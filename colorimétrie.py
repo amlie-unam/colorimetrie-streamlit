@@ -31,8 +31,43 @@ if adj1 and adj2 and adj3:
     resultats = [code for code, attribs in color_database.items() if attribs == profil]
 
     if resultats:
-        st.success("Couleurs correspondantes :")
-        for code in resultats:
-            st.color_picker(label=code, value=code, key=code)
+        from fpdf import FPDF
+        import io
+
+        def generate_pdf(profile, couleurs):
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", size=14)
+            pdf.cell(200, 10, txt=f"Profil colorimétrique : {', '.join(profile)}", ln=True)
+        
+            pdf.ln(10)  # ligne vide
+            for hex_code in couleurs:
+                # Couleur de remplissage
+                r = int(hex_code[1:3], 16)
+                g = int(hex_code[3:5], 16)
+                b = int(hex_code[5:7], 16)
+                pdf.set_fill_color(r, g, b)
+        
+                # Rectangle + code couleur
+                pdf.cell(20, 10, '', fill=True)
+                pdf.cell(40, 10, hex_code, ln=True)
+        
+            return pdf.output(dest='S').encode('latin-1')
+        
+        # === Affichage dans l'app ===
+        if resultats:
+            st.success("Couleurs correspondantes :")
+            for code in resultats:
+                st.color_picker(label=code, value=code, key=code)
+        
+            # Générer le PDF et bouton de téléchargement
+            pdf_data = generate_pdf(profil, resultats)
+            st.download_button(
+                label="📄 Télécharger la palette en PDF",
+                data=pdf_data,
+                file_name="palette_colorimetrie.pdf",
+                mime="application/pdf"
+            )
+
     else:
         st.warning("❌ Aucune couleur trouvée pour cette combinaison exacte.")
