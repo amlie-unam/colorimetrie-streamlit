@@ -9,7 +9,7 @@ import io
 def charger_couleurs(fichier):
     color_database = {}
     with open(fichier, encoding='utf-8') as f:
-        reader = csv.reader(f)
+        reader = csv.reader(f, delimiter=';')
         for row in reader:
             if len(row) != 4:
                 continue
