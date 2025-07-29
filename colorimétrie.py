@@ -9,14 +9,23 @@ Original file is located at
 
 import streamlit as st
 
-# Dictionnaire : code couleur → (adjectif1, adjectif2, adjectif3)
-color_database = {
-    "#8B0000": ("chaud", "foncé", "dense"),
-    "#FF4500": ("foncé", "chaud", "dense"),
-    "#CD5C5C": ("dense", "chaud", "foncé"),
-    "#FFD700": ("chaud", "clair", "doux"),
-    "#E0FFFF": ("froid", "clair", "léger")
-}
+import csv
+
+@st.cache_data
+def charger_couleurs(fichier):
+    color_database = {}
+    with open(fichier, encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row or row[0].startswith("#") == False:
+                continue
+            hex_code = row[0].strip()
+            profil = tuple(row[1].strip().lower() for row in row[1:4])
+            color_database[hex_code] = profil
+    return color_database
+
+# Charger les données
+color_database = charger_couleurs("couleurs.txt")
 
 st.title("🎨 Outil de Colorimétrie")
 
