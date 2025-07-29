@@ -25,7 +25,7 @@ def charger_couleurs(fichier):
     return color_database
 
 # Charger les données
-color_database = charger_couleurs("couleurs.txt")
+color_database = charger_couleurs("colors.csv")
 
 st.title("🎨 Outil de Colorimétrie")
 
