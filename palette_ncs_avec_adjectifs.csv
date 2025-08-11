@@ -1,0 +1,1951 @@
+ncs_code;nom;noirceur%;saturation%;teinte;temperature;luminosite;clarte;is_neutre
+S0550-G50Y;Olive;5;50;G50Y;chaud;lumineux;clair;0
+S0550-G60Y;Jaune vert;5;50;G60Y;chaud;lumineux;clair;0
+S0550-G70Y;Jaune vert;5;50;G70Y;chaud;lumineux;clair;0
+S0550-G80Y;Jaune;5;50;G80Y;chaud;lumineux;clair;0
+S0550-G90Y;Jaune;5;50;G90Y;chaud;lumineux;clair;0
+S0550-R;Rose foncé;5;50;R;chaud;lumineux;clair;0
+S0550-R10B;Rose;5;50;R10B;chaud;lumineux;clair;0
+S0550-Y;Jaune;5;50;Y;chaud;lumineux;clair;0
+S0550-Y10R;Jaune;5;50;Y10R;chaud;lumineux;clair;0
+S0550-Y20R;Jaune beige;5;50;Y20R;chaud;lumineux;clair;0
+S0550-Y30R;Jaune beige;5;50;Y30R;chaud;lumineux;clair;0
+S0550-Y40R;Orange beige;5;50;Y40R;chaud;lumineux;clair;0
+S0550-Y50R;Orange beige;5;50;Y50R;chaud;lumineux;clair;0
+S0550-Y60R;Beige rosé;5;50;Y60R;chaud;lumineux;clair;0
+S0550-Y70R;Beige rosé;5;50;Y70R;chaud;lumineux;clair;0
+S0550-Y80R;Orange saumon;5;50;Y80R;chaud;lumineux;clair;0
+S0550-Y90R;Rose foncé;5;50;Y90R;chaud;lumineux;clair;0
+S0560-G50Y;Vert clair;5;60;G50Y;chaud;lumineux;clair;0
+S0560-G60Y;Jaune vert;5;60;G60Y;chaud;lumineux;clair;0
+S0560-G70Y;Jaune vert;5;60;G70Y;chaud;lumineux;clair;0
+S0560-G80Y;Jaune;5;60;G80Y;chaud;lumineux;clair;0
+S0560-G90Y;Jaune;5;60;G90Y;chaud;lumineux;clair;0
+S0560-R;Rouge saumon;5;60;R;chaud;lumineux;clair;0
+S0560-Y;Jaune;5;60;Y;chaud;lumineux;clair;0
+S0560-Y10R;Jaune;5;60;Y10R;chaud;lumineux;clair;0
+S0560-Y20R;Jaune orangé;5;60;Y20R;chaud;lumineux;clair;0
+S0560-Y30R;Beige orangé;5;60;Y30R;chaud;lumineux;clair;0
+S0560-Y40R;Beige orangé;5;60;Y40R;chaud;lumineux;clair;0
+S0560-Y50R;Beige orangé;5;60;Y50R;chaud;lumineux;clair;0
+S0560-Y60R;Beige orangé;5;60;Y60R;chaud;lumineux;clair;0
+S0560-Y70R;Beige rosé;5;60;Y70R;chaud;lumineux;clair;0
+S0560-Y80R;Rose foncé;5;60;Y80R;chaud;lumineux;clair;0
+S0560-Y90R;Rose foncé;5;60;Y90R;chaud;lumineux;clair;0
+S0565-G50Y;Vert clair;5;65;G50Y;chaud;lumineux;clair;0
+S0565-R;Rouge saumon;5;65;R;chaud;lumineux;clair;0
+S0570-G60Y;Vert clair;5;70;G60Y;chaud;lumineux;clair;0
+S0570-G70Y;Jaune vert;5;70;G70Y;chaud;lumineux;clair;0
+S0570-G80Y;Jaune;5;70;G80Y;chaud;lumineux;clair;0
+S0570-G90Y;Jaune soufre;5;70;G90Y;chaud;lumineux;clair;0
+S0570-Y;Jaune;5;70;Y;chaud;lumineux;clair;0
+S0570-Y10R;Orange jaune;5;70;Y10R;chaud;lumineux;clair;0
+S0570-Y20R;Orange jaune;5;70;Y20R;chaud;lumineux;clair;0
+S0570-Y30R;Jaune safran- Jaune orangé;5;70;Y30R;chaud;lumineux;clair;0
+S0570-Y40R;Orange;5;70;Y40R;chaud;lumineux;clair;0
+S0570-Y50R;Orange;5;70;Y50R;chaud;lumineux;clair;0
+S0570-Y60R;Orange;5;70;Y60R;chaud;lumineux;clair;0
+S0570-Y70R;Rouge orangé;5;70;Y70R;chaud;lumineux;clair;0
+S0570-Y80R;Orange rouge;5;70;Y80R;chaud;lumineux;clair;0
+S0570-Y90R;Rouge;5;70;Y90R;chaud;lumineux;clair;0
+S0575-G60Y;Jaune vert;5;75;G60Y;chaud;lumineux;clair;0
+S0575-G70Y;Jaune vert;5;75;G70Y;chaud;lumineux;clair;0
+S0575-G90Y;Jaune;5;75;G90Y;chaud;lumineux;clair;0
+S0580-Y;Jaune;5;80;Y;chaud;lumineux;clair;0
+S0580-Y10R;Jaune;5;80;Y10R;chaud;lumineux;clair;0
+S0580-Y20R;Jaune de zinc- orangé;5;80;Y20R;chaud;lumineux;clair;0
+S0580-Y30R;Jaune melon- Orange;5;80;Y30R;chaud;lumineux;clair;0
+S0580-Y40R;Jaune Dalhia- Jaune orange;5;80;Y40R;chaud;lumineux;clair;0
+S0580-Y50R;Orange;5;80;Y50R;chaud;lumineux;clair;0
+S0580-Y60R;Orange;5;80;Y60R;chaud;lumineux;clair;0
+S0580-Y70R;Rouge orangé;5;80;Y70R;chaud;lumineux;clair;0
+S0580-Y80R;Rouge orange;5;80;Y80R;chaud;lumineux;clair;0
+S0580-Y90R;Rouge;5;80;Y90R;chaud;lumineux;clair;0
+S0585-Y20R;Jaune orangé;5;85;Y20R;chaud;lumineux;clair;0
+S0585-Y30R;Jaune orange;5;85;Y30R;chaud;lumineux;clair;0
+S0585-Y40R;Jaune orange;5;85;Y40R;chaud;lumineux;clair;0
+S0585-Y50R;Orange;5;85;Y50R;chaud;lumineux;clair;0
+S0585-Y60R;Orange foncé;5;85;Y60R;chaud;lumineux;clair;0
+S0585-Y70R;Orange foncé;5;85;Y70R;chaud;lumineux;clair;0
+S0585-Y80R;Rouge;5;85;Y80R;chaud;lumineux;clair;0
+S1050-G50Y;Vert;10;50;G50Y;chaud;lumineux;clair;0
+S1050-G60Y;Vert clair;10;50;G60Y;chaud;lumineux;clair;0
+S1050-G70Y;Vert clair;10;50;G70Y;chaud;lumineux;clair;0
+S1050-G80Y;Vert clair;10;50;G80Y;chaud;lumineux;clair;0
+S1050-G90Y;Jaune;10;50;G90Y;chaud;lumineux;clair;0
+S1050-R;Rose;10;50;R;chaud;lumineux;clair;0
+S1050-R10B;Rose;10;50;R10B;chaud;lumineux;clair;0
+S1050-R20B;Lilas;10;50;R20B;chaud;lumineux;clair;0
+S1050-R30B;Lilas;10;50;R30B;chaud;lumineux;clair;0
+S1050-R40B;Violet clair;10;50;R40B;chaud;lumineux;clair;0
+S1050-Y;Jaune;10;50;Y;chaud;lumineux;clair;0
+S1050-Y10R;Jaune;10;50;Y10R;chaud;lumineux;clair;0
+S1050-Y20R;Jaune;10;50;Y20R;chaud;lumineux;clair;0
+S1050-Y30R;Orange;10;50;Y30R;chaud;lumineux;clair;0
+S1050-Y40R;Jaune pastel- Orange;10;50;Y40R;chaud;lumineux;clair;0
+S1050-Y50R;Jaune soleil- Orange;10;50;Y50R;chaud;lumineux;clair;0
+S1050-Y60R;Orange;10;50;Y60R;chaud;lumineux;clair;0
+S1050-Y70R;Rose clair;10;50;Y70R;chaud;lumineux;clair;0
+S1050-Y80R;Rose;10;50;Y80R;chaud;lumineux;clair;0
+S1050-Y90R;Rose;10;50;Y90R;chaud;lumineux;clair;0
+S1060-G50Y;Vert clair;10;60;G50Y;chaud;lumineux;clair;0
+S1060-G60Y;Vert clair;10;60;G60Y;chaud;lumineux;clair;0
+S1060-G70Y;Vert clair;10;60;G70Y;chaud;lumineux;clair;0
+S1060-G80Y;Vert clair;10;60;G80Y;chaud;lumineux;clair;0
+S1060-G90Y;Jaune;10;60;G90Y;chaud;lumineux;clair;0
+S1060-R;Rose;10;60;R;chaud;lumineux;clair;0
+S1060-R10B;Rose foncé;10;60;R10B;chaud;lumineux;clair;0
+S1060-R20B;Violet;10;60;R20B;chaud;lumineux;clair;0
+S1060-R30B;Violet;10;60;R30B;chaud;lumineux;clair;0
+S1060-Y;Jaune;10;60;Y;chaud;lumineux;clair;0
+S1060-Y10R;Jaune;10;60;Y10R;chaud;lumineux;clair;0
+S1060-Y20R;Jaune foncé;10;60;Y20R;chaud;lumineux;clair;0
+S1060-Y30R;Orange;10;60;Y30R;chaud;lumineux;clair;0
+S1060-Y40R;Orange;10;60;Y40R;chaud;lumineux;clair;0
+S1060-Y50R;Orange;10;60;Y50R;chaud;lumineux;clair;0
+S1060-Y60R;Rouge clair;10;60;Y60R;chaud;lumineux;clair;0
+S1060-Y70R;Rouge clair;10;60;Y70R;chaud;lumineux;clair;0
+S1060-Y80R;Rose clair;10;60;Y80R;chaud;lumineux;clair;0
+S1060-Y90R;Rose;10;60;Y90R;chaud;lumineux;clair;0
+S1070-G50Y;Vert Clair;10;70;G50Y;chaud;lumineux;clair;0
+S1070-G60Y;Jaune vert;10;70;G60Y;chaud;lumineux;clair;0
+S1070-G70Y;Jaune vert;10;70;G70Y;chaud;lumineux;clair;0
+S1070-G80Y;P;10;70;G80Y;chaud;lumineux;clair;0
+S1070-G90Y;Jaune foncé;10;70;G90Y;chaud;lumineux;clair;0
+S1070-R;Rose;10;70;R;chaud;lumineux;clair;0
+S1070-R10B;Rose foncé;10;70;R10B;chaud;lumineux;clair;0
+S1070-R20B;Violet;10;70;R20B;chaud;lumineux;clair;0
+S1070-Y;Jaune;10;70;Y;chaud;lumineux;clair;0
+S1070-Y10R;Jaune;10;70;Y10R;chaud;lumineux;clair;0
+S1070-Y20R;Jaune;10;70;Y20R;chaud;lumineux;clair;0
+S1070-Y30R;Orange;10;70;Y30R;chaud;lumineux;clair;0
+S1070-Y40R;Orange;10;70;Y40R;chaud;lumineux;clair;0
+S1070-Y50R;Orange;10;70;Y50R;chaud;lumineux;clair;0
+S1070-Y60R;Orange profond;10;70;Y60R;chaud;lumineux;clair;0
+S1070-Y70R;Rouge clair;10;70;Y70R;chaud;lumineux;clair;0
+S1070-Y80R;Rouge clair;10;70;Y80R;chaud;lumineux;clair;0
+S1070-Y90R;Rouge clair;10;70;Y90R;chaud;lumineux;clair;0
+S1075-G50Y;Vert;10;75;G50Y;chaud;lumineux;clair;0
+S1075-G60Y;Jaune vert;10;75;G60Y;chaud;lumineux;clair;0
+S1075-G70Y;Jaune vert;10;75;G70Y;chaud;lumineux;clair;0
+S1075-G80Y;Jaune citron clair;10;75;G80Y;chaud;lumineux;clair;0
+S1075-G90Y;Jaune foncé;10;75;G90Y;chaud;lumineux;clair;0
+S1080-R;Rouge;10;80;R;chaud;lumineux;clair;0
+S1080-Y;Jaune;10;80;Y;chaud;lumineux;clair;0
+S1080-Y10R;Jaune or;10;80;Y10R;chaud;lumineux;clair;0
+S1080-Y20R;Orange;10;80;Y20R;chaud;lumineux;clair;0
+S1080-Y30R;Orange;10;80;Y30R;chaud;lumineux;clair;0
+S1080-Y40R;Jaune maïs- Orange profond;10;80;Y40R;chaud;lumineux;clair;0
+S1080-Y50R;Jaune orange- Orange profond;10;80;Y50R;chaud;lumineux;clair;0
+S1080-Y60R;Orange;10;80;Y60R;chaud;lumineux;clair;0
+S1080-Y70R;Orange profond;10;80;Y70R;chaud;lumineux;clair;0
+S1080-Y80R;Orange sang;10;80;Y80R;chaud;lumineux;clair;0
+S1080-Y90R;Rouge;10;80;Y90R;chaud;lumineux;clair;0
+S1085-Y80R;Rouge orangé;10;85;Y80R;chaud;lumineux;clair;0
+S1085-Y90R;Rouge;10;85;Y90R;chaud;lumineux;clair;0
+S1575-R10B;Rouge;15;75;R10B;chaud;lumineux;clair;0
+S1580-R;Rouge;15;80;R;chaud;lumineux;clair;0
+S1580-Y80R;Rouge orange;15;80;Y80R;chaud;lumineux;clair;0
+S1580-Y90R;Rouge;15;80;Y90R;chaud;lumineux;clair;0
+S2050-G50Y;Vert;20;50;G50Y;chaud;lumineux;clair;0
+S2050-G60Y;Vert clair;20;50;G60Y;chaud;lumineux;clair;0
+S2050-G70Y;Vert clair;20;50;G70Y;chaud;lumineux;clair;0
+S2050-G80Y;Vert clair;20;50;G80Y;chaud;lumineux;clair;0
+S2050-G90Y;Vert clair;20;50;G90Y;chaud;lumineux;clair;0
+S2050-R;Rose;20;50;R;chaud;lumineux;clair;0
+S2050-R10B;Rose;20;50;R10B;chaud;lumineux;clair;0
+S2050-R20B;Rose foncé;20;50;R20B;chaud;lumineux;clair;0
+S2050-R30B;Rose foncé;20;50;R30B;chaud;lumineux;clair;0
+S2050-R40B;Lilas;20;50;R40B;chaud;lumineux;clair;0
+S2050-Y;Jaune brun;20;50;Y;chaud;lumineux;clair;0
+S2050-Y10R;Jaune foncé;20;50;Y10R;chaud;lumineux;clair;0
+S2050-Y20R;Jaune foncé;20;50;Y20R;chaud;lumineux;clair;0
+S2050-Y30R;Jaune foncé;20;50;Y30R;chaud;lumineux;clair;0
+S2050-Y40R;Brun orange;20;50;Y40R;chaud;lumineux;clair;0
+S2050-Y50R;Brun orange;20;50;Y50R;chaud;lumineux;clair;0
+S2050-Y60R;Brun orange;20;50;Y60R;chaud;lumineux;clair;0
+S2050-Y70R;Brun orange;20;50;Y70R;chaud;lumineux;clair;0
+S2050-Y80R;Rouge saumon;20;50;Y80R;chaud;lumineux;clair;0
+S2050-Y90R;Rouge;20;50;Y90R;chaud;lumineux;clair;0
+S2060-G50Y;Vert clair;20;60;G50Y;chaud;lumineux;clair;0
+S2060-G60Y;Vert clair;20;60;G60Y;chaud;lumineux;clair;0
+S2060-G70Y;Vert clair;20;60;G70Y;chaud;lumineux;clair;0
+S2060-G80Y;Vert clair;20;60;G80Y;chaud;lumineux;clair;0
+S2060-G90Y;Jaune vert;20;60;G90Y;chaud;lumineux;clair;0
+S2060-R;Rose foncé;20;60;R;chaud;lumineux;clair;0
+S2060-R10B;Rose foncé;20;60;R10B;chaud;lumineux;clair;0
+S2060-R20B;Rose foncé;20;60;R20B;chaud;lumineux;clair;0
+S2060-R30B;Violet;20;60;R30B;chaud;lumineux;clair;0
+S2060-R40B;Violet;20;60;R40B;chaud;lumineux;clair;0
+S2060-Y;Jaune foncé;20;60;Y;chaud;lumineux;clair;0
+S2060-Y10R;Jaune ocre;20;60;Y10R;chaud;lumineux;clair;0
+S2060-Y20R;Jaune;20;60;Y20R;chaud;lumineux;clair;0
+S2060-Y30R;Orange brun;20;60;Y30R;chaud;lumineux;clair;0
+S2060-Y40R;Orange brun;20;60;Y40R;chaud;lumineux;clair;0
+S2060-Y50R;Orange brun;20;60;Y50R;chaud;lumineux;clair;0
+S2060-Y60R;Orange brun;20;60;Y60R;chaud;lumineux;clair;0
+S2060-Y70R;Orange rouge;20;60;Y70R;chaud;lumineux;clair;0
+S2060-Y80R;Orange saumon;20;60;Y80R;chaud;lumineux;clair;0
+S2060-Y90R;Rose;20;60;Y90R;chaud;lumineux;clair;0
+S2065-R20B;Rose foncé;20;65;R20B;chaud;lumineux;clair;0
+S2070-G50Y;Vert clair;20;70;G50Y;chaud;lumineux;clair;0
+S2070-G60Y;Vert Foncé;20;70;G60Y;chaud;lumineux;clair;0
+S2070-G70Y;Vert foncé;20;70;G70Y;chaud;lumineux;clair;0
+S2070-G80Y;Jaune citron;20;70;G80Y;chaud;lumineux;clair;0
+S2070-G90Y;Jaune foncé;20;70;G90Y;chaud;lumineux;clair;0
+S2070-R;Rouge;20;70;R;chaud;lumineux;clair;0
+S2070-R10B;Rouge;20;70;R10B;chaud;lumineux;clair;0
+S2070-Y;Vert jaune;20;70;Y;chaud;lumineux;clair;0
+S2070-Y10R;Ocre orange;20;70;Y10R;chaud;lumineux;clair;0
+S2070-Y20R;Jaune d’or- Miel- genêt;20;70;Y20R;chaud;lumineux;clair;0
+S2070-Y30R;Brun clair;20;70;Y30R;chaud;lumineux;clair;0
+S2070-Y40R;Brun clair;20;70;Y40R;chaud;lumineux;clair;0
+S2070-Y50R;Orange profond;20;70;Y50R;chaud;lumineux;clair;0
+S2070-Y60R;Orange oxyde;20;70;Y60R;chaud;lumineux;clair;0
+S2070-Y70R;Orange rouge;20;70;Y70R;chaud;lumineux;clair;0
+S2070-Y80R;Rouge;20;70;Y80R;chaud;lumineux;clair;0
+S2070-Y90R;Rouge;20;70;Y90R;chaud;lumineux;clair;0
+S2075-Y60R;Orange rouge;20;75;Y60R;chaud;lumineux;clair;0
+S2075-Y70R;Orange rouge;20;75;Y70R;chaud;lumineux;clair;0
+S2570-R;Rouge;25;70;R;chaud;lumineux;clair;0
+S2570-Y30R;Brun clair;25;70;Y30R;chaud;lumineux;clair;0
+S2570-Y40R;Brun orangé;25;70;Y40R;chaud;lumineux;clair;0
+S2570-Y50R;Brun orangé;25;70;Y50R;chaud;lumineux;clair;0
+S2570-Y60R;Brun orangé;25;70;Y60R;chaud;lumineux;clair;0
+S2570-Y70R;Rouge brun;25;70;Y70R;chaud;lumineux;clair;0
+S2570-Y80R;Rouge;25;70;Y80R;chaud;lumineux;clair;0
+S2570-Y90R;Rouge signal;25;70;Y90R;chaud;lumineux;clair;0
+S0502-G50Y;Blanc cassé;5;2;G50Y;chaud;mat;clair;0
+S0502-R;Blanc cassé;5;2;R;chaud;mat;clair;0
+S0502-Y;Blanc cassé;5;2;Y;chaud;mat;clair;0
+S0502-Y50R;Blanc cassé;5;2;Y50R;chaud;mat;clair;0
+S0505-G50Y;Vert blanc;5;5;G50Y;chaud;mat;clair;0
+S0505-G60Y;Jaune pâle;5;5;G60Y;chaud;mat;clair;0
+S0505-G70Y;Jaune pâle;5;5;G70Y;chaud;mat;clair;0
+S0505-G80Y;Jaune blanc;5;5;G80Y;chaud;mat;clair;0
+S0505-G90Y;Jaune pâle;5;5;G90Y;chaud;mat;clair;0
+S0505-R;Blanc cassé;5;5;R;chaud;mat;clair;0
+S0505-R10B;Blanc cassé;5;5;R10B;chaud;mat;clair;0
+S0505-R20B;Violet clair;5;5;R20B;chaud;mat;clair;0
+S0505-R30B;Violet clair;5;5;R30B;chaud;mat;clair;0
+S0505-R40B;Violet clair;5;5;R40B;chaud;mat;clair;0
+S0505-Y;Crème;5;5;Y;chaud;mat;clair;0
+S0505-Y10R;Crème;5;5;Y10R;chaud;mat;clair;0
+S0505-Y20R;Blanc crème;5;5;Y20R;chaud;mat;clair;0
+S0505-Y30R;Beige crème;5;5;Y30R;chaud;mat;clair;0
+S0505-Y40R;Beige clair;5;5;Y40R;chaud;mat;clair;0
+S0505-Y50R;Jaune beige;5;5;Y50R;chaud;mat;clair;0
+S0505-Y60R;Beige clair;5;5;Y60R;chaud;mat;clair;0
+S0505-Y70R;Beige clair;5;5;Y70R;chaud;mat;clair;0
+S0505-Y80R;Beige rosé;5;5;Y80R;chaud;mat;clair;0
+S0505-Y90R;Beige rosé;5;5;Y90R;chaud;mat;clair;0
+S0507-G80Y;Jaune vert pâle;5;7;G80Y;chaud;mat;clair;0
+S0507-R;Rose pâle;5;7;R;chaud;mat;clair;0
+S0507-R20B;Rose pâle;5;7;R20B;chaud;mat;clair;0
+S0507-R40B;Lilas pâle;5;7;R40B;chaud;mat;clair;0
+S0507-Y;Jaune pâle;5;7;Y;chaud;mat;clair;0
+S0507-Y20R;Beige crème;5;7;Y20R;chaud;mat;clair;0
+S0507-Y40R;Beige rosé;5;7;Y40R;chaud;mat;clair;0
+S0507-Y60R;Rose pâle;5;7;Y60R;chaud;mat;clair;0
+S0507-Y80R;Rose pâle;5;7;Y80R;chaud;mat;clair;0
+S0510-G50Y;Jaune pâle;5;10;G50Y;chaud;mat;clair;0
+S0510-G60Y;Jaune pâle;5;10;G60Y;chaud;mat;clair;0
+S0510-G70Y;Jaune pâle;5;10;G70Y;chaud;mat;clair;0
+S0510-G80Y;Jaune pâle;5;10;G80Y;chaud;mat;clair;0
+S0510-G90Y;Jaune pâle;5;10;G90Y;chaud;mat;clair;0
+S0510-R;Rose;5;10;R;chaud;mat;clair;0
+S0510-R10B;Rose;5;10;R10B;chaud;mat;clair;0
+S0510-R20B;Rose;5;10;R20B;chaud;mat;clair;0
+S0510-R30B;Rose;5;10;R30B;chaud;mat;clair;0
+S0510-R40B;Gris rosé;5;10;R40B;chaud;mat;clair;0
+S0510-Y;Jaune clair;5;10;Y;chaud;mat;clair;0
+S0510-Y10R;Jaune clair;5;10;Y10R;chaud;mat;clair;0
+S0510-Y20R;Jaune beige;5;10;Y20R;chaud;mat;clair;0
+S0510-Y30R;Jaune beige;5;10;Y30R;chaud;mat;clair;0
+S0510-Y40R;Jaune rosé;5;10;Y40R;chaud;mat;clair;0
+S0510-Y50R;Jaune rose;5;10;Y50R;chaud;mat;clair;0
+S0510-Y60R;Beige rosé;5;10;Y60R;chaud;mat;clair;0
+S0510-Y70R;Rose clair;5;10;Y70R;chaud;mat;clair;0
+S0510-Y80R;Rose clair;5;10;Y80R;chaud;mat;clair;0
+S0510-Y90R;Rose clair;5;10;Y90R;chaud;mat;clair;0
+S0515-G60Y;Jaune vert clair;5;15;G60Y;chaud;mat;clair;0
+S0515-G80Y;Jaune pâle;5;15;G80Y;chaud;mat;clair;0
+S0515-G90Y;Jaune clair;5;15;G90Y;chaud;mat;clair;0
+S0515-R;Rose pâle;5;15;R;chaud;mat;clair;0
+S0515-R10B;Rose pastel;5;15;R10B;chaud;mat;clair;0
+S0515-R20B;Rose pâle;5;15;R20B;chaud;mat;clair;0
+S0515-R40B;Lilas pâle;5;15;R40B;chaud;mat;clair;0
+S0515-Y;Jaune clair;5;15;Y;chaud;mat;clair;0
+S0515-Y10R;Jaune beige;5;15;Y10R;chaud;mat;clair;0
+S0515-Y20R;Jaune beige;5;15;Y20R;chaud;mat;clair;0
+S0515-Y30R;Orange pâle;5;15;Y30R;chaud;mat;clair;0
+S0515-Y40R;Saumon;5;15;Y40R;chaud;mat;clair;0
+S0515-Y50R;Rose saumon;5;15;Y50R;chaud;mat;clair;0
+S0515-Y60R;Saumon;5;15;Y60R;chaud;mat;clair;0
+S0515-Y70R;Rose pâle;5;15;Y70R;chaud;mat;clair;0
+S0515-Y80R;Rose pastel;5;15;Y80R;chaud;mat;clair;0
+S0515-Y90R;Rose clair;5;15;Y90R;chaud;mat;clair;0
+S0520-G50Y;Jaune vert;5;20;G50Y;chaud;mat;clair;0
+S0520-G60Y;Jaune pâle;5;20;G60Y;chaud;mat;clair;0
+S0520-G70Y;Jaune pâle;5;20;G70Y;chaud;mat;clair;0
+S0520-G80Y;Jaune pâle;5;20;G80Y;chaud;mat;clair;0
+S0520-G90Y;Jaune pâle;5;20;G90Y;chaud;mat;clair;0
+S0520-R;Rose;5;20;R;chaud;mat;clair;0
+S0520-R10B;Rose;5;20;R10B;chaud;mat;clair;0
+S0520-R20B;Rose;5;20;R20B;chaud;mat;clair;0
+S0520-R30B;Rose pastel;5;20;R30B;chaud;mat;clair;0
+S0520-R40B;Rose;5;20;R40B;chaud;mat;clair;0
+S0520-Y;Jaune clair;5;20;Y;chaud;mat;clair;0
+S0520-Y10R;Jaune clair;5;20;Y10R;chaud;mat;clair;0
+S0520-Y20R;Jaune;5;20;Y20R;chaud;mat;clair;0
+S0520-Y30R;Jaune beige;5;20;Y30R;chaud;mat;clair;0
+S0520-Y40R;Beige rosé;5;20;Y40R;chaud;mat;clair;0
+S0520-Y50R;Beige rosé;5;20;Y50R;chaud;mat;clair;0
+S0520-Y60R;Beige rosé;5;20;Y60R;chaud;mat;clair;0
+S0520-Y70R;Saumon;5;20;Y70R;chaud;mat;clair;0
+S0520-Y80R;Saumon;5;20;Y80R;chaud;mat;clair;0
+S0520-Y90R;Saumon;5;20;Y90R;chaud;mat;clair;0
+S0530-G50Y;Vert clair;5;30;G50Y;chaud;mat;clair;0
+S0530-G60Y;Jaune vert;5;30;G60Y;chaud;mat;clair;0
+S0530-G70Y;Jaune pâle;5;30;G70Y;chaud;mat;clair;0
+S0530-G80Y;Jaune;5;30;G80Y;chaud;mat;clair;0
+S0530-G90Y;Jaune;5;30;G90Y;chaud;mat;clair;0
+S0530-R;Rose;5;30;R;chaud;mat;clair;0
+S0530-R10B;Rose;5;30;R10B;chaud;mat;clair;0
+S0530-R20B;Rose;5;30;R20B;chaud;mat;clair;0
+S0530-R30B;Rose;5;30;R30B;chaud;mat;clair;0
+S0530-R40B;Rose;5;30;R40B;chaud;mat;clair;0
+S0530-Y;Jaune clair;5;30;Y;chaud;mat;clair;0
+S0530-Y10R;Jaune;5;30;Y10R;chaud;mat;clair;0
+S0530-Y20R;Jaune beige;5;30;Y20R;chaud;mat;clair;0
+S0530-Y30R;Jaune beige;5;30;Y30R;chaud;mat;clair;0
+S0530-Y40R;Jaune rosé;5;30;Y40R;chaud;mat;clair;0
+S0530-Y50R;Beige rosé;5;30;Y50R;chaud;mat;clair;0
+S0530-Y60R;Beige rosé;5;30;Y60R;chaud;mat;clair;0
+S0530-Y70R;Beige rosé;5;30;Y70R;chaud;mat;clair;0
+S0530-Y80R;Rose;5;30;Y80R;chaud;mat;clair;0
+S0530-Y90R;Rose;5;30;Y90R;chaud;mat;clair;0
+S0540-G50Y;Jaune vert;5;40;G50Y;chaud;mat;clair;0
+S0540-G60Y;Jaune vert;5;40;G60Y;chaud;mat;clair;0
+S0540-G70Y;Jaune;5;40;G70Y;chaud;mat;clair;0
+S0540-G80Y;Jaune;5;40;G80Y;chaud;mat;clair;0
+S0540-G90Y;Jaune;5;40;G90Y;chaud;mat;clair;0
+S0540-R;Rose;5;40;R;chaud;mat;clair;0
+S0540-R10B;Rose;5;40;R10B;chaud;mat;clair;0
+S0540-R20B;Rose;5;40;R20B;chaud;mat;clair;0
+S0540-R30B;Rose;5;40;R30B;chaud;mat;clair;0
+S0540-Y;Jaune clair;5;40;Y;chaud;mat;clair;0
+S0540-Y10R;Jaune clair;5;40;Y10R;chaud;mat;clair;0
+S0540-Y20R;Jaune beige;5;40;Y20R;chaud;mat;clair;0
+S0540-Y30R;Jaune orange;5;40;Y30R;chaud;mat;clair;0
+S0540-Y40R;Jaune orange;5;40;Y40R;chaud;mat;clair;0
+S0540-Y50R;Orange pâle;5;40;Y50R;chaud;mat;clair;0
+S0540-Y60R;Orange clair;5;40;Y60R;chaud;mat;clair;0
+S0540-Y70R;Beige rosé;5;40;Y70R;chaud;mat;clair;0
+S0540-Y80R;Rose;5;40;Y80R;chaud;mat;clair;0
+S0540-Y90R;Rose;5;40;Y90R;chaud;mat;clair;0
+S0603-G80Y;Crème;6;3;G80Y;chaud;mat;clair;0
+S0603-R20B;Gris rosé pâle;6;3;R20B;chaud;mat;clair;0
+S0603-R40B;Gris clair;6;3;R40B;chaud;mat;clair;0
+S0603-Y20R;Crème;6;3;Y20R;chaud;mat;clair;0
+S0603-Y40R;Beige coquille d’œuf;6;3;Y40R;chaud;mat;clair;0
+S0603-Y60R;Beige coquille d’œuf;6;3;Y60R;chaud;mat;clair;0
+S0603-Y80R;Blanc cassé;6;3;Y80R;chaud;mat;clair;0
+S0804-G60Y;Vert gris pâle;8;4;G60Y;chaud;mat;clair;0
+S0804-G90Y;Crème;8;4;G90Y;chaud;mat;clair;0
+S0804-R10B;Rose pâle;8;4;R10B;chaud;mat;clair;0
+S0804-R30B;Gris clair;8;4;R30B;chaud;mat;clair;0
+S0804-Y10R;Beige clair;8;4;Y10R;chaud;mat;clair;0
+S0804-Y30R;Crème;8;4;Y30R;chaud;mat;clair;0
+S0804-Y50R;Gris clair;8;4;Y50R;chaud;mat;clair;0
+S0804-Y70R;Crème;8;4;Y70R;chaud;mat;clair;0
+S0804-Y90R;Gris clair;8;4;Y90R;chaud;mat;clair;0
+S0907-G60Y;Gris vert pâle;9;7;G60Y;chaud;mat;clair;0
+S0907-G90Y;Jaune beige;9;7;G90Y;chaud;mat;clair;0
+S0907-R10B;Rose pâle;9;7;R10B;chaud;mat;clair;0
+S0907-R30B;Lilas pâle;9;7;R30B;chaud;mat;clair;0
+S0907-Y10R;Beige clair;9;7;Y10R;chaud;mat;clair;0
+S0907-Y30R;Beige rosé;9;7;Y30R;chaud;mat;clair;0
+S0907-Y50R;Beige rosé;9;7;Y50R;chaud;mat;clair;0
+S0907-Y70R;Rose pâle;9;7;Y70R;chaud;mat;clair;0
+S0907-Y90R;Gris pâle rougeâtre;9;7;Y90R;chaud;mat;clair;0
+S1002-G50Y;Gris clair;10;2;G50Y;chaud;mat;clair;0
+S1002-R;Gris pastel;10;2;R;chaud;mat;clair;0
+S1002-Y;Gris blanc;10;2;Y;chaud;mat;clair;0
+S1002-Y50R;Gris clair;10;2;Y50R;chaud;mat;clair;0
+S1005-G50Y;Vert pastel;10;5;G50Y;chaud;mat;clair;0
+S1005-G60Y;Beige vert;10;5;G60Y;chaud;mat;clair;0
+S1005-G70Y;Beige vert;10;5;G70Y;chaud;mat;clair;0
+S1005-G80Y;Beige vert;10;5;G80Y;chaud;mat;clair;0
+S1005-G90Y;Beige clair;10;5;G90Y;chaud;mat;clair;0
+S1005-R;Violet clair;10;5;R;chaud;mat;clair;0
+S1005-R10B;Violet clair;10;5;R10B;chaud;mat;clair;0
+S1005-R20B;Violet clair;10;5;R20B;chaud;mat;clair;0
+S1005-R30B;Gris clair;10;5;R30B;chaud;mat;clair;0
+S1005-R40B;Gris clair;10;5;R40B;chaud;mat;clair;0
+S1005-Y;Beige coquille d’œuf;10;5;Y;chaud;mat;clair;0
+S1005-Y10R;Beige coquille d’œuf;10;5;Y10R;chaud;mat;clair;0
+S1005-Y20R;Beige coquille d’œuf;10;5;Y20R;chaud;mat;clair;0
+S1005-Y30R;Beige gris;10;5;Y30R;chaud;mat;clair;0
+S1005-Y40R;Beige gris;10;5;Y40R;chaud;mat;clair;0
+S1005-Y50R;Beige gris;10;5;Y50R;chaud;mat;clair;0
+S1005-Y60R;Beige gris;10;5;Y60R;chaud;mat;clair;0
+S1005-Y70R;Beige rosé;10;5;Y70R;chaud;mat;clair;0
+S1005-Y80R;Beige rosé;10;5;Y80R;chaud;mat;clair;0
+S1005-Y90R;Vieux rose;10;5;Y90R;chaud;mat;clair;0
+S1010-G50Y;Vert pâle;10;10;G50Y;chaud;mat;clair;0
+S1010-G60Y;Vert beige;10;10;G60Y;chaud;mat;clair;0
+S1010-G70Y;Vert beige;10;10;G70Y;chaud;mat;clair;0
+S1010-G80Y;Vert beige;10;10;G80Y;chaud;mat;clair;0
+S1010-G90Y;Ivoire clair;10;10;G90Y;chaud;mat;clair;0
+S1010-R;Rose pâle;10;10;R;chaud;mat;clair;0
+S1010-R10B;Rose pâle;10;10;R10B;chaud;mat;clair;0
+S1010-R20B;Rose pâle;10;10;R20B;chaud;mat;clair;0
+S1010-R30B;Rose pâle;10;10;R30B;chaud;mat;clair;0
+S1010-R40B;Lilas;10;10;R40B;chaud;mat;clair;0
+S1010-Y;Jaune beige;10;10;Y;chaud;mat;clair;0
+S1010-Y10R;Jaune clair;10;10;Y10R;chaud;mat;clair;0
+S1010-Y20R;Blanc perlé- Beige;10;10;Y20R;chaud;mat;clair;0
+S1010-Y30R;Jaune rosé;10;10;Y30R;chaud;mat;clair;0
+S1010-Y40R;Ivoire clair- Rose clair;10;10;Y40R;chaud;mat;clair;0
+S1010-Y50R;Jaune rosé;10;10;Y50R;chaud;mat;clair;0
+S1010-Y60R;Rose;10;10;Y60R;chaud;mat;clair;0
+S1010-Y70R;Rose jaune;10;10;Y70R;chaud;mat;clair;0
+S1010-Y80R;Rose beige clair;10;10;Y80R;chaud;mat;clair;0
+S1010-Y90R;Rose jaune;10;10;Y90R;chaud;mat;clair;0
+S1015-G60Y;Jaune vert;10;15;G60Y;chaud;mat;clair;0
+S1015-G80Y;Jaune gris;10;15;G80Y;chaud;mat;clair;0
+S1015-G90Y;Jaune clair;10;15;G90Y;chaud;mat;clair;0
+S1015-R;Rose pastel;10;15;R;chaud;mat;clair;0
+S1015-R10B;Rose clair;10;15;R10B;chaud;mat;clair;0
+S1015-R20B;Lilas clair;10;15;R20B;chaud;mat;clair;0
+S1015-R40B;Lilas pâle;10;15;R40B;chaud;mat;clair;0
+S1015-Y;Jaune clair;10;15;Y;chaud;mat;clair;0
+S1015-Y10R;Jaune beige;10;15;Y10R;chaud;mat;clair;0
+S1015-Y20R;Jaune beige;10;15;Y20R;chaud;mat;clair;0
+S1015-Y30R;Beige rosé;10;15;Y30R;chaud;mat;clair;0
+S1015-Y40R;Saumon;10;15;Y40R;chaud;mat;clair;0
+S1015-Y50R;Rose saumon;10;15;Y50R;chaud;mat;clair;0
+S1015-Y60R;Saumon;10;15;Y60R;chaud;mat;clair;0
+S1015-Y70R;Rose pastel;10;15;Y70R;chaud;mat;clair;0
+S1015-Y80R;Vieux rose Clair;10;15;Y80R;chaud;mat;clair;0
+S1015-Y90R;Rose;10;15;Y90R;chaud;mat;clair;0
+S1020-G50Y;Vert jaune;10;20;G50Y;chaud;mat;clair;0
+S1020-G60Y;Vert jaune;10;20;G60Y;chaud;mat;clair;0
+S1020-G70Y;Vert jaune;10;20;G70Y;chaud;mat;clair;0
+S1020-G80Y;Jaune clair;10;20;G80Y;chaud;mat;clair;0
+S1020-G90Y;Jaune clair;10;20;G90Y;chaud;mat;clair;0
+S1020-R;Rose;10;20;R;chaud;mat;clair;0
+S1020-R10B;Rose;10;20;R10B;chaud;mat;clair;0
+S1020-R20B;Rose bleuté;10;20;R20B;chaud;mat;clair;0
+S1020-R30B;Rose;10;20;R30B;chaud;mat;clair;0
+S1020-R40B;Bleu rosé;10;20;R40B;chaud;mat;clair;0
+S1020-Y;Jaune pâle;10;20;Y;chaud;mat;clair;0
+S1020-Y10R;Jaune beige;10;20;Y10R;chaud;mat;clair;0
+S1020-Y20R;Ivoire;10;20;Y20R;chaud;mat;clair;0
+S1020-Y30R;Jaune rouge;10;20;Y30R;chaud;mat;clair;0
+S1020-Y40R;Beige;10;20;Y40R;chaud;mat;clair;0
+S1020-Y50R;Jaune rouge;10;20;Y50R;chaud;mat;clair;0
+S1020-Y60R;Beige rouge;10;20;Y60R;chaud;mat;clair;0
+S1020-Y70R;Rose;10;20;Y70R;chaud;mat;clair;0
+S1020-Y80R;Rose;10;20;Y80R;chaud;mat;clair;0
+S1020-Y90R;Rose;10;20;Y90R;chaud;mat;clair;0
+S1030-G50Y;Vert clair;10;30;G50Y;chaud;mat;clair;0
+S1030-G60Y;Jaune;10;30;G60Y;chaud;mat;clair;0
+S1030-G70Y;Jaune vert;10;30;G70Y;chaud;mat;clair;0
+S1030-G80Y;Jaune;10;30;G80Y;chaud;mat;clair;0
+S1030-G90Y;Jaune;10;30;G90Y;chaud;mat;clair;0
+S1030-R;Rouge rosé;10;30;R;chaud;mat;clair;0
+S1030-R10B;Rose orangé;10;30;R10B;chaud;mat;clair;0
+S1030-R20B;Rose;10;30;R20B;chaud;mat;clair;0
+S1030-R30B;Rose;10;30;R30B;chaud;mat;clair;0
+S1030-R40B;Bleu rosé;10;30;R40B;chaud;mat;clair;0
+S1030-Y;Jaune clair;10;30;Y;chaud;mat;clair;0
+S1030-Y10R;Jaune moutarde;10;30;Y10R;chaud;mat;clair;0
+S1030-Y20R;Beige oxyde;10;30;Y20R;chaud;mat;clair;0
+S1030-Y30R;Jaune orange;10;30;Y30R;chaud;mat;clair;0
+S1030-Y40R;Orange pâle;10;30;Y40R;chaud;mat;clair;0
+S1030-Y50R;Orange;10;30;Y50R;chaud;mat;clair;0
+S1030-Y60R;Orange clair;10;30;Y60R;chaud;mat;clair;0
+S1030-Y70R;Orange;10;30;Y70R;chaud;mat;clair;0
+S1030-Y80R;Rose saumon;10;30;Y80R;chaud;mat;clair;0
+S1030-Y90R;Rose orangé;10;30;Y90R;chaud;mat;clair;0
+S1040-G50Y;Vert clair;10;40;G50Y;chaud;mat;clair;0
+S1040-G60Y;Vert moyen;10;40;G60Y;chaud;mat;clair;0
+S1040-G70Y;Jaune clair;10;40;G70Y;chaud;mat;clair;0
+S1040-G80Y;Jaune clair;10;40;G80Y;chaud;mat;clair;0
+S1040-G90Y;Jaune clair;10;40;G90Y;chaud;mat;clair;0
+S1040-R;Rose clair;10;40;R;chaud;mat;clair;0
+S1040-R10B;Rose;10;40;R10B;chaud;mat;clair;0
+S1040-R20B;Rose clair;10;40;R20B;chaud;mat;clair;0
+S1040-R30B;Rose clair;10;40;R30B;chaud;mat;clair;0
+S1040-R40B;Lilas;10;40;R40B;chaud;mat;clair;0
+S1040-Y;Jaune;10;40;Y;chaud;mat;clair;0
+S1040-Y10R;Jaune;10;40;Y10R;chaud;mat;clair;0
+S1040-Y20R;Jaune de Chrome- Orange clair;10;40;Y20R;chaud;mat;clair;0
+S1040-Y30R;Orange clair;10;40;Y30R;chaud;mat;clair;0
+S1040-Y40R;Orange clair;10;40;Y40R;chaud;mat;clair;0
+S1040-Y50R;Orange clair;10;40;Y50R;chaud;mat;clair;0
+S1040-Y60R;Orange clair;10;40;Y60R;chaud;mat;clair;0
+S1040-Y70R;Orange;10;40;Y70R;chaud;mat;clair;0
+S1040-Y80R;Rose tendre;10;40;Y80R;chaud;mat;clair;0
+S1040-Y90R;Rose pâle;10;40;Y90R;chaud;mat;clair;0
+S1502-G50Y;Gris clair;15;2;G50Y;chaud;mat;clair;0
+S1502-R;Gris clair;15;2;R;chaud;mat;clair;0
+S1502-Y;Gris clair;15;2;Y;chaud;mat;clair;0
+S1502-Y50R;Gris clair;15;2;Y50R;chaud;mat;clair;0
+S1505-G80Y;Gris vert clair;15;5;G80Y;chaud;mat;clair;0
+S1505-G90Y;Gris jaune clair;15;5;G90Y;chaud;mat;clair;0
+S1505-R;Gris clair;15;5;R;chaud;mat;clair;0
+S1505-Y;Gris beige;15;5;Y;chaud;mat;clair;0
+S1505-Y10R;Gris beige clair;15;5;Y10R;chaud;mat;clair;0
+S1505-Y20R;Gris beige;15;5;Y20R;chaud;mat;clair;0
+S1505-Y30R;Gris beige clair;15;5;Y30R;chaud;mat;clair;0
+S1505-Y40R;Gris clair;15;5;Y40R;chaud;mat;clair;0
+S1505-Y50R;Gris clair;15;5;Y50R;chaud;mat;clair;0
+S1505-Y60R;Gris rosé clair;15;5;Y60R;chaud;mat;clair;0
+S1505-Y70R;Gris clair;15;5;Y70R;chaud;mat;clair;0
+S1505-Y80R;Gris rougeâtre clair;15;5;Y80R;chaud;mat;clair;0
+S1505-Y90R;Gris rougeâtre clair;15;5;Y90R;chaud;mat;clair;0
+S1510-G60Y;Gris vert;15;10;G60Y;chaud;mat;clair;0
+S1510-G80Y;Jaune gris;15;10;G80Y;chaud;mat;clair;0
+S1510-G90Y;Jaune gris;15;10;G90Y;chaud;mat;clair;0
+S1510-R;Gris rose clair;15;10;R;chaud;mat;clair;0
+S1510-R10B;Gris rose clair;15;10;R10B;chaud;mat;clair;0
+S1510-R20B;Gris lilas;15;10;R20B;chaud;mat;clair;0
+S1510-R40B;Gris lilas;15;10;R40B;chaud;mat;clair;0
+S1510-Y;Beige;15;10;Y;chaud;mat;clair;0
+S1510-Y10R;Gris beige;15;10;Y10R;chaud;mat;clair;0
+S1510-Y20R;Beige;15;10;Y20R;chaud;mat;clair;0
+S1510-Y30R;Beige;15;10;Y30R;chaud;mat;clair;0
+S1510-Y40R;Beige brun;15;10;Y40R;chaud;mat;clair;0
+S1510-Y50R;Beige;15;10;Y50R;chaud;mat;clair;0
+S1510-Y60R;Gris rose;15;10;Y60R;chaud;mat;clair;0
+S1510-Y70R;Vieux rose;15;10;Y70R;chaud;mat;clair;0
+S1510-Y80R;Vieux rose;15;10;Y80R;chaud;mat;clair;0
+S1510-Y90R;Gris rose;15;10;Y90R;chaud;mat;clair;0
+S1515-G60Y;Vert tilleul;15;15;G60Y;chaud;mat;clair;0
+S1515-G80Y;Jaune gris;15;15;G80Y;chaud;mat;clair;0
+S1515-G90Y;Jaune gris;15;15;G90Y;chaud;mat;clair;0
+S1515-R;Vieux rose;15;15;R;chaud;mat;clair;0
+S1515-R10B;Rose;15;15;R10B;chaud;mat;clair;0
+S1515-R20B;Lilas clair;15;15;R20B;chaud;mat;clair;0
+S1515-R40B;Lilas;15;15;R40B;chaud;mat;clair;0
+S1515-Y;Jaune beige;15;15;Y;chaud;mat;clair;0
+S1515-Y10R;Jaune beige;15;15;Y10R;chaud;mat;clair;0
+S1515-Y20R;Beige brun;15;15;Y20R;chaud;mat;clair;0
+S1515-Y30R;Beige brun;15;15;Y30R;chaud;mat;clair;0
+S1515-Y40R;Beige brun;15;15;Y40R;chaud;mat;clair;0
+S1515-Y50R;Beige rosé;15;15;Y50R;chaud;mat;clair;0
+S1515-Y60R;Beige rosé;15;15;Y60R;chaud;mat;clair;0
+S1515-Y70R;Vieux rose;15;15;Y70R;chaud;mat;clair;0
+S1515-Y80R;Vieux rose;15;15;Y80R;chaud;mat;clair;0
+S1515-Y90R;Vieux rose;15;15;Y90R;chaud;mat;clair;0
+S2002-G50Y;Gris clair;20;2;G50Y;chaud;mat;clair;0
+S2002-R;Gris clair;20;2;R;chaud;mat;clair;0
+S2002-Y;Gris clair;20;2;Y;chaud;mat;clair;0
+S2002-Y50R;Gris clair;20;2;Y50R;chaud;mat;clair;0
+S2005-G50Y;Vert gris;20;5;G50Y;chaud;mat;clair;0
+S2005-G60Y;Vert gris;20;5;G60Y;chaud;mat;clair;0
+S2005-G70Y;Vert gris;20;5;G70Y;chaud;mat;clair;0
+S2005-G80Y;Beige clair;20;5;G80Y;chaud;mat;clair;0
+S2005-G90Y;Beige clair;20;5;G90Y;chaud;mat;clair;0
+S2005-R;Gris violet;20;5;R;chaud;mat;clair;0
+S2005-R10B;Gris violet;20;5;R10B;chaud;mat;clair;0
+S2005-R20B;Gris violet;20;5;R20B;chaud;mat;clair;0
+S2005-R30B;Gris;20;5;R30B;chaud;mat;clair;0
+S2005-R40B;Gris;20;5;R40B;chaud;mat;clair;0
+S2005-Y;Beige clair;20;5;Y;chaud;mat;clair;0
+S2005-Y10R;Beige clair;20;5;Y10R;chaud;mat;clair;0
+S2005-Y20R;Beige clair;20;5;Y20R;chaud;mat;clair;0
+S2005-Y30R;Beige;20;5;Y30R;chaud;mat;clair;0
+S2005-Y40R;Beige;20;5;Y40R;chaud;mat;clair;0
+S2005-Y50R;Beige gris;20;5;Y50R;chaud;mat;clair;0
+S2005-Y60R;Beige gris;20;5;Y60R;chaud;mat;clair;0
+S2005-Y70R;Gris rougeâtre;20;5;Y70R;chaud;mat;clair;0
+S2005-Y80R;Beige rouge;20;5;Y80R;chaud;mat;clair;0
+S2005-Y90R;Gris rougeâtre;20;5;Y90R;chaud;mat;clair;0
+S2010-G50Y;Vert jaune;20;10;G50Y;chaud;mat;clair;0
+S2010-G60Y;Vert jaune;20;10;G60Y;chaud;mat;clair;0
+S2010-G70Y;Vert jaune;20;10;G70Y;chaud;mat;clair;0
+S2010-G80Y;Vert jaune;20;10;G80Y;chaud;mat;clair;0
+S2010-G90Y;Vert jaune;20;10;G90Y;chaud;mat;clair;0
+S2010-R;Rouge beige;20;10;R;chaud;mat;clair;0
+S2010-R10B;Lilas pâle;20;10;R10B;chaud;mat;clair;0
+S2010-R20B;Lilas pâle;20;10;R20B;chaud;mat;clair;0
+S2010-R30B;Lilas pâle;20;10;R30B;chaud;mat;clair;0
+S2010-R40B;Lilas pâle;20;10;R40B;chaud;mat;clair;0
+S2010-Y;Vert beige;20;10;Y;chaud;mat;clair;0
+S2010-Y10R;Gris beige;20;10;Y10R;chaud;mat;clair;0
+S2010-Y20R;Ivoire- Gris beige;20;10;Y20R;chaud;mat;clair;0
+S2010-Y30R;Beige clair;20;10;Y30R;chaud;mat;clair;0
+S2010-Y40R;Beige;20;10;Y40R;chaud;mat;clair;0
+S2010-Y50R;Gris beige;20;10;Y50R;chaud;mat;clair;0
+S2010-Y60R;Beige rouge;20;10;Y60R;chaud;mat;clair;0
+S2010-Y70R;Beige rosé;20;10;Y70R;chaud;mat;clair;0
+S2010-Y80R;Beige rouge;20;10;Y80R;chaud;mat;clair;0
+S2010-Y90R;Beige rosé;20;10;Y90R;chaud;mat;clair;0
+S2020-G50Y;Vert clair;20;20;G50Y;chaud;mat;clair;0
+S2020-G60Y;Vert clair;20;20;G60Y;chaud;mat;clair;0
+S2020-G70Y;Olive;20;20;G70Y;chaud;mat;clair;0
+S2020-G80Y;Vert gris;20;20;G80Y;chaud;mat;clair;0
+S2020-G90Y;Olive;20;20;G90Y;chaud;mat;clair;0
+S2020-R;Vieux rose;20;20;R;chaud;mat;clair;0
+S2020-R10B;Rose beige;20;20;R10B;chaud;mat;clair;0
+S2020-R20B;Rose beige;20;20;R20B;chaud;mat;clair;0
+S2020-R30B;Lilas;20;20;R30B;chaud;mat;clair;0
+S2020-R40B;Lilas;20;20;R40B;chaud;mat;clair;0
+S2020-Y;Beige vert;20;20;Y;chaud;mat;clair;0
+S2020-Y10R;Beige;20;20;Y10R;chaud;mat;clair;0
+S2020-Y20R;Beige;20;20;Y20R;chaud;mat;clair;0
+S2020-Y30R;Beige;20;20;Y30R;chaud;mat;clair;0
+S2020-Y40R;Beige orange clair;20;20;Y40R;chaud;mat;clair;0
+S2020-Y50R;Beige;20;20;Y50R;chaud;mat;clair;0
+S2020-Y60R;Beige orangé;20;20;Y60R;chaud;mat;clair;0
+S2020-Y70R;Beige rosé;20;20;Y70R;chaud;mat;clair;0
+S2020-Y80R;Beige rouge;20;20;Y80R;chaud;mat;clair;0
+S2020-Y90R;Beige rosé;20;20;Y90R;chaud;mat;clair;0
+S2030-G50Y;Vert;20;30;G50Y;chaud;mat;clair;0
+S2030-G60Y;Vert jaune;20;30;G60Y;chaud;mat;clair;0
+S2030-G70Y;Vert jaune;20;30;G70Y;chaud;mat;clair;0
+S2030-G80Y;Olive;20;30;G80Y;chaud;mat;clair;0
+S2030-G90Y;Jaune vert;20;30;G90Y;chaud;mat;clair;0
+S2030-R;Rouge rosé;20;30;R;chaud;mat;clair;0
+S2030-R10B;Rose;20;30;R10B;chaud;mat;clair;0
+S2030-R20B;Rose;20;30;R20B;chaud;mat;clair;0
+S2030-R30B;Rose;20;30;R30B;chaud;mat;clair;0
+S2030-R40B;Bleu rosé;20;30;R40B;chaud;mat;clair;0
+S2030-Y;Jaune beige;20;30;Y;chaud;mat;clair;0
+S2030-Y10R;Jaune sable;20;30;Y10R;chaud;mat;clair;0
+S2030-Y20R;Beige brun;20;30;Y20R;chaud;mat;clair;0
+S2030-Y30R;Jaune rouge;20;30;Y30R;chaud;mat;clair;0
+S2030-Y40R;Beige orangé clair;20;30;Y40R;chaud;mat;clair;0
+S2030-Y50R;Brun clair;20;30;Y50R;chaud;mat;clair;0
+S2030-Y60R;Orange rouge;20;30;Y60R;chaud;mat;clair;0
+S2030-Y70R;Rouge saumon;20;30;Y70R;chaud;mat;clair;0
+S2030-Y80R;Orange rosé;20;30;Y80R;chaud;mat;clair;0
+S2030-Y90R;Rose brun;20;30;Y90R;chaud;mat;clair;0
+S2040-G50Y;Vert;20;40;G50Y;chaud;mat;clair;0
+S2040-G60Y;Vert;20;40;G60Y;chaud;mat;clair;0
+S2040-G70Y;Vert;20;40;G70Y;chaud;mat;clair;0
+S2040-G80Y;Beige vert;20;40;G80Y;chaud;mat;clair;0
+S2040-G90Y;Beige vert;20;40;G90Y;chaud;mat;clair;0
+S2040-R;Rose;20;40;R;chaud;mat;clair;0
+S2040-R10B;Rose;20;40;R10B;chaud;mat;clair;0
+S2040-R20B;Rose;20;40;R20B;chaud;mat;clair;0
+S2040-R30B;Rose foncé;20;40;R30B;chaud;mat;clair;0
+S2040-R40B;Lilas;20;40;R40B;chaud;mat;clair;0
+S2040-Y;Jaune vert;20;40;Y;chaud;mat;clair;0
+S2040-Y10R;Jaune brun;20;40;Y10R;chaud;mat;clair;0
+S2040-Y20R;Jaune ocre;20;40;Y20R;chaud;mat;clair;0
+S2040-Y30R;Brun clair;20;40;Y30R;chaud;mat;clair;0
+S2040-Y40R;Beige orange;20;40;Y40R;chaud;mat;clair;0
+S2040-Y50R;Brun clair;20;40;Y50R;chaud;mat;clair;0
+S2040-Y60R;Rouge orangé;20;40;Y60R;chaud;mat;clair;0
+S2040-Y70R;Rouge orangé;20;40;Y70R;chaud;mat;clair;0
+S2040-Y80R;Brun rosé;20;40;Y80R;chaud;mat;clair;0
+S2040-Y90R;Rose foncé;20;40;Y90R;chaud;mat;clair;0
+S2502-R;Gris rougeâtre;25;2;R;chaud;mat;clair;0
+S2502-Y;Gris;25;2;Y;chaud;mat;clair;0
+S3050-G50Y;Vert;30;50;G50Y;chaud;lumineux;foncé;0
+S3050-G60Y;Vert;30;50;G60Y;chaud;lumineux;foncé;0
+S3050-G70Y;Vert;30;50;G70Y;chaud;lumineux;foncé;0
+S3050-G80Y;Vert;30;50;G80Y;chaud;lumineux;foncé;0
+S3050-G90Y;Vert;30;50;G90Y;chaud;lumineux;foncé;0
+S3050-R;Rouge;30;50;R;chaud;lumineux;foncé;0
+S3050-R10B;Rouge;30;50;R10B;chaud;lumineux;foncé;0
+S3050-R20B;Violet clair;30;50;R20B;chaud;lumineux;foncé;0
+S3050-R30B;Violet;30;50;R30B;chaud;lumineux;foncé;0
+S3050-R40B;Violet;30;50;R40B;chaud;lumineux;foncé;0
+S3050-Y;Jaune brun;30;50;Y;chaud;lumineux;foncé;0
+S3050-Y10R;Jaune brun;30;50;Y10R;chaud;lumineux;foncé;0
+S3050-Y20R;Brun clair;30;50;Y20R;chaud;lumineux;foncé;0
+S3050-Y30R;Brun clair;30;50;Y30R;chaud;lumineux;foncé;0
+S3050-Y40R;Beige brun- Brun clair;30;50;Y40R;chaud;lumineux;foncé;0
+S3050-Y50R;Brun clair;30;50;Y50R;chaud;lumineux;foncé;0
+S3050-Y60R;Brun;30;50;Y60R;chaud;lumineux;foncé;0
+S3050-Y70R;Rouge brun;30;50;Y70R;chaud;lumineux;foncé;0
+S3050-Y80R;Brun rouge;30;50;Y80R;chaud;lumineux;foncé;0
+S3050-Y90R;Rouge;30;50;Y90R;chaud;lumineux;foncé;0
+S3055-R30B;Lilas;30;55;R30B;chaud;lumineux;foncé;0
+S3055-R40B;Lilas;30;55;R40B;chaud;lumineux;foncé;0
+S3060-G50Y;Vert;30;60;G50Y;chaud;lumineux;foncé;0
+S3060-G60Y;Vert;30;60;G60Y;chaud;lumineux;foncé;0
+S3060-G70Y;Vert;30;60;G70Y;chaud;lumineux;foncé;0
+S3060-G80Y;Vert;30;60;G80Y;chaud;lumineux;foncé;0
+S3060-G90Y;Jaune brun;30;60;G90Y;chaud;lumineux;foncé;0
+S3060-R;Rouge;30;60;R;chaud;lumineux;foncé;0
+S3060-R10B;Rouge;30;60;R10B;chaud;lumineux;foncé;0
+S3060-R20B;Rose foncé;30;60;R20B;chaud;lumineux;foncé;0
+S3060-Y;Brun jaune;30;60;Y;chaud;lumineux;foncé;0
+S3060-Y10R;Brun clair;30;60;Y10R;chaud;lumineux;foncé;0
+S3060-Y20R;Jaune brun;30;60;Y20R;chaud;lumineux;foncé;0
+S3060-Y30R;Brun orangé;30;60;Y30R;chaud;lumineux;foncé;0
+S3060-Y40R;Brun clair;30;60;Y40R;chaud;lumineux;foncé;0
+S3060-Y50R;Ocre brun – Brun orangé;30;60;Y50R;chaud;lumineux;foncé;0
+S3060-Y60R;Rouge brun;30;60;Y60R;chaud;lumineux;foncé;0
+S3060-Y70R;Brun clair;30;60;Y70R;chaud;lumineux;foncé;0
+S3060-Y80R;Rouge brun;30;60;Y80R;chaud;lumineux;foncé;0
+S3060-Y90R;Rouge;30;60;Y90R;chaud;lumineux;foncé;0
+S3065-G50Y;Vert clair;30;65;G50Y;chaud;lumineux;foncé;0
+S3065-G60Y;Vert;30;65;G60Y;chaud;lumineux;foncé;0
+S3065-Y20R;Jaune brun;30;65;Y20R;chaud;lumineux;foncé;0
+S3560-G50Y;Vert;35;60;G50Y;chaud;lumineux;foncé;0
+S3560-G60Y;Vert;35;60;G60Y;chaud;lumineux;foncé;0
+S3560-G70Y;Vert;35;60;G70Y;chaud;lumineux;foncé;0
+S3560-R;Rouge;35;60;R;chaud;lumineux;foncé;0
+S3560-Y;Brun vert;35;60;Y;chaud;lumineux;foncé;0
+S3560-Y20R;Brun;35;60;Y20R;chaud;lumineux;foncé;0
+S3560-Y30R;Brun;35;60;Y30R;chaud;lumineux;foncé;0
+S3560-Y40R;Brun;35;60;Y40R;chaud;lumineux;foncé;0
+S3560-Y50R;Orange brun;35;60;Y50R;chaud;lumineux;foncé;0
+S3560-Y60R;Rouge brun;35;60;Y60R;chaud;lumineux;foncé;0
+S3560-Y70R;Rouge brun;35;60;Y70R;chaud;lumineux;foncé;0
+S3560-Y80R;Rouge brun;35;60;Y80R;chaud;lumineux;foncé;0
+S3560-Y90R;Rouge;35;60;Y90R;chaud;lumineux;foncé;0
+S4050-G50Y;Vert;40;50;G50Y;chaud;lumineux;foncé;0
+S4050-G60Y;Vert;40;50;G60Y;chaud;lumineux;foncé;0
+S4050-G70Y;Vert;40;50;G70Y;chaud;lumineux;foncé;0
+S4050-G80Y;Vert;40;50;G80Y;chaud;lumineux;foncé;0
+S4050-G90Y;Brun;40;50;G90Y;chaud;lumineux;foncé;0
+S4050-R;Rouge;40;50;R;chaud;lumineux;foncé;0
+S4050-R10B;Bordeau;40;50;R10B;chaud;lumineux;foncé;0
+S4050-R20B;Violet;40;50;R20B;chaud;lumineux;foncé;0
+S4050-R30B;Violet;40;50;R30B;chaud;lumineux;foncé;0
+S4050-R40B;Violet;40;50;R40B;chaud;lumineux;foncé;0
+S4050-Y;Jaune brun;40;50;Y;chaud;lumineux;foncé;0
+S4050-Y10R;Brun;40;50;Y10R;chaud;lumineux;foncé;0
+S4050-Y20R;Brun;40;50;Y20R;chaud;lumineux;foncé;0
+S4050-Y30R;Brun;40;50;Y30R;chaud;lumineux;foncé;0
+S4050-Y40R;Brun;40;50;Y40R;chaud;lumineux;foncé;0
+S4050-Y50R;Brun;40;50;Y50R;chaud;lumineux;foncé;0
+S4050-Y60R;Brun;40;50;Y60R;chaud;lumineux;foncé;0
+S4050-Y70R;Brun;40;50;Y70R;chaud;lumineux;foncé;0
+S4050-Y80R;Brun rouge;40;50;Y80R;chaud;lumineux;foncé;0
+S4050-Y90R;Brun rouge;40;50;Y90R;chaud;lumineux;foncé;0
+S4055-Y10R;Brun;40;55;Y10R;chaud;lumineux;foncé;0
+S4550-G50Y;Vert;45;50;G50Y;chaud;lumineux;foncé;0
+S4550-G60Y;Vert;45;50;G60Y;chaud;lumineux;foncé;0
+S4550-G70Y;Vert;45;50;G70Y;chaud;lumineux;foncé;0
+S4550-Y;Vert olive;45;50;Y;chaud;lumineux;foncé;0
+S4550-Y30R;Brun;45;50;Y30R;chaud;lumineux;foncé;0
+S4550-Y40R;Brun;45;50;Y40R;chaud;lumineux;foncé;0
+S4550-Y50R;Brun;45;50;Y50R;chaud;lumineux;foncé;0
+S4550-Y60R;Brun;45;50;Y60R;chaud;lumineux;foncé;0
+S4550-Y70R;Brun rouge;45;50;Y70R;chaud;lumineux;foncé;0
+S4550-Y80R;Rouge brun;45;50;Y80R;chaud;lumineux;foncé;0
+S4550-Y90R;Rouge brun;45;50;Y90R;chaud;lumineux;foncé;0
+S3005-G50Y;Gris vert;30;5;G50Y;chaud;mat;foncé;0
+S3005-G80Y;Gris beige;30;5;G80Y;chaud;mat;foncé;0
+S3005-R20B;Gris violet;30;5;R20B;chaud;mat;foncé;0
+S3005-Y20R;Beige brun;30;5;Y20R;chaud;mat;foncé;0
+S3005-Y50R;Beige gris;30;5;Y50R;chaud;mat;foncé;0
+S3005-Y80R;Gris rouge;30;5;Y80R;chaud;mat;foncé;0
+S3010-G50Y;Gris vert;30;10;G50Y;chaud;mat;foncé;0
+S3010-G60Y;Gris vert;30;10;G60Y;chaud;mat;foncé;0
+S3010-G70Y;Olive;30;10;G70Y;chaud;mat;foncé;0
+S3010-G80Y;Olive;30;10;G80Y;chaud;mat;foncé;0
+S3010-G90Y;Olive;30;10;G90Y;chaud;mat;foncé;0
+S3010-R;Gris rosé;30;10;R;chaud;mat;foncé;0
+S3010-R10B;Beige rouge;30;10;R10B;chaud;mat;foncé;0
+S3010-R20B;Beige rouge;30;10;R20B;chaud;mat;foncé;0
+S3010-R30B;Lilas pâle;30;10;R30B;chaud;mat;foncé;0
+S3010-R40B;Lilas pâle;30;10;R40B;chaud;mat;foncé;0
+S3010-Y;Beige;30;10;Y;chaud;mat;foncé;0
+S3010-Y10R;Beige foncé;30;10;Y10R;chaud;mat;foncé;0
+S3010-Y20R;Beige;30;10;Y20R;chaud;mat;foncé;0
+S3010-Y30R;Beige foncé;30;10;Y30R;chaud;mat;foncé;0
+S3010-Y40R;Brun beige;30;10;Y40R;chaud;mat;foncé;0
+S3010-Y50R;Beige foncé;30;10;Y50R;chaud;mat;foncé;0
+S3010-Y60R;Beige;30;10;Y60R;chaud;mat;foncé;0
+S3010-Y70R;Beige rouge;30;10;Y70R;chaud;mat;foncé;0
+S3010-Y80R;Beige brun;30;10;Y80R;chaud;mat;foncé;0
+S3010-Y90R;Beige rouge;30;10;Y90R;chaud;mat;foncé;0
+S3020-G50Y;Vert;30;20;G50Y;chaud;mat;foncé;0
+S3020-G60Y;Vert;30;20;G60Y;chaud;mat;foncé;0
+S3020-G70Y;Olive;30;20;G70Y;chaud;mat;foncé;0
+S3020-G80Y;Olive;30;20;G80Y;chaud;mat;foncé;0
+S3020-G90Y;Olive;30;20;G90Y;chaud;mat;foncé;0
+S3020-R;Vieux rose foncé;30;20;R;chaud;mat;foncé;0
+S3020-R10B;Beige rosé;30;20;R10B;chaud;mat;foncé;0
+S3020-R20B;Beige rosé;30;20;R20B;chaud;mat;foncé;0
+S3020-R30B;Beige rosé;30;20;R30B;chaud;mat;foncé;0
+S3020-R40B;Bleu rosé;30;20;R40B;chaud;mat;foncé;0
+S3020-Y;Beige olive;30;20;Y;chaud;mat;foncé;0
+S3020-Y10R;Beige foncé;30;20;Y10R;chaud;mat;foncé;0
+S3020-Y20R;Jaune sable- Brun clair;30;20;Y20R;chaud;mat;foncé;0
+S3020-Y30R;Beige foncé;30;20;Y30R;chaud;mat;foncé;0
+S3020-Y40R;Brun beige;30;20;Y40R;chaud;mat;foncé;0
+S3020-Y50R;Beige foncé;30;20;Y50R;chaud;mat;foncé;0
+S3020-Y60R;Gris beige- Brun beige;30;20;Y60R;chaud;mat;foncé;0
+S3020-Y70R;Brun clair;30;20;Y70R;chaud;mat;foncé;0
+S3020-Y80R;Brun rose;30;20;Y80R;chaud;mat;foncé;0
+S3020-Y90R;Brun clair;30;20;Y90R;chaud;mat;foncé;0
+S3030-G50Y;Vert Neutre chaud;30;30;G50Y;chaud;mat;foncé;1
+S3030-G60Y;Vert Kaki Neutre chaud;30;30;G60Y;chaud;mat;foncé;1
+S3030-G70Y;Vert kaki Neutre chaud;30;30;G70Y;chaud;mat;foncé;1
+S3030-G80Y;Vert kaki Neutre chaud;30;30;G80Y;chaud;mat;foncé;1
+S3030-G90Y;Jaune olive - Vert kaki Neutre chaud;30;30;G90Y;chaud;mat;foncé;1
+S3030-R;Rose rouge Neutre chaud;30;30;R;chaud;mat;foncé;1
+S3030-R10B;Bleu rosé Neutre chaud;30;30;R10B;chaud;mat;foncé;1
+S3030-R20B;Bleu rosé Neutre chaud;30;30;R20B;chaud;mat;foncé;1
+S3030-R30B;Violet Neutre chaud;30;30;R30B;chaud;mat;foncé;1
+S3030-R40B;Violet Neutre chaud;30;30;R40B;chaud;mat;foncé;1
+S3030-Y;Jaune beige Neutre chaud;30;30;Y;chaud;mat;foncé;1
+S3030-Y10R;Jaune ocre Neutre chaud;30;30;Y10R;chaud;mat;foncé;1
+S3030-Y20R;Jaune beige Neutre chaud;30;30;Y20R;chaud;mat;foncé;1
+S3030-Y30R;Jaune brun Neutre chaud;30;30;Y30R;chaud;mat;foncé;1
+S3030-Y40R;Brun beige Neutre chaud;30;30;Y40R;chaud;mat;foncé;1
+S3030-Y50R;Jaune brun Neutre chaud;30;30;Y50R;chaud;mat;foncé;1
+S3030-Y60R;Rouge saumon Neutre chaud;30;30;Y60R;chaud;mat;foncé;1
+S3030-Y70R;Jaune brun Neutre chaud;30;30;Y70R;chaud;mat;foncé;1
+S3030-Y80R;Rose foncé Neutre chaud;30;30;Y80R;chaud;mat;foncé;1
+S3030-Y90R;Bleu rosé Neutre chaud;30;30;Y90R;chaud;mat;foncé;1
+S3040-G50Y;Vert;30;40;G50Y;chaud;mat;foncé;0
+S3040-G60Y;Vert;30;40;G60Y;chaud;mat;foncé;0
+S3040-G70Y;Vert;30;40;G70Y;chaud;mat;foncé;0
+S3040-G80Y;Beige vert;30;40;G80Y;chaud;mat;foncé;0
+S3040-G90Y;Beige vert;30;40;G90Y;chaud;mat;foncé;0
+S3040-R;Rouge;30;40;R;chaud;mat;foncé;0
+S3040-R10B;Rouge;30;40;R10B;chaud;mat;foncé;0
+S3040-R20B;Violet rouge;30;40;R20B;chaud;mat;foncé;0
+S3040-R30B;Violet;30;40;R30B;chaud;mat;foncé;0
+S3040-R40B;Lilas;30;40;R40B;chaud;mat;foncé;0
+S3040-Y;Vert;30;40;Y;chaud;mat;foncé;0
+S3040-Y10R;Brun vert;30;40;Y10R;chaud;mat;foncé;0
+S3040-Y20R;Brun clair;30;40;Y20R;chaud;mat;foncé;0
+S3040-Y30R;Brun clair;30;40;Y30R;chaud;mat;foncé;0
+S3040-Y40R;Jaune ocre- Brun clair;30;40;Y40R;chaud;mat;foncé;0
+S3040-Y50R;Brun clair;30;40;Y50R;chaud;mat;foncé;0
+S3040-Y60R;Brun clair;30;40;Y60R;chaud;mat;foncé;0
+S3040-Y70R;Brun;30;40;Y70R;chaud;mat;foncé;0
+S3040-Y80R;Rouge brun;30;40;Y80R;chaud;mat;foncé;0
+S3040-Y90R;Vieux rose foncé;30;40;Y90R;chaud;mat;foncé;0
+S3502-R;Gris;35;2;R;chaud;mat;foncé;0
+S3502-Y;Gris;35;2;Y;chaud;mat;foncé;0
+S4005-G50Y;Gris vert;40;5;G50Y;chaud;mat;foncé;0
+S4005-G80Y;Beige brun;40;5;G80Y;chaud;mat;foncé;0
+S4005-R20B;Gris rouge;40;5;R20B;chaud;mat;foncé;0
+S4005-Y20R;Brun beige;40;5;Y20R;chaud;mat;foncé;0
+S4005-Y50R;Beige;40;5;Y50R;chaud;mat;foncé;0
+S4005-Y80R;Rouge beige;40;5;Y80R;chaud;mat;foncé;0
+S4010-G50Y;Gris olive;40;10;G50Y;chaud;mat;foncé;0
+S4010-G70Y;Gris olive;40;10;G70Y;chaud;mat;foncé;0
+S4010-G90Y;Gris olive;40;10;G90Y;chaud;mat;foncé;0
+S4010-R10B;Beige rouge;40;10;R10B;chaud;mat;foncé;0
+S4010-R30B;Lilas pâle;40;10;R30B;chaud;mat;foncé;0
+S4010-Y10R;Brun gris;40;10;Y10R;chaud;mat;foncé;0
+S4010-Y30R;Brun gris;40;10;Y30R;chaud;mat;foncé;0
+S4010-Y50R;Brun gris;40;10;Y50R;chaud;mat;foncé;0
+S4010-Y70R;Brun gris;40;10;Y70R;chaud;mat;foncé;0
+S4010-Y90R;Brun gris;40;10;Y90R;chaud;mat;foncé;0
+S4020-G50Y;Citron vert;40;20;G50Y;chaud;mat;foncé;0
+S4020-G70Y;Vert;40;20;G70Y;chaud;mat;foncé;0
+S4020-G90Y;Vert;40;20;G90Y;chaud;mat;foncé;0
+S4020-R;Rouge brun;40;20;R;chaud;mat;foncé;0
+S4020-R10B;Rouge brun;40;20;R10B;chaud;mat;foncé;0
+S4020-R20B;Rouge bleu;40;20;R20B;chaud;mat;foncé;0
+S4020-R30B;Rouge bleu;40;20;R30B;chaud;mat;foncé;0
+S4020-R40B;Rouge bleu;40;20;R40B;chaud;mat;foncé;0
+S4020-Y;Vert brun;40;20;Y;chaud;mat;foncé;0
+S4020-Y10R;Vert brun;40;20;Y10R;chaud;mat;foncé;0
+S4020-Y20R;Vert brun;40;20;Y20R;chaud;mat;foncé;0
+S4020-Y30R;Brun clair;40;20;Y30R;chaud;mat;foncé;0
+S4020-Y40R;Brun fauve;40;20;Y40R;chaud;mat;foncé;0
+S4020-Y50R;Brun;40;20;Y50R;chaud;mat;foncé;0
+S4020-Y60R;Brun;40;20;Y60R;chaud;mat;foncé;0
+S4020-Y70R;Brun rouge;40;20;Y70R;chaud;mat;foncé;0
+S4020-Y80R;Brun rouge;40;20;Y80R;chaud;mat;foncé;0
+S4020-Y90R;Brun rouge;40;20;Y90R;chaud;mat;foncé;0
+S4030-G50Y;Vert;40;30;G50Y;chaud;mat;foncé;0
+S4030-G70Y;Vert kaki;40;30;G70Y;chaud;mat;foncé;0
+S4030-G90Y;Vert Kaki;40;30;G90Y;chaud;mat;foncé;0
+S4030-R;Rouge brun;40;30;R;chaud;mat;foncé;0
+S4030-R10B;Rouge brun;40;30;R10B;chaud;mat;foncé;0
+S4030-R20B;Violet;40;30;R20B;chaud;mat;foncé;0
+S4030-R30B;Violet;40;30;R30B;chaud;mat;foncé;0
+S4030-R40B;Violet;40;30;R40B;chaud;mat;foncé;0
+S4030-Y;Brun;40;30;Y;chaud;mat;foncé;0
+S4030-Y10R;Brun;40;30;Y10R;chaud;mat;foncé;0
+S4030-Y20R;Brun beige;40;30;Y20R;chaud;mat;foncé;0
+S4030-Y30R;Brun;40;30;Y30R;chaud;mat;foncé;0
+S4030-Y40R;Brun;40;30;Y40R;chaud;mat;foncé;0
+S4030-Y50R;Brun;40;30;Y50R;chaud;mat;foncé;0
+S4030-Y60R;Brun;40;30;Y60R;chaud;mat;foncé;0
+S4030-Y70R;Brun;40;30;Y70R;chaud;mat;foncé;0
+S4030-Y80R;Brun;40;30;Y80R;chaud;mat;foncé;0
+S4030-Y90R;Brun rouge;40;30;Y90R;chaud;mat;foncé;0
+S4040-G50Y;Vert;40;40;G50Y;chaud;mat;foncé;0
+S4040-G60Y;Vert;40;40;G60Y;chaud;mat;foncé;0
+S4040-G70Y;Vert;40;40;G70Y;chaud;mat;foncé;0
+S4040-G80Y;Brun;40;40;G80Y;chaud;mat;foncé;0
+S4040-G90Y;Olive;40;40;G90Y;chaud;mat;foncé;0
+S4040-R;Rouge;40;40;R;chaud;mat;foncé;0
+S4040-R10B;Rouge foncé;40;40;R10B;chaud;mat;foncé;0
+S4040-R20B;Bordeau;40;40;R20B;chaud;mat;foncé;0
+S4040-R30B;Violet;40;40;R30B;chaud;mat;foncé;0
+S4040-R40B;Lilas;40;40;R40B;chaud;mat;foncé;0
+S4040-Y;Brun vert;40;40;Y;chaud;mat;foncé;0
+S4040-Y10R;Brun vert;40;40;Y10R;chaud;mat;foncé;0
+S4040-Y20R;Brun;40;40;Y20R;chaud;mat;foncé;0
+S4040-Y30R;Brun;40;40;Y30R;chaud;mat;foncé;0
+S4040-Y40R;Brun;40;40;Y40R;chaud;mat;foncé;0
+S4040-Y50R;Brun;40;40;Y50R;chaud;mat;foncé;0
+S4040-Y60R;Brun;40;40;Y60R;chaud;mat;foncé;0
+S4040-Y70R;Rouge brun;40;40;Y70R;chaud;mat;foncé;0
+S4040-Y80R;Rouge brun;40;40;Y80R;chaud;mat;foncé;0
+S4040-Y90R;Rouge brun;40;40;Y90R;chaud;mat;foncé;0
+S4502-R;Gris Automne;45;2;R;chaud;mat;foncé;0
+S4502-Y;Gris;45;2;Y;chaud;mat;foncé;0
+S5005-G50Y;Gris vert;50;5;G50Y;chaud;mat;foncé;0
+S5005-G80Y;Beige foncé;50;5;G80Y;chaud;mat;foncé;0
+S5005-R20B;Gris violet;50;5;R20B;chaud;mat;foncé;0
+S5005-Y20R;Gris brun;50;5;Y20R;chaud;mat;foncé;0
+S5005-Y50R;Gris brun;50;5;Y50R;chaud;mat;foncé;0
+S5005-Y80R;Gris brun;50;5;Y80R;chaud;mat;foncé;0
+S5010-G50Y;Jaune gris;50;10;G50Y;chaud;mat;foncé;0
+S5010-G70Y;Jaune gris;50;10;G70Y;chaud;mat;foncé;0
+S5010-G90Y;Jaune gris;50;10;G90Y;chaud;mat;foncé;0
+S5010-R10B;Brun violet;50;10;R10B;chaud;mat;foncé;0
+S5010-R30B;Rose;50;10;R30B;chaud;mat;foncé;0
+S5010-Y10R;Brun;50;10;Y10R;chaud;mat;foncé;0
+S5010-Y30R;Brun beige;50;10;Y30R;chaud;mat;foncé;0
+S5010-Y50R;Brun;50;10;Y50R;chaud;mat;foncé;0
+S5010-Y70R;Brun;50;10;Y70R;chaud;mat;foncé;0
+S5010-Y90R;Brun rouge;50;10;Y90R;chaud;mat;foncé;0
+S5020-G50Y;Vert;50;20;G50Y;chaud;mat;foncé;0
+S5020-G70Y;Vert jonc;50;20;G70Y;chaud;mat;foncé;0
+S5020-G90Y;Vert jonc;50;20;G90Y;chaud;mat;foncé;0
+S5020-R;Rouge brun;50;20;R;chaud;mat;foncé;0
+S5020-R10B;Rouge brun;50;20;R10B;chaud;mat;foncé;0
+S5020-R20B;Rouge brun;50;20;R20B;chaud;mat;foncé;0
+S5020-R30B;Rouge bleu;50;20;R30B;chaud;mat;foncé;0
+S5020-R40B;Rouge bleu;50;20;R40B;chaud;mat;foncé;0
+S5020-Y;Brun vert;50;20;Y;chaud;mat;foncé;0
+S5020-Y10R;Brun vert;50;20;Y10R;chaud;mat;foncé;0
+S5020-Y20R;Brun vert;50;20;Y20R;chaud;mat;foncé;0
+S5020-Y30R;Brun vert;50;20;Y30R;chaud;mat;foncé;0
+S5020-Y40R;Brun;50;20;Y40R;chaud;mat;foncé;0
+S5020-Y50R;Brun;50;20;Y50R;chaud;mat;foncé;0
+S5020-Y60R;Brun;50;20;Y60R;chaud;mat;foncé;0
+S5020-Y70R;Brun;50;20;Y70R;chaud;mat;foncé;0
+S5020-Y80R;Beige rouge;50;20;Y80R;chaud;mat;foncé;0
+S5020-Y90R;Rouge brun;50;20;Y90R;chaud;mat;foncé;0
+S5030-G50Y;Vert;50;30;G50Y;chaud;mat;foncé;0
+S5030-G70Y;Vert olive;50;30;G70Y;chaud;mat;foncé;0
+S5030-G90Y;Olive;50;30;G90Y;chaud;mat;foncé;0
+S5030-R;Rouge brun;50;30;R;chaud;mat;foncé;0
+S5030-R10B;Rouge bleu;50;30;R10B;chaud;mat;foncé;0
+S5030-R20B;Rouge bleu;50;30;R20B;chaud;mat;foncé;0
+S5030-R30B;Violet;50;30;R30B;chaud;mat;foncé;0
+S5030-R40B;Violet;50;30;R40B;chaud;mat;foncé;0
+S5030-Y;Brun vert;50;30;Y;chaud;mat;foncé;0
+S5030-Y10R;Brun vert;50;30;Y10R;chaud;mat;foncé;0
+S5030-Y20R;Brun;50;30;Y20R;chaud;mat;foncé;0
+S5030-Y30R;Brun;50;30;Y30R;chaud;mat;foncé;0
+S5030-Y40R;Brun;50;30;Y40R;chaud;mat;foncé;0
+S5030-Y50R;Brun;50;30;Y50R;chaud;mat;foncé;0
+S5030-Y60R;Brun;50;30;Y60R;chaud;mat;foncé;0
+S5030-Y70R;Brun;50;30;Y70R;chaud;mat;foncé;0
+S5030-Y80R;Brun rouge;50;30;Y80R;chaud;mat;foncé;0
+S5030-Y90R;Brun rouge;50;30;Y90R;chaud;mat;foncé;0
+S5040-G50Y;Vert;50;40;G50Y;chaud;mat;foncé;0
+S5040-G60Y;Vert;50;40;G60Y;chaud;mat;foncé;0
+S5040-G70Y;Vert;50;40;G70Y;chaud;mat;foncé;0
+S5040-G80Y;Vert brun;50;40;G80Y;chaud;mat;foncé;0
+S5040-G90Y;Vert brun;50;40;G90Y;chaud;mat;foncé;0
+S5040-R;Rouge foncé;50;40;R;chaud;mat;foncé;0
+S5040-R10B;Rouge foncé;50;40;R10B;chaud;mat;foncé;0
+S5040-R20B;Rouge foncé;50;40;R20B;chaud;mat;foncé;0
+S5040-R30B;Violet foncé;50;40;R30B;chaud;mat;foncé;0
+S5040-R40B;Violet;50;40;R40B;chaud;mat;foncé;0
+S5040-Y;Olive vert;50;40;Y;chaud;mat;foncé;0
+S5040-Y10R;Brun vert;50;40;Y10R;chaud;mat;foncé;0
+S5040-Y20R;Brun;50;40;Y20R;chaud;mat;foncé;0
+S5040-Y30R;Brun;50;40;Y30R;chaud;mat;foncé;0
+S5040-Y40R;Brun;50;40;Y40R;chaud;mat;foncé;0
+S5040-Y50R;Brun;50;40;Y50R;chaud;mat;foncé;0
+S5040-Y60R;Rouge brun;50;40;Y60R;chaud;mat;foncé;0
+S5040-Y70R;Rouge brun;50;40;Y70R;chaud;mat;foncé;0
+S5040-Y80R;Rouge brun;50;40;Y80R;chaud;mat;foncé;0
+S5040-Y90R;Brun rouge;50;40;Y90R;chaud;mat;foncé;0
+S5502-R;Gris;55;2;R;chaud;mat;foncé;0
+S5502-Y;Gris;55;2;Y;chaud;mat;foncé;0
+S5540-G50Y;Vert;55;40;G50Y;chaud;mat;foncé;0
+S5540-G60Y;Vert;55;40;G60Y;chaud;mat;foncé;0
+S5540-G70Y;Vert;55;40;G70Y;chaud;mat;foncé;0
+S5540-Y90R;Rouge;55;40;Y90R;chaud;mat;foncé;0
+S6005-G50Y;Gris vert;60;5;G50Y;chaud;mat;foncé;0
+S6005-G80Y;Gris brun;60;5;G80Y;chaud;mat;foncé;0
+S6005-R20B;Gris brun;60;5;R20B;chaud;mat;foncé;0
+S6005-Y20R;Gris brun;60;5;Y20R;chaud;mat;foncé;0
+S6005-Y50R;Gris brun;60;5;Y50R;chaud;mat;foncé;0
+S6005-Y80R;Gris brun;60;5;Y80R;chaud;mat;foncé;0
+S6010-G50Y;Vert gris;60;10;G50Y;chaud;mat;foncé;0
+S6010-G70Y;Gris mousse;60;10;G70Y;chaud;mat;foncé;0
+S6010-G90Y;Gris mousse;60;10;G90Y;chaud;mat;foncé;0
+S6010-R10B;Gris rouge;60;10;R10B;chaud;mat;foncé;0
+S6010-R30B;Violet brun;60;10;R30B;chaud;mat;foncé;0
+S6010-Y10R;Brun;60;10;Y10R;chaud;mat;foncé;0
+S6010-Y30R;Brun;60;10;Y30R;chaud;mat;foncé;0
+S6010-Y50R;Brun cuivré- argile;60;10;Y50R;chaud;mat;foncé;0
+S6010-Y70R;Brun;60;10;Y70R;chaud;mat;foncé;0
+S6010-Y90R;Brun;60;10;Y90R;chaud;mat;foncé;0
+S6020-G50Y;Brun vert;60;20;G50Y;chaud;mat;foncé;0
+S6020-G70Y;Olive;60;20;G70Y;chaud;mat;foncé;0
+S6020-G90Y;Brun olive;60;20;G90Y;chaud;mat;foncé;0
+S6020-R;Brun violet;60;20;R;chaud;mat;foncé;0
+S6020-R10B;Violet rouge;60;20;R10B;chaud;mat;foncé;0
+S6020-R20B;Violet;60;20;R20B;chaud;mat;foncé;0
+S6020-R30B;Violet;60;20;R30B;chaud;mat;foncé;0
+S6020-R40B;Violet foncé;60;20;R40B;chaud;mat;foncé;0
+S6020-Y;Brun;60;20;Y;chaud;mat;foncé;0
+S6020-Y10R;Brun;60;20;Y10R;chaud;mat;foncé;0
+S6020-Y20R;Brun;60;20;Y20R;chaud;mat;foncé;0
+S6020-Y30R;Brun;60;20;Y30R;chaud;mat;foncé;0
+S6020-Y40R;Brun;60;20;Y40R;chaud;mat;foncé;0
+S6020-Y50R;Brun;60;20;Y50R;chaud;mat;foncé;0
+S6020-Y60R;Brun;60;20;Y60R;chaud;mat;foncé;0
+S6020-Y70R;Brun;60;20;Y70R;chaud;mat;foncé;0
+S6020-Y80R;Rouge brun;60;20;Y80R;chaud;mat;foncé;0
+S6020-Y90R;Rouge brun;60;20;Y90R;chaud;mat;foncé;0
+S6030-G50Y;Vert brun;60;30;G50Y;chaud;mat;foncé;0
+S6030-G70Y;Vert olive;60;30;G70Y;chaud;mat;foncé;0
+S6030-G90Y;Brun;60;30;G90Y;chaud;mat;foncé;0
+S6030-R;Rouge vin;60;30;R;chaud;mat;foncé;0
+S6030-R10B;Rouge vin;60;30;R10B;chaud;mat;foncé;0
+S6030-R20B;Bordeau;60;30;R20B;chaud;mat;foncé;0
+S6030-R30B;Bordeaux;60;30;R30B;chaud;mat;foncé;0
+S6030-R40B;Violet;60;30;R40B;chaud;mat;foncé;0
+S6030-Y;Brun;60;30;Y;chaud;mat;foncé;0
+S6030-Y10R;Brun olivâtre;60;30;Y10R;chaud;mat;foncé;0
+S6030-Y20R;Brun;60;30;Y20R;chaud;mat;foncé;0
+S6030-Y30R;Brun;60;30;Y30R;chaud;mat;foncé;0
+S6030-Y40R;Brun;60;30;Y40R;chaud;mat;foncé;0
+S6030-Y50R;Brun;60;30;Y50R;chaud;mat;foncé;0
+S6030-Y60R;Brun;60;30;Y60R;chaud;mat;foncé;0
+S6030-Y70R;Brun chevreuil;60;30;Y70R;chaud;mat;foncé;0
+S6030-Y80R;Brun rouge;60;30;Y80R;chaud;mat;foncé;0
+S6030-Y90R;Rouge brun;60;30;Y90R;chaud;mat;foncé;0
+S6502-R;Gris;65;2;R;chaud;mat;foncé;0
+S6502-Y;Gris;65;2;Y;chaud;mat;foncé;0
+S6530-G50Y;Vert;65;30;G50Y;chaud;mat;foncé;0
+S7005-G50Y;Gris foncé;70;5;G50Y;chaud;mat;foncé;0
+S7005-G80Y;Gris brun;70;5;G80Y;chaud;mat;foncé;0
+S7005-R20B;Gris rouge;70;5;R20B;chaud;mat;foncé;0
+S7005-Y20R;Gris brun;70;5;Y20R;chaud;mat;foncé;0
+S7005-Y50R;Brun;70;5;Y50R;chaud;mat;foncé;0
+S7005-Y80R;Gris brun;70;5;Y80R;chaud;mat;foncé;0
+S7010-G50Y;Olive gris;70;10;G50Y;chaud;mat;foncé;0
+S7010-G70Y;Olive foncé;70;10;G70Y;chaud;mat;foncé;0
+S7010-G90Y;Olive foncé;70;10;G90Y;chaud;mat;foncé;0
+S7010-R10B;Rouge brun;70;10;R10B;chaud;mat;foncé;0
+S7010-R30B;Brun foncé;70;10;R30B;chaud;mat;foncé;0
+S7010-Y10R;Brun;70;10;Y10R;chaud;mat;foncé;0
+S7010-Y30R;Brun;70;10;Y30R;chaud;mat;foncé;0
+S7010-Y50R;Brun;70;10;Y50R;chaud;mat;foncé;0
+S7010-Y70R;Brun foncé;70;10;Y70R;chaud;mat;foncé;0
+S7010-Y90R;Brun foncé;70;10;Y90R;chaud;mat;foncé;0
+S7020-G50Y;Olive;70;20;G50Y;chaud;mat;foncé;0
+S7020-G70Y;Olive;70;20;G70Y;chaud;mat;foncé;0
+S7020-G90Y;Olive brun;70;20;G90Y;chaud;mat;foncé;0
+S7020-R;Rouge foncé;70;20;R;chaud;mat;foncé;0
+S7020-R10B;Rouge foncé;70;20;R10B;chaud;mat;foncé;0
+S7020-R20B;Violet;70;20;R20B;chaud;mat;foncé;0
+S7020-R30B;Violet foncé;70;20;R30B;chaud;mat;foncé;0
+S7020-R40B;Violet;70;20;R40B;chaud;mat;foncé;0
+S7020-Y;Brun;70;20;Y;chaud;mat;foncé;0
+S7020-Y10R;Brun;70;20;Y10R;chaud;mat;foncé;0
+S7020-Y20R;Brun;70;20;Y20R;chaud;mat;foncé;0
+S7020-Y30R;Brun;70;20;Y30R;chaud;mat;foncé;0
+S7020-Y40R;Brun;70;20;Y40R;chaud;mat;foncé;0
+S7020-Y50R;Brun noyé;70;20;Y50R;chaud;mat;foncé;0
+S7020-Y60R;Brun;70;20;Y60R;chaud;mat;foncé;0
+S7020-Y70R;Brun rouge- sépia- Brun foncé;70;20;Y70R;chaud;mat;foncé;0
+S7020-Y80R;Brun foncé;70;20;Y80R;chaud;mat;foncé;0
+S7020-Y90R;Rouge brun;70;20;Y90R;chaud;mat;foncé;0
+S7502-R;Gris foncé;75;2;R;chaud;mat;foncé;0
+S7502-Y;Gris foncé;75;2;Y;chaud;mat;foncé;0
+S8005-G50Y;Gris foncé;80;5;G50Y;chaud;mat;foncé;0
+S8005-G80Y;Brun foncé;80;5;G80Y;chaud;mat;foncé;0
+S8005-R20B;Brun foncé;80;5;R20B;chaud;mat;foncé;0
+S8005-Y20R;Brun foncé;80;5;Y20R;chaud;mat;foncé;0
+S8005-Y50R;Brun foncé;80;5;Y50R;chaud;mat;foncé;0
+S8005-Y80R;Brun foncé;80;5;Y80R;chaud;mat;foncé;0
+S8010-G50Y;Vert;80;10;G50Y;chaud;mat;foncé;0
+S8010-G70Y;Brun;80;10;G70Y;chaud;mat;foncé;0
+S8010-G90Y;Brun;80;10;G90Y;chaud;mat;foncé;0
+S8010-R10B;Rouge noir;80;10;R10B;chaud;mat;foncé;0
+S8010-R30B;Violet noir;80;10;R30B;chaud;mat;foncé;0
+S8010-Y10R;Brun foncé;80;10;Y10R;chaud;mat;foncé;0
+S8010-Y30R;Brun foncé;80;10;Y30R;chaud;mat;foncé;0
+S8010-Y50R;Brun foncé;80;10;Y50R;chaud;mat;foncé;0
+S8010-Y70R;Brun foncé;80;10;Y70R;chaud;mat;foncé;0
+S8010-Y90R;Brun foncé;80;10;Y90R;chaud;mat;foncé;0
+S8502-R;Gris brun;85;2;R;chaud;mat;foncé;0
+S8502-Y;Gris foncé;85;2;Y;chaud;mat;foncé;0
+S8505-G80Y;Brun foncé;85;5;G80Y;chaud;mat;foncé;0
+S8505-R20B;Brun foncé;85;5;R20B;chaud;mat;foncé;0
+S8505-Y20R;Brun foncé;85;5;Y20R;chaud;mat;foncé;0
+S8505-Y80R;Brun foncé;85;5;Y80R;chaud;mat;foncé;0
+S0550-G10Y;Vert clair;5;50;G10Y;froid;lumineux;clair;0
+S0550-G20Y;Vert clair;5;50;G20Y;froid;lumineux;clair;0
+S0550-G30Y;Vert clair;5;50;G30Y;froid;lumineux;clair;0
+S0550-G40Y;Jaune vert;5;50;G40Y;froid;lumineux;clair;0
+S0560-G10Y;Vert;5;60;G10Y;froid;lumineux;clair;0
+S0560-G20Y;Vert;5;60;G20Y;froid;lumineux;clair;0
+S0560-G30Y;Vert clair;5;60;G30Y;froid;lumineux;clair;0
+S0560-G40Y;Vert clair;5;60;G40Y;froid;lumineux;clair;0
+S0565-G10Y;Vert;5;65;G10Y;froid;lumineux;clair;0
+S0570-G20Y;Vert;5;70;G20Y;froid;lumineux;clair;0
+S0570-G30Y;Vert clair ¨;5;70;G30Y;froid;lumineux;clair;0
+S0570-G40Y;Vert clair;5;70;G40Y;froid;lumineux;clair;0
+S0575-G20Y;Vert;5;75;G20Y;froid;lumineux;clair;0
+S0575-G40Y;Vert clair;5;75;G40Y;froid;lumineux;clair;0
+S0580-G30Y;Vert;5;80;G30Y;froid;lumineux;clair;0
+S1050-B;Bleu clair;10;50;B;froid;lumineux;clair;0
+S1050-B10G;Bleu clair;10;50;B10G;froid;lumineux;clair;0
+S1050-B20G;Bleu clair;10;50;B20G;froid;lumineux;clair;0
+S1050-B30G;Bleu clair;10;50;B30G;froid;lumineux;clair;0
+S1050-B40G;Bleu clair;10;50;B40G;froid;lumineux;clair;0
+S1050-B50G;Vert clair;10;50;B50G;froid;lumineux;clair;0
+S1050-B60G;Vert;10;50;B60G;froid;lumineux;clair;0
+S1050-B70G;Vert clair;10;50;B70G;froid;lumineux;clair;0
+S1050-B80G;Vert clair;10;50;B80G;froid;lumineux;clair;0
+S1050-B90G;Vert clair;10;50;B90G;froid;lumineux;clair;0
+S1050-G;Vert;10;50;G;froid;lumineux;clair;0
+S1050-G10Y;Vert;10;50;G10Y;froid;lumineux;clair;0
+S1050-G20Y;Vert;10;50;G20Y;froid;lumineux;clair;0
+S1050-G30Y;Vert;10;50;G30Y;froid;lumineux;clair;0
+S1050-G40Y;Vert;10;50;G40Y;froid;lumineux;clair;0
+S1050-R90B;Bleu clair;10;50;R90B;froid;lumineux;clair;0
+S1055-B90G;Vert clair;10;55;B90G;froid;lumineux;clair;0
+S1060-B;Bleu clair;10;60;B;froid;lumineux;clair;0
+S1060-G;Vert clair;10;60;G;froid;lumineux;clair;0
+S1060-G10Y;Vert;10;60;G10Y;froid;lumineux;clair;0
+S1060-G20Y;Vert clair;10;60;G20Y;froid;lumineux;clair;0
+S1060-G30Y;Vert clair;10;60;G30Y;froid;lumineux;clair;0
+S1060-G40Y;Vert clair;10;60;G40Y;froid;lumineux;clair;0
+S1070-G10Y;Vert;10;70;G10Y;froid;lumineux;clair;0
+S1070-G20Y;Vert;10;70;G20Y;froid;lumineux;clair;0
+S1070-G30Y;Vert;10;70;G30Y;froid;lumineux;clair;0
+S1070-G40Y;Vert;10;70;G40Y;froid;lumineux;clair;0
+S1075-G20Y;Vert;10;75;G20Y;froid;lumineux;clair;0
+S1075-G40Y;Vert;10;75;G40Y;froid;lumineux;clair;0
+S1080-G30Y;Vert;10;80;G30Y;froid;lumineux;clair;0
+S1550-R70B;Bleu violet;15;50;R70B;froid;lumineux;clair;0
+S1550-R80B;Bleu;15;50;R80B;froid;lumineux;clair;0
+S1555-B10G;Bleu clair;15;55;B10G;froid;lumineux;clair;0
+S1555-R70B;Bleu violet;15;55;R70B;froid;lumineux;clair;0
+S1555-R80B;Bleu;15;55;R80B;froid;lumineux;clair;0
+S1560-R90B;Bleu;15;60;R90B;froid;lumineux;clair;0
+S1565-B;Bleu clair;15;65;B;froid;lumineux;clair;0
+S1565-G;Vert;15;65;G;froid;lumineux;clair;0
+S2050-B;Bleu clair;20;50;B;froid;lumineux;clair;0
+S2050-B10G;Bleu clair;20;50;B10G;froid;lumineux;clair;0
+S2050-B20G;Bleu clair;20;50;B20G;froid;lumineux;clair;0
+S2050-B30G;Bleu;20;50;B30G;froid;lumineux;clair;0
+S2050-B40G;Bleu;20;50;B40G;froid;lumineux;clair;0
+S2050-B50G;Vert;20;50;B50G;froid;lumineux;clair;0
+S2050-B60G;Vert;20;50;B60G;froid;lumineux;clair;0
+S2050-B70G;Vert clair;20;50;B70G;froid;lumineux;clair;0
+S2050-B80G;Vert clair;20;50;B80G;froid;lumineux;clair;0
+S2050-B90G;Vert clair;20;50;B90G;froid;lumineux;clair;0
+S2050-G;Vert;20;50;G;froid;lumineux;clair;0
+S2050-G10Y;Vert;20;50;G10Y;froid;lumineux;clair;0
+S2050-G20Y;Vert;20;50;G20Y;froid;lumineux;clair;0
+S2050-G30Y;Vert;20;50;G30Y;froid;lumineux;clair;0
+S2050-G40Y;Vert;20;50;G40Y;froid;lumineux;clair;0
+S2050-R50B;Lilas;20;50;R50B;froid;lumineux;clair;0
+S2050-R60B;Lilas;20;50;R60B;froid;lumineux;clair;0
+S2050-R70B;Bleu clair;20;50;R70B;froid;lumineux;clair;0
+S2050-R80B;Bleu clair;20;50;R80B;froid;lumineux;clair;0
+S2050-R90B;Bleu clair;20;50;R90B;froid;lumineux;clair;0
+S2055-B10G;Bleu Clair;20;55;B10G;froid;lumineux;clair;0
+S2060-B;Bleu clair;20;60;B;froid;lumineux;clair;0
+S2060-B50G;Vert;20;60;B50G;froid;lumineux;clair;0
+S2060-B70G;Vert;20;60;B70G;froid;lumineux;clair;0
+S2060-B90G;Vert;20;60;B90G;froid;lumineux;clair;0
+S2060-G;Vert;20;60;G;froid;lumineux;clair;0
+S2060-G10Y;Vert;20;60;G10Y;froid;lumineux;clair;0
+S2060-G20Y;Vert;20;60;G20Y;froid;lumineux;clair;0
+S2060-G30Y;Vert;20;60;G30Y;froid;lumineux;clair;0
+S2060-G40Y;Vert clair;20;60;G40Y;froid;lumineux;clair;0
+S2060-R70B;Bleu violet;20;60;R70B;froid;lumineux;clair;0
+S2060-R80B;Bleu clair;20;60;R80B;froid;lumineux;clair;0
+S2060-R90B;Bleu clair;20;60;R90B;froid;lumineux;clair;0
+S2065-B;Bleu;20;65;B;froid;lumineux;clair;0
+S2065-R90B;Bleu;20;65;R90B;froid;lumineux;clair;0
+S2070-G10Y;Vert;20;70;G10Y;froid;lumineux;clair;0
+S2070-G20Y;Vert;20;70;G20Y;froid;lumineux;clair;0
+S2070-G30Y;Vert;20;70;G30Y;froid;lumineux;clair;0
+S2070-G40Y;Vert;20;70;G40Y;froid;lumineux;clair;0
+S2075-G20Y;Vert;20;75;G20Y;froid;lumineux;clair;0
+S2075-G30Y;Vert;20;75;G30Y;froid;lumineux;clair;0
+S2555-B20G;Bleu;25;55;B20G;froid;lumineux;clair;0
+S2555-B30G;Bleu;25;55;B30G;froid;lumineux;clair;0
+S2555-B40G;Vert;25;55;B40G;froid;lumineux;clair;0
+S2555-B60G;Vert;25;55;B60G;froid;lumineux;clair;0
+S2555-B80G;Vert;25;55;B80G;froid;lumineux;clair;0
+S2565-G;Vert;25;65;G;froid;lumineux;clair;0
+S2565-R80B;Bleu;25;65;R80B;froid;lumineux;clair;0
+S2570-G20Y;Vert;25;70;G20Y;froid;lumineux;clair;0
+S2570-G30Y;Vert;25;70;G30Y;froid;lumineux;clair;0
+S0502-B;Blanc bleui;5;2;B;froid;mat;clair;0
+S0502-B50G;Blanc bleui;5;2;B50G;froid;mat;clair;0
+S0502-G;Blanc verdâtre;5;2;G;froid;mat;clair;0
+S0502-R50B;Blanc gris;5;2;R50B;froid;mat;clair;0
+S0505-B;Blanc bleuté;5;5;B;froid;mat;clair;0
+S0505-B20G;Vert pastel;5;5;B20G;froid;mat;clair;0
+S0505-B50G;Gris blanc;5;5;B50G;froid;mat;clair;0
+S0505-B80G;Blanc bleuté;5;5;B80G;froid;mat;clair;0
+S0505-G;Vert pâle;5;5;G;froid;mat;clair;0
+S0505-G10Y;Vert pâle;5;5;G10Y;froid;mat;clair;0
+S0505-G20Y;Vert clair;5;5;G20Y;froid;mat;clair;0
+S0505-G30Y;Vert pâle;5;5;G30Y;froid;mat;clair;0
+S0505-G40Y;Jaune pâle;5;5;G40Y;froid;mat;clair;0
+S0505-R50B;Gris clair;5;5;R50B;froid;mat;clair;0
+S0505-R60B;Blanc bleuté;5;5;R60B;froid;mat;clair;0
+S0505-R70B;Blanc bleuté;5;5;R70B;froid;mat;clair;0
+S0505-R80B;Blanc bleuté;5;5;R80B;froid;mat;clair;0
+S0505-R90B;Blanc bleuté;5;5;R90B;froid;mat;clair;0
+S0507-B;Bleu pâle;5;7;B;froid;mat;clair;0
+S0507-B20G;Turquoise pâle;5;7;B20G;froid;mat;clair;0
+S0507-B80G;Vert pâle;5;7;B80G;froid;mat;clair;0
+S0507-G;Vert pâle;5;7;G;froid;mat;clair;0
+S0507-G40Y;Jaune vert pâle;5;7;G40Y;froid;mat;clair;0
+S0507-R60B;Gris clair;5;7;R60B;froid;mat;clair;0
+S0507-R80B;Bleu pâle;5;7;R80B;froid;mat;clair;0
+S0510-B;Bleu clair;5;10;B;froid;mat;clair;0
+S0510-B10G;Bleu clair;5;10;B10G;froid;mat;clair;0
+S0510-B30G;Bleu clair;5;10;B30G;froid;mat;clair;0
+S0510-B50G;Bleu vert;5;10;B50G;froid;mat;clair;0
+S0510-B70G;Vert pastel;5;10;B70G;froid;mat;clair;0
+S0510-B90G;Vert pastel;5;10;B90G;froid;mat;clair;0
+S0510-G;Vert clair;5;10;G;froid;mat;clair;0
+S0510-G10Y;Vert pâle;5;10;G10Y;froid;mat;clair;0
+S0510-G20Y;Vert clair;5;10;G20Y;froid;mat;clair;0
+S0510-G30Y;Vert pâle;5;10;G30Y;froid;mat;clair;0
+S0510-G40Y;Vert blanc;5;10;G40Y;froid;mat;clair;0
+S0510-R50B;Gris rosé;5;10;R50B;froid;mat;clair;0
+S0510-R60B;Gris rose;5;10;R60B;froid;mat;clair;0
+S0510-R70B;Gris pâle;5;10;R70B;froid;mat;clair;0
+S0510-R80B;Bleu clair;5;10;R80B;froid;mat;clair;0
+S0510-R90B;Bleu clair;5;10;R90B;froid;mat;clair;0
+S0515-B;Bleu pastel;5;15;B;froid;mat;clair;0
+S0515-B20G;Turquoise clair;5;15;B20G;froid;mat;clair;0
+S0515-B50G;Turquoise pâle;5;15;B50G;froid;mat;clair;0
+S0515-B80G;Vert pâle;5;15;B80G;froid;mat;clair;0
+S0515-G;Vert pâle;5;15;G;froid;mat;clair;0
+S0515-G20Y;Vert tilleul clair;5;15;G20Y;froid;mat;clair;0
+S0515-G40Y;Jaune vert clair;5;15;G40Y;froid;mat;clair;0
+S0515-R60B;Lilas pâle;5;15;R60B;froid;mat;clair;0
+S0515-R80B;Bleu pastel;5;15;R80B;froid;mat;clair;0
+S0515-R90B;Bleu clair;5;15;R90B;froid;mat;clair;0
+S0520-B;Bleu clair;5;20;B;froid;mat;clair;0
+S0520-B10G;Bleu clair;5;20;B10G;froid;mat;clair;0
+S0520-B30G;Bleu vert;5;20;B30G;froid;mat;clair;0
+S0520-B40G;Turquoise clair;5;20;B40G;froid;mat;clair;0
+S0520-B50G;Bleu vert;5;20;B50G;froid;mat;clair;0
+S0520-B60G;Turquoise clair;5;20;B60G;froid;mat;clair;0
+S0520-B70G;Menthe;5;20;B70G;froid;mat;clair;0
+S0520-B90G;Menthe;5;20;B90G;froid;mat;clair;0
+S0520-G;Vert pâle;5;20;G;froid;mat;clair;0
+S0520-G10Y;Vert pâle;5;20;G10Y;froid;mat;clair;0
+S0520-G20Y;Vert Pâle;5;20;G20Y;froid;mat;clair;0
+S0520-G30Y;Vert pâle;5;20;G30Y;froid;mat;clair;0
+S0520-G40Y;Vert pâle;5;20;G40Y;froid;mat;clair;0
+S0520-R50B;Rose;5;20;R50B;froid;mat;clair;0
+S0520-R60B;Rose gris;5;20;R60B;froid;mat;clair;0
+S0520-R70B;Bleu clair;5;20;R70B;froid;mat;clair;0
+S0520-R80B;Bleu clair;5;20;R80B;froid;mat;clair;0
+S0520-R90B;Bleu clair;5;20;R90B;froid;mat;clair;0
+S0525-R60B;Violet clair;5;25;R60B;froid;mat;clair;0
+S0525-R70B;Bleu Clair;5;25;R70B;froid;mat;clair;0
+S0530-B;Bleu clair;5;30;B;froid;mat;clair;0
+S0530-B10G;Bleu clair;5;30;B10G;froid;mat;clair;0
+S0530-B30G;Bleu vert;5;30;B30G;froid;mat;clair;0
+S0530-B40G;Turquoise;5;30;B40G;froid;mat;clair;0
+S0530-B50G;Menthe;5;30;B50G;froid;mat;clair;0
+S0530-B60G;Turquoise;5;30;B60G;froid;mat;clair;0
+S0530-B70G;Menthe;5;30;B70G;froid;mat;clair;0
+S0530-B90G;Vert clair;5;30;B90G;froid;mat;clair;0
+S0530-G;Vert pastel;5;30;G;froid;mat;clair;0
+S0530-G10Y;Vert pastel;5;30;G10Y;froid;mat;clair;0
+S0530-G20Y;Vert pâle;5;30;G20Y;froid;mat;clair;0
+S0530-G30Y;Vert pâle;5;30;G30Y;froid;mat;clair;0
+S0530-G40Y;Vert pâle;5;30;G40Y;froid;mat;clair;0
+S0530-R50B;Rose;5;30;R50B;froid;mat;clair;0
+S0530-R80B;Bleu azur;5;30;R80B;froid;mat;clair;0
+S0530-R90B;Bleu;5;30;R90B;froid;mat;clair;0
+S0540-B;Bleu clair;5;40;B;froid;mat;clair;0
+S0540-B10G;Bleu clair;5;40;B10G;froid;mat;clair;0
+S0540-B30G;Turquoise;5;40;B30G;froid;mat;clair;0
+S0540-G;Vert;5;40;G;froid;mat;clair;0
+S0540-G10Y;Vert;5;40;G10Y;froid;mat;clair;0
+S0540-G20Y;Vert pâle;5;40;G20Y;froid;mat;clair;0
+S0540-G30Y;Vert clair;5;40;G30Y;froid;mat;clair;0
+S0540-G40Y;Vert clair;5;40;G40Y;froid;mat;clair;0
+S0540-R90B;Bleu;5;40;R90B;froid;mat;clair;0
+S0603-G40Y;Vert pâle;6;3;G40Y;froid;mat;clair;0
+S0603-R60B;Gris clair;6;3;R60B;froid;mat;clair;0
+S0603-R80B;Gris clair;6;3;R80B;froid;mat;clair;0
+S0804-B50G;Turquoise pâle;8;4;B50G;froid;mat;clair;0
+S0804-G20Y;Vert pâle;8;4;G20Y;froid;mat;clair;0
+S0804-R50B;Gris clair;8;4;R50B;froid;mat;clair;0
+S0804-R70B;Gris clair;8;4;R70B;froid;mat;clair;0
+S0804-R90B;Gris clair;8;4;R90B;froid;mat;clair;0
+S0907-B20G;Turquoise pâle;9;7;B20G;froid;mat;clair;0
+S0907-B80G;Vert pâle;9;7;B80G;froid;mat;clair;0
+S0907-G20Y;Vert pâle;9;7;G20Y;froid;mat;clair;0
+S0907-R50B;Lilas pâle;9;7;R50B;froid;mat;clair;0
+S0907-R70B;Bleu gris clair;9;7;R70B;froid;mat;clair;0
+S0907-R90B;Bleu pâle;9;7;R90B;froid;mat;clair;0
+S1002-B;Gris clair;10;2;B;froid;mat;clair;0
+S1002-B50G;Gris clair;10;2;B50G;froid;mat;clair;0
+S1002-G;Gris clair;10;2;G;froid;mat;clair;0
+S1002-R50B;Gris clair;10;2;R50B;froid;mat;clair;0
+S1005-B;Bleu clair;10;5;B;froid;mat;clair;0
+S1005-B20G;Bleu clair;10;5;B20G;froid;mat;clair;0
+S1005-B50G;Bleu gris;10;5;B50G;froid;mat;clair;0
+S1005-B80G;Gris bleu;10;5;B80G;froid;mat;clair;0
+S1005-G;Gris;10;5;G;froid;mat;clair;0
+S1005-G10Y;Gris;10;5;G10Y;froid;mat;clair;0
+S1005-G20Y;Beige vert;10;5;G20Y;froid;mat;clair;0
+S1005-G30Y;Gris clair;10;5;G30Y;froid;mat;clair;0
+S1005-G40Y;Gris clair;10;5;G40Y;froid;mat;clair;0
+S1005-R50B;Gris clair;10;5;R50B;froid;mat;clair;0
+S1005-R60B;Gris clair;10;5;R60B;froid;mat;clair;0
+S1005-R70B;Gris clair;10;5;R70B;froid;mat;clair;0
+S1005-R80B;Blanc bleui;10;5;R80B;froid;mat;clair;0
+S1005-R90B;Blanc bleui;10;5;R90B;froid;mat;clair;0
+S1010-B;Bleu clair;10;10;B;froid;mat;clair;0
+S1010-B10G;Bleu pâle;10;10;B10G;froid;mat;clair;0
+S1010-B30G;Bleu pâle;10;10;B30G;froid;mat;clair;0
+S1010-B50G;Bleu pâle;10;10;B50G;froid;mat;clair;0
+S1010-B70G;Bleu pâle;10;10;B70G;froid;mat;clair;0
+S1010-B90G;Vert pâle;10;10;B90G;froid;mat;clair;0
+S1010-G;Vert pâle;10;10;G;froid;mat;clair;0
+S1010-G10Y;Vert pâle;10;10;G10Y;froid;mat;clair;0
+S1010-G20Y;Vert pâle;10;10;G20Y;froid;mat;clair;0
+S1010-G30Y;Vert pâle;10;10;G30Y;froid;mat;clair;0
+S1010-G40Y;Vert pâle;10;10;G40Y;froid;mat;clair;0
+S1010-R50B;Lilas;10;10;R50B;froid;mat;clair;0
+S1010-R60B;Bleu rosé;10;10;R60B;froid;mat;clair;0
+S1010-R70B;Bleu rosé;10;10;R70B;froid;mat;clair;0
+S1010-R80B;Bleu clair;10;10;R80B;froid;mat;clair;0
+S1010-R90B;Bleu clair;10;10;R90B;froid;mat;clair;0
+S1015-B;Bleu clair;10;15;B;froid;mat;clair;0
+S1015-B20G;Bleu vert clair;10;15;B20G;froid;mat;clair;0
+S1015-B50G;Turquoise pastel;10;15;B50G;froid;mat;clair;0
+S1015-B80G;Vert pâle;10;15;B80G;froid;mat;clair;0
+S1015-G;Vert pastel;10;15;G;froid;mat;clair;0
+S1015-G20Y;Vert clair;10;15;G20Y;froid;mat;clair;0
+S1015-G40Y;Vert tilleul clair;10;15;G40Y;froid;mat;clair;0
+S1015-R60B;Lilas clair;10;15;R60B;froid;mat;clair;0
+S1015-R80B;Bleu clair;10;15;R80B;froid;mat;clair;0
+S1015-R90B;Gris bleu clair;10;15;R90B;froid;mat;clair;0
+S1020-B;Bleu clair;10;20;B;froid;mat;clair;0
+S1020-B10G;Bleu clair;10;20;B10G;froid;mat;clair;0
+S1020-B30G;Bleu clair;10;20;B30G;froid;mat;clair;0
+S1020-B40G;Turquoise clair;10;20;B40G;froid;mat;clair;0
+S1020-B50G;Bleu clair;10;20;B50G;froid;mat;clair;0
+S1020-B60G;Turquoise clair;10;20;B60G;froid;mat;clair;0
+S1020-B70G;Vert pastel;10;20;B70G;froid;mat;clair;0
+S1020-B90G;Vert pâle;10;20;B90G;froid;mat;clair;0
+S1020-G;Vert pâle;10;20;G;froid;mat;clair;0
+S1020-G10Y;Vert pâle;10;20;G10Y;froid;mat;clair;0
+S1020-G20Y;Vert blanc;10;20;G20Y;froid;mat;clair;0
+S1020-G30Y;Vert pâle;10;20;G30Y;froid;mat;clair;0
+S1020-G40Y;Vert pâle;10;20;G40Y;froid;mat;clair;0
+S1020-R50B;Bleu rosé;10;20;R50B;froid;mat;clair;0
+S1020-R60B;Rose bleuté;10;20;R60B;froid;mat;clair;0
+S1020-R70B;Bleu clair;10;20;R70B;froid;mat;clair;0
+S1020-R80B;Bleu pastel;10;20;R80B;froid;mat;clair;0
+S1020-R90B;Bleu clair;10;20;R90B;froid;mat;clair;0
+S1030-B;Bleu clair;10;30;B;froid;mat;clair;0
+S1030-B10G;Bleu clair;10;30;B10G;froid;mat;clair;0
+S1030-B30G;Bleu clair;10;30;B30G;froid;mat;clair;0
+S1030-B40G;Turquoise;10;30;B40G;froid;mat;clair;0
+S1030-B50G;Turquoise;10;30;B50G;froid;mat;clair;0
+S1030-B60G;Turquoise;10;30;B60G;froid;mat;clair;0
+S1030-B70G;Turquoise;10;30;B70G;froid;mat;clair;0
+S1030-B90G;Vert clair;10;30;B90G;froid;mat;clair;0
+S1030-G;Vert clair;10;30;G;froid;mat;clair;0
+S1030-G10Y;Vert clair;10;30;G10Y;froid;mat;clair;0
+S1030-G20Y;Vert clair;10;30;G20Y;froid;mat;clair;0
+S1030-G30Y;Vert clair;10;30;G30Y;froid;mat;clair;0
+S1030-G40Y;Vert clair;10;30;G40Y;froid;mat;clair;0
+S1030-R50B;Bleu rosé ¨;10;30;R50B;froid;mat;clair;0
+S1030-R60B;Bleu rosé;10;30;R60B;froid;mat;clair;0
+S1030-R70B;Violet;10;30;R70B;froid;mat;clair;0
+S1030-R80B;Bleu clair;10;30;R80B;froid;mat;clair;0
+S1030-R90B;Bleu clair;10;30;R90B;froid;mat;clair;0
+S1040-B;Bleu clair;10;40;B;froid;mat;clair;0
+S1040-B10G;Bleu clair;10;40;B10G;froid;mat;clair;0
+S1040-B20G;Bleu clair;10;40;B20G;froid;mat;clair;0
+S1040-B30G;Bleu clair;10;40;B30G;froid;mat;clair;0
+S1040-B40G;Bleu clair;10;40;B40G;froid;mat;clair;0
+S1040-B50G;Vert pastel;10;40;B50G;froid;mat;clair;0
+S1040-B60G;Vert clair;10;40;B60G;froid;mat;clair;0
+S1040-B70G;Vert clair;10;40;B70G;froid;mat;clair;0
+S1040-B80G;Vert clair;10;40;B80G;froid;mat;clair;0
+S1040-B90G;Vert clair;10;40;B90G;froid;mat;clair;0
+S1040-G;Vert clair;10;40;G;froid;mat;clair;0
+S1040-G10Y;Vert clair;10;40;G10Y;froid;mat;clair;0
+S1040-G20Y;Vert clair;10;40;G20Y;froid;mat;clair;0
+S1040-G30Y;Vert clair;10;40;G30Y;froid;mat;clair;0
+S1040-G40Y;Vert clair;10;40;G40Y;froid;mat;clair;0
+S1040-R50B;Lilas;10;40;R50B;froid;mat;clair;0
+S1040-R60B;Lilas pastel;10;40;R60B;froid;mat;clair;0
+S1040-R70B;Violet;10;40;R70B;froid;mat;clair;0
+S1040-R80B;Bleu clair;10;40;R80B;froid;mat;clair;0
+S1040-R90B;Bleu clair;10;40;R90B;froid;mat;clair;0
+S1502-B;Gris clair;15;2;B;froid;mat;clair;0
+S1502-B50G;Gris clair;15;2;B50G;froid;mat;clair;0
+S1502-G;Gris clair;15;2;G;froid;mat;clair;0
+S1502-R50B;Gris clair;15;2;R50B;froid;mat;clair;0
+S1510-B;Bleu gris;15;10;B;froid;mat;clair;0
+S1510-B20G;Bleu gris clair;15;10;B20G;froid;mat;clair;0
+S1510-B50G;Gris turquoise pastel;15;10;B50G;froid;mat;clair;0
+S1510-B80G;Gris vert clair;15;10;B80G;froid;mat;clair;0
+S1510-G;Gris vert clair;15;10;G;froid;mat;clair;0
+S1510-G20Y;Vert tilleul;15;10;G20Y;froid;mat;clair;0
+S1510-G40Y;Gris vert;15;10;G40Y;froid;mat;clair;0
+S1510-R60B;Gris lilas;15;10;R60B;froid;mat;clair;0
+S1510-R80B;Gris bleu;15;10;R80B;froid;mat;clair;0
+S1510-R90B;Gris bleu;15;10;R90B;froid;mat;clair;0
+S1515-B;Bleu gris clair;15;15;B;froid;mat;clair;0
+S1515-B20G;Bleu vert clair;15;15;B20G;froid;mat;clair;0
+S1515-B50G;Bleu vert clair;15;15;B50G;froid;mat;clair;0
+S1515-B80G;Vert bleu clair;15;15;B80G;froid;mat;clair;0
+S1515-G;Gris vert clair;15;15;G;froid;mat;clair;0
+S1515-G20Y;Vert tilleul;15;15;G20Y;froid;mat;clair;0
+S1515-G40Y;Vert tilleul;15;15;G40Y;froid;mat;clair;0
+S1515-R60B;Lilas clair;15;15;R60B;froid;mat;clair;0
+S1515-R80B;Bleu clair;15;15;R80B;froid;mat;clair;0
+S1515-R90B;Bleu clair;15;15;R90B;froid;mat;clair;0
+S2002-B;Gris clair;20;2;B;froid;mat;clair;0
+S2002-B50G;Gris clair;20;2;B50G;froid;mat;clair;0
+S2002-G;Gris clair;20;2;G;froid;mat;clair;0
+S2002-R50B;Gris clair;20;2;R50B;froid;mat;clair;0
+S2005-B;Gris clair;20;5;B;froid;mat;clair;0
+S2005-B20G;Gris clair;20;5;B20G;froid;mat;clair;0
+S2005-B50G;Gris clair;20;5;B50G;froid;mat;clair;0
+S2005-B80G;Gris clair;20;5;B80G;froid;mat;clair;0
+S2005-G;Vert;20;5;G;froid;mat;clair;0
+S2005-G10Y;Gris vert;20;5;G10Y;froid;mat;clair;0
+S2005-G20Y;Gris perle;20;5;G20Y;froid;mat;clair;0
+S2005-G30Y;Gris vert;20;5;G30Y;froid;mat;clair;0
+S2005-G40Y;Gris vert;20;5;G40Y;froid;mat;clair;0
+S2005-R50B;Gris;20;5;R50B;froid;mat;clair;0
+S2005-R60B;Gris;20;5;R60B;froid;mat;clair;0
+S2005-R70B;Gris;20;5;R70B;froid;mat;clair;0
+S2005-R80B;Gris clair;20;5;R80B;froid;mat;clair;0
+S2005-R90B;Gris clair;20;5;R90B;froid;mat;clair;0
+S2010-B;Bleu gris;20;10;B;froid;mat;clair;0
+S2010-B10G;Bleu gris;20;10;B10G;froid;mat;clair;0
+S2010-B30G;Bleu gris;20;10;B30G;froid;mat;clair;0
+S2010-B50G;Bleu gris;20;10;B50G;froid;mat;clair;0
+S2010-B70G;Gris clair;20;10;B70G;froid;mat;clair;0
+S2010-B90G;Gris clair;20;10;B90G;froid;mat;clair;0
+S2010-G;Vert pâle;20;10;G;froid;mat;clair;0
+S2010-G10Y;Vert pâle;20;10;G10Y;froid;mat;clair;0
+S2010-G20Y;Vert pâle;20;10;G20Y;froid;mat;clair;0
+S2010-G30Y;Vert pastel;20;10;G30Y;froid;mat;clair;0
+S2010-G40Y;Vert jaune;20;10;G40Y;froid;mat;clair;0
+S2010-R50B;Lilas pâle;20;10;R50B;froid;mat;clair;0
+S2010-R60B;Bleu gris;20;10;R60B;froid;mat;clair;0
+S2010-R70B;Bleu gris;20;10;R70B;froid;mat;clair;0
+S2010-R80B;Gris bleu;20;10;R80B;froid;mat;clair;0
+S2010-R90B;Bleu clair;20;10;R90B;froid;mat;clair;0
+S2020-B;Bleu clair;20;20;B;froid;mat;clair;0
+S2020-B10G;Bleu;20;20;B10G;froid;mat;clair;0
+S2020-B30G;Bleu;20;20;B30G;froid;mat;clair;0
+S2020-B40G;Gris turquoise;20;20;B40G;froid;mat;clair;0
+S2020-B50G;Bleu clair;20;20;B50G;froid;mat;clair;0
+S2020-B60G;Vert bleu;20;20;B60G;froid;mat;clair;0
+S2020-B70G;Vert pastel;20;20;B70G;froid;mat;clair;0
+S2020-B90G;Vert clair;20;20;B90G;froid;mat;clair;0
+S2020-G;Vert clair;20;20;G;froid;mat;clair;0
+S2020-G10Y;Vert clair;20;20;G10Y;froid;mat;clair;0
+S2020-G20Y;Vert clair;20;20;G20Y;froid;mat;clair;0
+S2020-G30Y;Vert clair;20;20;G30Y;froid;mat;clair;0
+S2020-G40Y;Vert clair;20;20;G40Y;froid;mat;clair;0
+S2020-R50B;Lilas;20;20;R50B;froid;mat;clair;0
+S2020-R60B;Bleu clair;20;20;R60B;froid;mat;clair;0
+S2020-R70B;Bleu clair;20;20;R70B;froid;mat;clair;0
+S2020-R80B;Bleu violet;20;20;R80B;froid;mat;clair;0
+S2020-R90B;Bleu clair;20;20;R90B;froid;mat;clair;0
+S2030-B;Bleu;20;30;B;froid;mat;clair;0
+S2030-B10G;Bleu;20;30;B10G;froid;mat;clair;0
+S2030-B30G;Bleu;20;30;B30G;froid;mat;clair;0
+S2030-B40G;Turquoise foncé;20;30;B40G;froid;mat;clair;0
+S2030-B50G;Bleu clair;20;30;B50G;froid;mat;clair;0
+S2030-B60G;Bleu vert;20;30;B60G;froid;mat;clair;0
+S2030-B70G;Vert pastel;20;30;B70G;froid;mat;clair;0
+S2030-B90G;Vert;20;30;B90G;froid;mat;clair;0
+S2030-G;Vert;20;30;G;froid;mat;clair;0
+S2030-G10Y;Vert;20;30;G10Y;froid;mat;clair;0
+S2030-G20Y;Vert;20;30;G20Y;froid;mat;clair;0
+S2030-G30Y;Vert;20;30;G30Y;froid;mat;clair;0
+S2030-G40Y;Vert;20;30;G40Y;froid;mat;clair;0
+S2030-R50B;Bleu rosé;20;30;R50B;froid;mat;clair;0
+S2030-R60B;Bleu violet;20;30;R60B;froid;mat;clair;0
+S2030-R70B;Bleu clair;20;30;R70B;froid;mat;clair;0
+S2030-R80B;Bleu;20;30;R80B;froid;mat;clair;0
+S2030-R90B;Bleu clair;20;30;R90B;froid;mat;clair;0
+S2040-B;Bleu;20;40;B;froid;mat;clair;0
+S2040-B10G;Bleu;20;40;B10G;froid;mat;clair;0
+S2040-B20G;Bleu;20;40;B20G;froid;mat;clair;0
+S2040-B30G;Bleu vert;20;40;B30G;froid;mat;clair;0
+S2040-B40G;Bleu clair;20;40;B40G;froid;mat;clair;0
+S2040-B50G;Bleu vert clair;20;40;B50G;froid;mat;clair;0
+S2040-B60G;Vert Clair;20;40;B60G;froid;mat;clair;0
+S2040-B70G;Vert clair;20;40;B70G;froid;mat;clair;0
+S2040-B80G;Vert clair;20;40;B80G;froid;mat;clair;0
+S2040-B90G;Vert clair;20;40;B90G;froid;mat;clair;0
+S2040-G;Vert;20;40;G;froid;mat;clair;0
+S2040-G10Y;Vert;20;40;G10Y;froid;mat;clair;0
+S2040-G20Y;Vert;20;40;G20Y;froid;mat;clair;0
+S2040-G30Y;Vert;20;40;G30Y;froid;mat;clair;0
+S2040-G40Y;Vert;20;40;G40Y;froid;mat;clair;0
+S2040-R50B;Lilas;20;40;R50B;froid;mat;clair;0
+S2040-R60B;Bleu clair;20;40;R60B;froid;mat;clair;0
+S2040-R70B;Bleu clair;20;40;R70B;froid;mat;clair;0
+S2040-R80B;Bleu clair;20;40;R80B;froid;mat;clair;0
+S2040-R90B;Bleu clair;20;40;R90B;froid;mat;clair;0
+S2502-B;Gris Agathe- Gris bleu;25;2;B;froid;mat;clair;0
+S2502-G;Gris;25;2;G;froid;mat;clair;0
+S3050-B;Bleu;30;50;B;froid;lumineux;foncé;0
+S3050-B10G;Bleu;30;50;B10G;froid;lumineux;foncé;0
+S3050-B20G;Bleu;30;50;B20G;froid;lumineux;foncé;0
+S3050-B30G;Vert bleu;30;50;B30G;froid;lumineux;foncé;0
+S3050-B40G;Bleu;30;50;B40G;froid;lumineux;foncé;0
+S3050-B50G;Vert;30;50;B50G;froid;lumineux;foncé;0
+S3050-B60G;Vert;30;50;B60G;froid;lumineux;foncé;0
+S3050-B70G;Vert;30;50;B70G;froid;lumineux;foncé;0
+S3050-B80G;Vert;30;50;B80G;froid;lumineux;foncé;0
+S3050-B90G;Vert clair;30;50;B90G;froid;lumineux;foncé;0
+S3050-G;Vert;30;50;G;froid;lumineux;foncé;0
+S3050-G10Y;Vert;30;50;G10Y;froid;lumineux;foncé;0
+S3050-G20Y;Vert;30;50;G20Y;froid;lumineux;foncé;0
+S3050-G30Y;Vert;30;50;G30Y;froid;lumineux;foncé;0
+S3050-G40Y;Vert;30;50;G40Y;froid;lumineux;foncé;0
+S3050-R50B;Lilas;30;50;R50B;froid;lumineux;foncé;0
+S3050-R60B;lilas;30;50;R60B;froid;lumineux;foncé;0
+S3050-R70B;Bleu;30;50;R70B;froid;lumineux;foncé;0
+S3050-R80B;Bleu;30;50;R80B;froid;lumineux;foncé;0
+S3050-R90B;Bleu;30;50;R90B;froid;lumineux;foncé;0
+S3055-B50G;Vert;30;55;B50G;froid;lumineux;foncé;0
+S3055-R50B;Violet;30;55;R50B;froid;lumineux;foncé;0
+S3060-B;Bleu;30;60;B;froid;lumineux;foncé;0
+S3060-B10G;Bleu;30;60;B10G;froid;lumineux;foncé;0
+S3060-B20G;Bleu;30;60;B20G;froid;lumineux;foncé;0
+S3060-B30G;Bleu;30;60;B30G;froid;lumineux;foncé;0
+S3060-B40G;Vert;30;60;B40G;froid;lumineux;foncé;0
+S3060-B70G;Vert;30;60;B70G;froid;lumineux;foncé;0
+S3060-B90G;Vert;30;60;B90G;froid;lumineux;foncé;0
+S3060-G;Vert;30;60;G;froid;lumineux;foncé;0
+S3060-G10Y;Vert foncé;30;60;G10Y;froid;lumineux;foncé;0
+S3060-G20Y;Vert;30;60;G20Y;froid;lumineux;foncé;0
+S3060-G30Y;Vert;30;60;G30Y;froid;lumineux;foncé;0
+S3060-G40Y;Vert;30;60;G40Y;froid;lumineux;foncé;0
+S3060-R70B;Bleu violet;30;60;R70B;froid;lumineux;foncé;0
+S3060-R80B;Bleu;30;60;R80B;froid;lumineux;foncé;0
+S3060-R90B;Bleu;30;60;R90B;froid;lumineux;foncé;0
+S3065-G10Y;Vert;30;65;G10Y;froid;lumineux;foncé;0
+S3065-G40Y;Vert;30;65;G40Y;froid;lumineux;foncé;0
+S3065-R90B;Bleu;30;65;R90B;froid;lumineux;foncé;0
+S3555-B60G;Vert;35;55;B60G;froid;lumineux;foncé;0
+S3555-B80G;Vert;35;55;B80G;froid;lumineux;foncé;0
+S3555-R60B;Violet foncé;35;55;R60B;froid;lumineux;foncé;0
+S3560-G;Vert;35;60;G;froid;lumineux;foncé;0
+S3560-G10Y;Vert;35;60;G10Y;froid;lumineux;foncé;0
+S3560-G20Y;Vert;35;60;G20Y;froid;lumineux;foncé;0
+S3560-G30Y;Vert;35;60;G30Y;froid;lumineux;foncé;0
+S3560-G40Y;Vert;35;60;G40Y;froid;lumineux;foncé;0
+S3560-R80B;Bleu;35;60;R80B;froid;lumineux;foncé;0
+S3560-R90B;Bleu;35;60;R90B;froid;lumineux;foncé;0
+S4050-B;Bleu;40;50;B;froid;lumineux;foncé;0
+S4050-B10G;Bleu;40;50;B10G;froid;lumineux;foncé;0
+S4050-B20G;Bleu;40;50;B20G;froid;lumineux;foncé;0
+S4050-B30G;Vert;40;50;B30G;froid;lumineux;foncé;0
+S4050-B40G;Buhlergrun;40;50;B40G;froid;lumineux;foncé;0
+S4050-B50G;Vert;40;50;B50G;froid;lumineux;foncé;0
+S4050-B60G;Vert;40;50;B60G;froid;lumineux;foncé;0
+S4050-B70G;Vert;40;50;B70G;froid;lumineux;foncé;0
+S4050-B80G;Vert;40;50;B80G;froid;lumineux;foncé;0
+S4050-B90G;Vert foncé;40;50;B90G;froid;lumineux;foncé;0
+S4050-G;Vert foncé;40;50;G;froid;lumineux;foncé;0
+S4050-G10Y;Vert;40;50;G10Y;froid;lumineux;foncé;0
+S4050-G20Y;Vert;40;50;G20Y;froid;lumineux;foncé;0
+S4050-G30Y;Vert;40;50;G30Y;froid;lumineux;foncé;0
+S4050-G40Y;Vert;40;50;G40Y;froid;lumineux;foncé;0
+S4050-R50B;Violet foncé;40;50;R50B;froid;lumineux;foncé;0
+S4050-R60B;Violet;40;50;R60B;froid;lumineux;foncé;0
+S4050-R70B;Bleu;40;50;R70B;froid;lumineux;foncé;0
+S4050-R80B;Bleu;40;50;R80B;froid;lumineux;foncé;0
+S4050-R90B;Bleu;40;50;R90B;froid;lumineux;foncé;0
+S4055-B;Bleu;40;55;B;froid;lumineux;foncé;0
+S4055-B40G;Vert;40;55;B40G;froid;lumineux;foncé;0
+S4055-R70B;Bleu;40;55;R70B;froid;lumineux;foncé;0
+S4550-B;Bleu;45;50;B;froid;lumineux;foncé;0
+S4550-B20G;Bleu vert;45;50;B20G;froid;lumineux;foncé;0
+S4550-B30G;Vert;45;50;B30G;froid;lumineux;foncé;0
+S4550-B40G;Vert;45;50;B40G;froid;lumineux;foncé;0
+S4550-B50G;Vert;45;50;B50G;froid;lumineux;foncé;0
+S4550-B80G;Vert;45;50;B80G;froid;lumineux;foncé;0
+S4550-B90G;Vert;45;50;B90G;froid;lumineux;foncé;0
+S4550-G;Vert;45;50;G;froid;lumineux;foncé;0
+S4550-G10Y;Vert;45;50;G10Y;froid;lumineux;foncé;0
+S4550-G20Y;Vert;45;50;G20Y;froid;lumineux;foncé;0
+S4550-G30Y;Vert;45;50;G30Y;froid;lumineux;foncé;0
+S4550-G40Y;Vert;45;50;G40Y;froid;lumineux;foncé;0
+S4550-R70B;Bleu violet;45;50;R70B;froid;lumineux;foncé;0
+S4550-R80B;Bleu;45;50;R80B;froid;lumineux;foncé;0
+S4550-R90B;Bleu gentiane;45;50;R90B;froid;lumineux;foncé;0
+S3005-B20G;Bleu gris;30;5;B20G;froid;mat;foncé;0
+S3005-B80G;Bleu gris;30;5;B80G;froid;mat;foncé;0
+S3005-G20Y;Jaune gris;30;5;G20Y;froid;mat;foncé;0
+S3005-R50B;Gris;30;5;R50B;froid;mat;foncé;0
+S3005-R80B;Gris;30;5;R80B;froid;mat;foncé;0
+S3010-B;Bleu gris;30;10;B;froid;mat;foncé;0
+S3010-B10G;Gris bleu;30;10;B10G;froid;mat;foncé;0
+S3010-B30G;Gris clair;30;10;B30G;froid;mat;foncé;0
+S3010-B50G;Bleu gris;30;10;B50G;froid;mat;foncé;0
+S3010-B70G;Bleu gris;30;10;B70G;froid;mat;foncé;0
+S3010-B90G;Gris clair;30;10;B90G;froid;mat;foncé;0
+S3010-G;Gris vert;30;10;G;froid;mat;foncé;0
+S3010-G10Y;Gris vert;30;10;G10Y;froid;mat;foncé;0
+S3010-G20Y;Gris vert;30;10;G20Y;froid;mat;foncé;0
+S3010-G30Y;Gris vert;30;10;G30Y;froid;mat;foncé;0
+S3010-G40Y;Gris vert;30;10;G40Y;froid;mat;foncé;0
+S3010-R50B;Lilas pâle;30;10;R50B;froid;mat;foncé;0
+S3010-R60B;Gris bleu;30;10;R60B;froid;mat;foncé;0
+S3010-R70B;Bleu lilas;30;10;R70B;froid;mat;foncé;0
+S3010-R80B;Bleu gris;30;10;R80B;froid;mat;foncé;0
+S3010-R90B;Bleu gris;30;10;R90B;froid;mat;foncé;0
+S3020-B;Bleu clair;30;20;B;froid;mat;foncé;0
+S3020-B10G;Bleu;30;20;B10G;froid;mat;foncé;0
+S3020-B30G;Bleu;30;20;B30G;froid;mat;foncé;0
+S3020-B40G;Gris turquoise;30;20;B40G;froid;mat;foncé;0
+S3020-B50G;Bleu;30;20;B50G;froid;mat;foncé;0
+S3020-B60G;Gris vert;30;20;B60G;froid;mat;foncé;0
+S3020-B70G;Vert bleu;30;20;B70G;froid;mat;foncé;0
+S3020-B90G;Vert bleu;30;20;B90G;froid;mat;foncé;0
+S3020-G;Vert;30;20;G;froid;mat;foncé;0
+S3020-G10Y;Vert;30;20;G10Y;froid;mat;foncé;0
+S3020-G20Y;Vert;30;20;G20Y;froid;mat;foncé;0
+S3020-G30Y;Vert;30;20;G30Y;froid;mat;foncé;0
+S3020-G40Y;Vert;30;20;G40Y;froid;mat;foncé;0
+S3020-R50B;Lilas;30;20;R50B;froid;mat;foncé;0
+S3020-R60B;Bleu violet;30;20;R60B;froid;mat;foncé;0
+S3020-R70B;Bleu violet;30;20;R70B;froid;mat;foncé;0
+S3020-R80B;Bleu;30;20;R80B;froid;mat;foncé;0
+S3020-R90B;Bleu;30;20;R90B;froid;mat;foncé;0
+S3030-B;Bleu Neutre froid;30;30;B;froid;mat;foncé;1
+S3030-B10G;Bleu Neutre froid;30;30;B10G;froid;mat;foncé;1
+S3030-B30G;Bleu Neutre froid;30;30;B30G;froid;mat;foncé;1
+S3030-B40G;Turquoise foncé Neutre froid;30;30;B40G;froid;mat;foncé;1
+S3030-B50G;Bleu Neutre froid;30;30;B50G;froid;mat;foncé;1
+S3030-B60G;Bleu vert Neutre froid;30;30;B60G;froid;mat;foncé;1
+S3030-B70G;Vert bleu Neutre froid;30;30;B70G;froid;mat;foncé;1
+S3030-B90G;Vert Neutre froid;30;30;B90G;froid;mat;foncé;1
+S3030-G;Vert Neutre Universel;30;30;G;froid;mat;foncé;1
+S3030-G10Y;Vert Neutre chaud;30;30;G10Y;froid;mat;foncé;1
+S3030-G20Y;Vert pâle Neutre chaud;30;30;G20Y;froid;mat;foncé;1
+S3030-G30Y;Vert Neutre chaud;30;30;G30Y;froid;mat;foncé;1
+S3030-G40Y;Vert Neutre chaud;30;30;G40Y;froid;mat;foncé;1
+S3030-R50B;Bleu rosé Neutre universel;30;30;R50B;froid;mat;foncé;1
+S3030-R60B;Bleu rosé Neutre froid;30;30;R60B;froid;mat;foncé;1
+S3030-R70B;Bleu Neutre froid;30;30;R70B;froid;mat;foncé;1
+S3030-R80B;Bleu antique Neutre froid;30;30;R80B;froid;mat;foncé;1
+S3030-R90B;Bleu Neutre froid;30;30;R90B;froid;mat;foncé;1
+S3040-B;Bleu;30;40;B;froid;mat;foncé;0
+S3040-B10G;bLEU;30;40;B10G;froid;mat;foncé;0
+S3040-B20G;Bleu;30;40;B20G;froid;mat;foncé;0
+S3040-B30G;Bleu;30;40;B30G;froid;mat;foncé;0
+S3040-B40G;Bleu;30;40;B40G;froid;mat;foncé;0
+S3040-B50G;Vert;30;40;B50G;froid;mat;foncé;0
+S3040-B60G;Vert;30;40;B60G;froid;mat;foncé;0
+S3040-B70G;Vert;30;40;B70G;froid;mat;foncé;0
+S3040-B80G;Vert;30;40;B80G;froid;mat;foncé;0
+S3040-B90G;Vert;30;40;B90G;froid;mat;foncé;0
+S3040-G;Vert;30;40;G;froid;mat;foncé;0
+S3040-G10Y;Vert;30;40;G10Y;froid;mat;foncé;0
+S3040-G20Y;Vert;30;40;G20Y;froid;mat;foncé;0
+S3040-G30Y;Vert;30;40;G30Y;froid;mat;foncé;0
+S3040-G40Y;Vert;30;40;G40Y;froid;mat;foncé;0
+S3040-R50B;Lilas;30;40;R50B;froid;mat;foncé;0
+S3040-R60B;Lilas;30;40;R60B;froid;mat;foncé;0
+S3040-R70B;Bleu clair;30;40;R70B;froid;mat;foncé;0
+S3040-R80B;Bleu clair;30;40;R80B;froid;mat;foncé;0
+S3040-R90B;Bleu clair;30;40;R90B;froid;mat;foncé;0
+S3502-B;Gris trafic;35;2;B;froid;mat;foncé;0
+S3502-G;Gris;35;2;G;froid;mat;foncé;0
+S4005-B20G;Gris;40;5;B20G;froid;mat;foncé;0
+S4005-B80G;Bleu gris;40;5;B80G;froid;mat;foncé;0
+S4005-G20Y;Gris vert;40;5;G20Y;froid;mat;foncé;0
+S4005-R50B;Gris;40;5;R50B;froid;mat;foncé;0
+S4005-R80B;Bleu gris;40;5;R80B;froid;mat;foncé;0
+S4010-B10G;Gris bleu;40;10;B10G;froid;mat;foncé;0
+S4010-B30G;Gris;40;10;B30G;froid;mat;foncé;0
+S4010-B50G;Gris;40;10;B50G;froid;mat;foncé;0
+S4010-B70G;Gris vert;40;10;B70G;froid;mat;foncé;0
+S4010-B90G;Gris vert;40;10;B90G;froid;mat;foncé;0
+S4010-G10Y;Vert gris;40;10;G10Y;froid;mat;foncé;0
+S4010-G30Y;Gris vert;40;10;G30Y;froid;mat;foncé;0
+S4010-R50B;Lilas;40;10;R50B;froid;mat;foncé;0
+S4010-R70B;Bleu gris;40;10;R70B;froid;mat;foncé;0
+S4010-R90B;Bleu Gris;40;10;R90B;froid;mat;foncé;0
+S4020-B;Bleu;40;20;B;froid;mat;foncé;0
+S4020-B10G;Bleu;40;20;B10G;froid;mat;foncé;0
+S4020-B30G;Bleu;40;20;B30G;froid;mat;foncé;0
+S4020-B50G;Vert pâle;40;20;B50G;froid;mat;foncé;0
+S4020-B70G;Vert bleu;40;20;B70G;froid;mat;foncé;0
+S4020-B90G;Vert;40;20;B90G;froid;mat;foncé;0
+S4020-G;Vert;40;20;G;froid;mat;foncé;0
+S4020-G10Y;Vert;40;20;G10Y;froid;mat;foncé;0
+S4020-G30Y;Vert;40;20;G30Y;froid;mat;foncé;0
+S4020-R50B;Rouge bleu;40;20;R50B;froid;mat;foncé;0
+S4020-R60B;Rouge bleu;40;20;R60B;froid;mat;foncé;0
+S4020-R70B;Rouge bleu;40;20;R70B;froid;mat;foncé;0
+S4020-R80B;Gris bleu;40;20;R80B;froid;mat;foncé;0
+S4020-R90B;Bleu pigeon;40;20;R90B;froid;mat;foncé;0
+S4030-B;Bleu;40;30;B;froid;mat;foncé;0
+S4030-B10G;Bleu;40;30;B10G;froid;mat;foncé;0
+S4030-B30G;Bleu;40;30;B30G;froid;mat;foncé;0
+S4030-B50G;Bleu;40;30;B50G;froid;mat;foncé;0
+S4030-B70G;Vert;40;30;B70G;froid;mat;foncé;0
+S4030-B90G;Vert;40;30;B90G;froid;mat;foncé;0
+S4030-G;Vert;40;30;G;froid;mat;foncé;0
+S4030-G10Y;Vert;40;30;G10Y;froid;mat;foncé;0
+S4030-G30Y;Vert réséda;40;30;G30Y;froid;mat;foncé;0
+S4030-R50B;Violet;40;30;R50B;froid;mat;foncé;0
+S4030-R60B;Violet;40;30;R60B;froid;mat;foncé;0
+S4030-R70B;Bleu;40;30;R70B;froid;mat;foncé;0
+S4030-R80B;Bleu;40;30;R80B;froid;mat;foncé;0
+S4030-R90B;Bleu;40;30;R90B;froid;mat;foncé;0
+S4040-B;Bleu;40;40;B;froid;mat;foncé;0
+S4040-B10G;bLEU;40;40;B10G;froid;mat;foncé;0
+S4040-B20G;Bleu;40;40;B20G;froid;mat;foncé;0
+S4040-B30G;Bleu vert;40;40;B30G;froid;mat;foncé;0
+S4040-B40G;Bleu;40;40;B40G;froid;mat;foncé;0
+S4040-B50G;Vert;40;40;B50G;froid;mat;foncé;0
+S4040-B60G;Vert;40;40;B60G;froid;mat;foncé;0
+S4040-B70G;Vert;40;40;B70G;froid;mat;foncé;0
+S4040-B80G;Vert;40;40;B80G;froid;mat;foncé;0
+S4040-B90G;Vert;40;40;B90G;froid;mat;foncé;0
+S4040-G;Vert;40;40;G;froid;mat;foncé;0
+S4040-G10Y;Vert;40;40;G10Y;froid;mat;foncé;0
+S4040-G20Y;Vert;40;40;G20Y;froid;mat;foncé;0
+S4040-G30Y;Vert;40;40;G30Y;froid;mat;foncé;0
+S4040-G40Y;Vert;40;40;G40Y;froid;mat;foncé;0
+S4040-R50B;Lilas;40;40;R50B;froid;mat;foncé;0
+S4040-R60B;Violet foncé;40;40;R60B;froid;mat;foncé;0
+S4040-R70B;Bleu;40;40;R70B;froid;mat;foncé;0
+S4040-R80B;Bleu;40;40;R80B;froid;mat;foncé;0
+S4040-R90B;Bleu brillant;40;40;R90B;froid;mat;foncé;0
+S4502-B;Gris fenêtre- souris;45;2;B;froid;mat;foncé;0
+S4502-G;Gris;45;2;G;froid;mat;foncé;0
+S5005-B20G;Gris bleu;50;5;B20G;froid;mat;foncé;0
+S5005-B80G;Gris vert;50;5;B80G;froid;mat;foncé;0
+S5005-G20Y;Gris vert;50;5;G20Y;froid;mat;foncé;0
+S5005-R50B;Gris;50;5;R50B;froid;mat;foncé;0
+S5005-R80B;Gris;50;5;R80B;froid;mat;foncé;0
+S5010-B10G;Gris bleu;50;10;B10G;froid;mat;foncé;0
+S5010-B30G;Gris bleu;50;10;B30G;froid;mat;foncé;0
+S5010-B50G;Gris vert;50;10;B50G;froid;mat;foncé;0
+S5010-B70G;Gris vert;50;10;B70G;froid;mat;foncé;0
+S5010-B90G;Vert gris;50;10;B90G;froid;mat;foncé;0
+S5010-G10Y;Vert gris;50;10;G10Y;froid;mat;foncé;0
+S5010-G30Y;Vert gris;50;10;G30Y;froid;mat;foncé;0
+S5010-R50B;Gris lilas;50;10;R50B;froid;mat;foncé;0
+S5010-R70B;Gris bleu;50;10;R70B;froid;mat;foncé;0
+S5010-R90B;Gris bleu;50;10;R90B;froid;mat;foncé;0
+S5020-B;Bleu;50;20;B;froid;mat;foncé;0
+S5020-B10G;Bleu;50;20;B10G;froid;mat;foncé;0
+S5020-B30G;Bleu;50;20;B30G;froid;mat;foncé;0
+S5020-B50G;Vert gris;50;20;B50G;froid;mat;foncé;0
+S5020-B70G;Vert bleu;50;20;B70G;froid;mat;foncé;0
+S5020-B90G;Vert menthe;50;20;B90G;froid;mat;foncé;0
+S5020-G;Vert;50;20;G;froid;mat;foncé;0
+S5020-G10Y;Vert;50;20;G10Y;froid;mat;foncé;0
+S5020-G30Y;Vert;50;20;G30Y;froid;mat;foncé;0
+S5020-R50B;Rouge bleu;50;20;R50B;froid;mat;foncé;0
+S5020-R60B;Bleu gris;50;20;R60B;froid;mat;foncé;0
+S5020-R70B;Bleu;50;20;R70B;froid;mat;foncé;0
+S5020-R80B;Bleu;50;20;R80B;froid;mat;foncé;0
+S5020-R90B;Bleu;50;20;R90B;froid;mat;foncé;0
+S5030-B;Bleu;50;30;B;froid;mat;foncé;0
+S5030-B10G;Bleu;50;30;B10G;froid;mat;foncé;0
+S5030-B30G;Bleu;50;30;B30G;froid;mat;foncé;0
+S5030-B50G;Bleu vert;50;30;B50G;froid;mat;foncé;0
+S5030-B70G;Vert;50;30;B70G;froid;mat;foncé;0
+S5030-B90G;Vert;50;30;B90G;froid;mat;foncé;0
+S5030-G;Vert;50;30;G;froid;mat;foncé;0
+S5030-G10Y;Vert;50;30;G10Y;froid;mat;foncé;0
+S5030-G30Y;Vert;50;30;G30Y;froid;mat;foncé;0
+S5030-R50B;Violet;50;30;R50B;froid;mat;foncé;0
+S5030-R60B;Violet foncé;50;30;R60B;froid;mat;foncé;0
+S5030-R70B;Bleu;50;30;R70B;froid;mat;foncé;0
+S5030-R80B;Bleu;50;30;R80B;froid;mat;foncé;0
+S5030-R90B;Bleu;50;30;R90B;froid;mat;foncé;0
+S5040-B;Bleu foncé;50;40;B;froid;mat;foncé;0
+S5040-B10G;Bleu foncé;50;40;B10G;froid;mat;foncé;0
+S5040-B20G;Bleu vert;50;40;B20G;froid;mat;foncé;0
+S5040-B30G;Bleu foncé;50;40;B30G;froid;mat;foncé;0
+S5040-B40G;Vert foncé;50;40;B40G;froid;mat;foncé;0
+S5040-B50G;Vert foncé;50;40;B50G;froid;mat;foncé;0
+S5040-B60G;Vert foncé;50;40;B60G;froid;mat;foncé;0
+S5040-B70G;Vert foncé;50;40;B70G;froid;mat;foncé;0
+S5040-B80G;Vert foncé;50;40;B80G;froid;mat;foncé;0
+S5040-B90G;Vert foncé;50;40;B90G;froid;mat;foncé;0
+S5040-G;Vert foncé;50;40;G;froid;mat;foncé;0
+S5040-G10Y;Vert foncé;50;40;G10Y;froid;mat;foncé;0
+S5040-G20Y;Vert foncé;50;40;G20Y;froid;mat;foncé;0
+S5040-G30Y;Vert foncé;50;40;G30Y;froid;mat;foncé;0
+S5040-G40Y;Vert;50;40;G40Y;froid;mat;foncé;0
+S5040-R50B;Violet;50;40;R50B;froid;mat;foncé;0
+S5040-R60B;Bleu violet;50;40;R60B;froid;mat;foncé;0
+S5040-R70B;Bleu foncé;50;40;R70B;froid;mat;foncé;0
+S5040-R80B;Bleu foncé;50;40;R80B;froid;mat;foncé;0
+S5040-R90B;Bleu;50;40;R90B;froid;mat;foncé;0
+S5045-B10G;Bleu foncé;50;45;B10G;froid;mat;foncé;0
+S5502-B;Quartz gray- Gris;55;2;B;froid;mat;foncé;0
+S5502-G;Gris;55;2;G;froid;mat;foncé;0
+S5540-B;Bleu;55;40;B;froid;mat;foncé;0
+S5540-B10G;Bleu;55;40;B10G;froid;mat;foncé;0
+S5540-B20G;Bleu vert;55;40;B20G;froid;mat;foncé;0
+S5540-B30G;Vert foncé;55;40;B30G;froid;mat;foncé;0
+S5540-B40G;Vert foncé;55;40;B40G;froid;mat;foncé;0
+S5540-B50G;Vert foncé;55;40;B50G;froid;mat;foncé;0
+S5540-B80G;Vert foncé;55;40;B80G;froid;mat;foncé;0
+S5540-B90G;Vert;55;40;B90G;froid;mat;foncé;0
+S5540-G;Vert;55;40;G;froid;mat;foncé;0
+S5540-G10Y;Vert;55;40;G10Y;froid;mat;foncé;0
+S5540-G20Y;Vert;55;40;G20Y;froid;mat;foncé;0
+S5540-G30Y;Vert;55;40;G30Y;froid;mat;foncé;0
+S5540-G40Y;Vert;55;40;G40Y;froid;mat;foncé;0
+S5540-R70B;Bleu;55;40;R70B;froid;mat;foncé;0
+S5540-R90B;Bleu;55;40;R90B;froid;mat;foncé;0
+S6005-B20G;Gris bleu;60;5;B20G;froid;mat;foncé;0
+S6005-B80G;Gris bleu;60;5;B80G;froid;mat;foncé;0
+S6005-G20Y;Gris foncé;60;5;G20Y;froid;mat;foncé;0
+S6005-R50B;Gris;60;5;R50B;froid;mat;foncé;0
+S6005-R80B;Gris bleu;60;5;R80B;froid;mat;foncé;0
+S6010-B10G;Gris;60;10;B10G;froid;mat;foncé;0
+S6010-B30G;Gris;60;10;B30G;froid;mat;foncé;0
+S6010-B50G;Gris;60;10;B50G;froid;mat;foncé;0
+S6010-B70G;Gris vert;60;10;B70G;froid;mat;foncé;0
+S6010-B90G;Vert gris;60;10;B90G;froid;mat;foncé;0
+S6010-G10Y;Vert gris;60;10;G10Y;froid;mat;foncé;0
+S6010-G30Y;Vert gris;60;10;G30Y;froid;mat;foncé;0
+S6010-R50B;Violet Brun;60;10;R50B;froid;mat;foncé;0
+S6010-R70B;Bleu gris;60;10;R70B;froid;mat;foncé;0
+S6010-R90B;Bleu gris;60;10;R90B;froid;mat;foncé;0
+S6020-B;Bleu foncé;60;20;B;froid;mat;foncé;0
+S6020-B10G;Bleu foncé;60;20;B10G;froid;mat;foncé;0
+S6020-B30G;Bleu foncé;60;20;B30G;froid;mat;foncé;0
+S6020-B50G;Bleu vert;60;20;B50G;froid;mat;foncé;0
+S6020-B70G;Vert foncé;60;20;B70G;froid;mat;foncé;0
+S6020-B90G;Vert foncé;60;20;B90G;froid;mat;foncé;0
+S6020-G;Vert foncé;60;20;G;froid;mat;foncé;0
+S6020-G10Y;Vert foncé;60;20;G10Y;froid;mat;foncé;0
+S6020-G30Y;Vert oxyde de chrome;60;20;G30Y;froid;mat;foncé;0
+S6020-R50B;Violet foncé;60;20;R50B;froid;mat;foncé;0
+S6020-R60B;Violet foncé;60;20;R60B;froid;mat;foncé;0
+S6020-R70B;Bleu foncé;60;20;R70B;froid;mat;foncé;0
+S6020-R80B;Bleu foncé;60;20;R80B;froid;mat;foncé;0
+S6020-R90B;Bleu foncé;60;20;R90B;froid;mat;foncé;0
+S6030-B;Bleu vert;60;30;B;froid;mat;foncé;0
+S6030-B10G;Bleu vert;60;30;B10G;froid;mat;foncé;0
+S6030-B30G;Vert bleu;60;30;B30G;froid;mat;foncé;0
+S6030-B50G;Vert bleu;60;30;B50G;froid;mat;foncé;0
+S6030-B70G;Vert foncé;60;30;B70G;froid;mat;foncé;0
+S6030-B90G;Vert foncé;60;30;B90G;froid;mat;foncé;0
+S6030-G;Vert;60;30;G;froid;mat;foncé;0
+S6030-G10Y;Vert;60;30;G10Y;froid;mat;foncé;0
+S6030-G30Y;Vert;60;30;G30Y;froid;mat;foncé;0
+S6030-R50B;Violet;60;30;R50B;froid;mat;foncé;0
+S6030-R60B;Violet foncé;60;30;R60B;froid;mat;foncé;0
+S6030-R70B;Bleu foncé;60;30;R70B;froid;mat;foncé;0
+S6030-R80B;Bleu foncé;60;30;R80B;froid;mat;foncé;0
+S6030-R90B;Bleu foncé;60;30;R90B;froid;mat;foncé;0
+S6035-B60G;Vert foncé;60;35;B60G;froid;mat;foncé;0
+S6502-B;Gris;65;2;B;froid;mat;foncé;0
+S6502-G;Gris;65;2;G;froid;mat;foncé;0
+S6530-B30G;Vert foncé;65;30;B30G;froid;mat;foncé;0
+S6530-B50G;Vert foncé;65;30;B50G;froid;mat;foncé;0
+S6530-G10Y;Vert foncé;65;30;G10Y;froid;mat;foncé;0
+S7005-B20G;Gris foncé;70;5;B20G;froid;mat;foncé;0
+S7005-B80G;Gris foncé;70;5;B80G;froid;mat;foncé;0
+S7005-G20Y;Gris;70;5;G20Y;froid;mat;foncé;0
+S7005-R50B;Gris foncé;70;5;R50B;froid;mat;foncé;0
+S7005-R80B;Gris foncé;70;5;R80B;froid;mat;foncé;0
+S7010-B10G;Gris fer;70;10;B10G;froid;mat;foncé;0
+S7010-B30G;Gris fer;70;10;B30G;froid;mat;foncé;0
+S7010-B50G;Gris vert;70;10;B50G;froid;mat;foncé;0
+S7010-B70G;Vert gris;70;10;B70G;froid;mat;foncé;0
+S7010-B90G;Vert gris;70;10;B90G;froid;mat;foncé;0
+S7010-G10Y;Vert gris;70;10;G10Y;froid;mat;foncé;0
+S7010-G30Y;Vert gris;70;10;G30Y;froid;mat;foncé;0
+S7010-R50B;Bleu marron;70;10;R50B;froid;mat;foncé;0
+S7010-R70B;Gris bleu;70;10;R70B;froid;mat;foncé;0
+S7010-R90B;Gris bleu;70;10;R90B;froid;mat;foncé;0
+S7020-B;Bleu foncé;70;20;B;froid;mat;foncé;0
+S7020-B10G;Bleu gris;70;20;B10G;froid;mat;foncé;0
+S7020-B30G;Vert bleu;70;20;B30G;froid;mat;foncé;0
+S7020-B50G;Vert;70;20;B50G;froid;mat;foncé;0
+S7020-B70G;Vert foncé;70;20;B70G;froid;mat;foncé;0
+S7020-B90G;Vert foncé;70;20;B90G;froid;mat;foncé;0
+S7020-G;Vert foncé;70;20;G;froid;mat;foncé;0
+S7020-G10Y;Vert foncé;70;20;G10Y;froid;mat;foncé;0
+S7020-G30Y;Vert olive;70;20;G30Y;froid;mat;foncé;0
+S7020-R50B;Violet foncé;70;20;R50B;froid;mat;foncé;0
+S7020-R60B;Bleu violet;70;20;R60B;froid;mat;foncé;0
+S7020-R70B;Bleu;70;20;R70B;froid;mat;foncé;0
+S7020-R80B;Bleu;70;20;R80B;froid;mat;foncé;0
+S7020-R90B;Bleu;70;20;R90B;froid;mat;foncé;0
+S7502-B;Gris foncé;75;2;B;froid;mat;foncé;0
+S7502-G;Gris trafic B- Gris foncé;75;2;G;froid;mat;foncé;0
+S8005-B20G;Gris bleu foncé;80;5;B20G;froid;mat;foncé;0
+S8005-B80G;Gris foncé;80;5;B80G;froid;mat;foncé;0
+S8005-G20Y;Vert foncé;80;5;G20Y;froid;mat;foncé;0
+S8005-R50B;Noir;80;5;R50B;froid;mat;foncé;0
+S8005-R80B;Gris violet;80;5;R80B;froid;mat;foncé;0
+S8010-B10G;Vert noir;80;10;B10G;froid;mat;foncé;0
+S8010-B30G;Vert noir;80;10;B30G;froid;mat;foncé;0
+S8010-B50G;Vert noir;80;10;B50G;froid;mat;foncé;0
+S8010-B70G;Vert noir;80;10;B70G;froid;mat;foncé;0
+S8010-B90G;Vert foncé;80;10;B90G;froid;mat;foncé;0
+S8010-G10Y;Vert gris;80;10;G10Y;froid;mat;foncé;0
+S8010-G30Y;Vert bouteille;80;10;G30Y;froid;mat;foncé;0
+S8010-R50B;Violet foncé;80;10;R50B;froid;mat;foncé;0
+S8010-R70B;Violet noir;80;10;R70B;froid;mat;foncé;0
+S8010-R90B;Violet noir;80;10;R90B;froid;mat;foncé;0
+S8502-B;Gris foncé;85;2;B;froid;mat;foncé;0
+S8502-G;Gris foncé;85;2;G;froid;mat;foncé;0
+S8505-B20G;Noir;85;5;B20G;froid;mat;foncé;0
+S8505-B80G;Vert noir;85;5;B80G;froid;mat;foncé;0
+S8505-G20Y;Vert noir;85;5;G20Y;froid;mat;foncé;0
+S8505-R80B;Bleu noir;85;5;R80B;froid;mat;foncé;0
+S0300-N;Blanc cassé Neutre Froid -;3;0;N;neutre;mat;clair;0
+S0500-N;Blanc cassé Neutre Froid;5;0;N;neutre;mat;clair;0
+S1000-N;Gris blanc Neutre froid -;10;0;N;neutre;mat;clair;0
+S1500-N;Gris blanc Neutre froid - Eté;15;0;N;neutre;mat;clair;0
+S2000-N;Gris clair Neutre froid - Eté;20;0;N;neutre;mat;clair;0
+S2500-N;Gris Neutre froid - Eté;25;0;N;neutre;mat;clair;0
+S3000-N;Gris Neutre froid;30;0;N;neutre;mat;foncé;0
+S3500-N;Gris Neutre froid -;35;0;N;neutre;mat;foncé;0
+S4000-N;Gris Neutre froid +;40;0;N;neutre;mat;foncé;0
+S4500-N;Gris;45;0;N;neutre;mat;foncé;0
+S5000-N;Gris foncé Neutre froid –;50;0;N;neutre;mat;foncé;0
+S5500-N;Gris Neutre Froid-;55;0;N;neutre;mat;foncé;0
+S6000-N;Gris moyen Neutre froid -;60;0;N;neutre;mat;foncé;0
+S6500-N;Gris Neutre froid - Hiver;65;0;N;neutre;mat;foncé;0
+S7000-N;Gris moyen Neutre froid -;70;0;N;neutre;mat;foncé;0
+S7500-N;Gris moyen Neutre froid - Hivers;75;0;N;neutre;mat;foncé;0
+S8000-N;Gris brun Neutre froid;80;0;N;neutre;mat;foncé;0
+S8500-N;Gris foncé Neutre froid -;85;0;N;neutre;mat;foncé;0
