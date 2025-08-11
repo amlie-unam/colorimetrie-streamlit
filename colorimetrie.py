@@ -7,6 +7,13 @@ import streamlit as st
 from fpdf import FPDF
 
 # =========================
+# App config
+# =========================
+st.set_page_config(page_title="Nuancier NCS", layout="wide")
+
+CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
+
+# =========================
 # Utils NCS -> RGB (approx)
 # =========================
 BASE = {
@@ -32,6 +39,7 @@ def hue_to_rgb(hue: str):
         a, pct, b = m.group(1), int(m.group(2)), m.group(3)
         t = pct / 100.0
         return _mix(BASE[a], BASE[b], t)
+    # Fallback: moyenne des lettres présentes
     letters = [ch for ch in hue if ch in BASE]
     if not letters:
         return BASE["W"]
@@ -65,13 +73,19 @@ def rgb_to_hex(rgb):
 # =========================
 # Chargement des données
 # =========================
-st.set_page_config(page_title="Nuancier NCS", layout="wide")
-
 @st.cache_data
-def load_data():
-    return pd.read_csv("palette_ncs_avec_adjectifs.csv", sep=";")
+def load_data(path: str):
+    df = pd.read_csv(path, sep=";")
+    # Colonnes minimales attendues
+    required = {"ncs_code", "nom", "noirceur%", "saturation%", "teinte",
+                "temperature", "clarte", "luminosite", "is_neutre"}
+    missing = required - set(df.columns)
+    if missing:
+        st.error(f"Colonnes manquantes dans {path} : {', '.join(sorted(missing))}")
+        st.stop()
+    return df
 
-df = load_data()
+df = load_data(CSV_PATH)
 
 # =========================
 # UI filtres (2 options)
@@ -98,13 +112,27 @@ if inclure_neutres:
     )
 
 result = df[mask].copy()
+
 st.write(f"**{len(result)} couleurs** trouvées")
+
+if result.empty:
+    st.info("Aucune couleur ne correspond à ces 3 adjectifs. Essaie une autre combinaison ou active l’option 'Inclure aussi les neutres'.")
+    st.stop()
 
 # =========================
 # Couleurs HEX pour rendu
 # =========================
-result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
-result["hex"] = result["rgb"].apply(rgb_to_hex)
+# (évite les NaN pour 'nom' qui cassent FPDF plus loin)
+result["nom"] = result["nom"].fillna("").astype(str)
+
+# Ajout des RGB/HEX si pas déjà présent
+if "hex" not in result.columns or "rgb" not in result.columns:
+    result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
+    result["hex"] = result["rgb"].apply(rgb_to_hex)
+else:
+    # si 'rgb' est stocké en str, on pourrait reparser, mais ici on recalcule pour fiabilité
+    result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
+    result["hex"] = result["rgb"].apply(rgb_to_hex)
 
 # =========================
 # Aperçu tableau
@@ -128,57 +156,73 @@ st.download_button(
 # =========================
 # PDF (via FPDF, pas reportlab)
 # =========================
+def _latin1_safe(s: str) -> str:
+    """Convertit les caractères non-latin1 pour éviter les erreurs FPDF."""
+    if s is None:
+        return ""
+    repl = {
+        "’": "'",
+        "‘": "'",
+        "“": '"',
+        "”": '"',
+        "–": "-",
+        "—": "-",
+        "•": "-",
+        "…": "...",
+        "\u00A0": " ",  # espace insécable
+    }
+    for a, b in repl.items():
+        s = s.replace(a, b)
+    return s.encode("latin-1", errors="replace").decode("latin-1")
+
 def generate_pdf(dataframe: pd.DataFrame, temperature: str, clarte: str, luminosite: str) -> bytes:
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
     pdf.set_font("Helvetica", size=12)
-    pdf.cell(0, 8, f"Sélection ({temperature}, {clarte}, {luminosite})", ln=1)
+    titre = f"Sélection ({temperature}, {clarte}, {luminosite})"
+    pdf.cell(0, 8, _latin1_safe(titre), ln=1)
 
-    # Grille 3 colonnes
-    left_margin = 15
-    right_margin = 15
+    left_margin, right_margin = 15, 15
     usable_width = 210 - left_margin - right_margin
-    cols = 3
+    cols, swatch_h, gap_y = 3, 25, 10
     swatch_w = usable_width / cols
-    swatch_h = 25  # hauteur rectangle couleur
-    gap_y = 10
-
-    col = 0
-    x0 = left_margin
-    y = pdf.get_y() + 5
+    col, x0, y = 0, left_margin, pdf.get_y() + 5
 
     for _, row in dataframe.iterrows():
         x = x0 + col * swatch_w
 
         # Pastille couleur
         r, g, b = row["rgb"]
-        pdf.set_fill_color(r, g, b)
+        pdf.set_fill_color(int(r), int(g), int(b))
         pdf.rect(x, y, swatch_w, swatch_h, style='F')
 
-        # Texte
+        # Textes (assainis latin-1)
         pdf.set_xy(x, y + swatch_h + 3)
         pdf.set_text_color(0, 0, 0)
         pdf.set_font("Helvetica", size=9)
+
         label1 = f"{row['ncs_code']}  |  {row['nom']}"
-        label2 = f"Noirceur: {row['noirceur%']}  |  Saturation: {row['saturation%']}  |  Teinte: {row['teinte']}  |  {row['hex']}"
-        pdf.multi_cell(w=swatch_w, h=5, txt=label1, border=0, align='L')
+        label2 = (
+            f"Noirceur: {row['noirceur%']}  |  "
+            f"Saturation: {row['saturation%']}  |  "
+            f"Teinte: {row['teinte']}  |  {row['hex']}"
+        )
+        pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(label1), border=0, align='L')
         pdf.set_x(x)
-        pdf.multi_cell(w=swatch_w, h=5, txt=label2, border=0, align='L')
+        pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(label2), border=0, align='L')
 
         col += 1
         if col >= cols:
             col = 0
             y = pdf.get_y() + gap_y
-            # Nouvelle page si on arrive en bas
-            if y + swatch_h + 20 > 297 - 15:  # A4 hauteur 297mm
+            # pagination
+            if y + swatch_h + 20 > 297 - 15:  # bas de page (A4=297mm)
                 pdf.add_page()
                 y = pdf.get_y() + 5
 
-    # Retour bytes
-    out = BytesIO()
-    pdf.output(out)
-    return out.getvalue()
+    # IMPORTANT: récupérer les bytes via dest='S' et encoder latin-1
+    return pdf.output(dest='S').encode('latin-1', 'replace')
 
 pdf_bytes = generate_pdf(result, temperature, clarte, luminosite)
 
@@ -189,4 +233,4 @@ st.download_button(
     mime="application/pdf"
 )
 
-st.caption("Note : conversion NCS→RGB approximative (fidèle pour écran).")
+st.caption("Note : conversion NCS→RGB approximative (suffisante pour l’écran).")
