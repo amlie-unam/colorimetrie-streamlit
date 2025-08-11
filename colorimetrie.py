@@ -1,34 +1,90 @@
-import pandas as pd
-import streamlit as st
+# -*- coding: utf-8 -*-
 import re
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import cm
-from reportlab.lib.colors import Color
 from io import BytesIO
 
+import pandas as pd
+import streamlit as st
+from fpdf import FPDF
+
+# =========================
+# Utils NCS -> RGB (approx)
+# =========================
+BASE = {
+    "R": (1.0, 0.0, 0.0),
+    "Y": (1.0, 1.0, 0.0),
+    "G": (0.0, 1.0, 0.0),
+    "B": (0.0, 0.0, 1.0),
+    "W": (1.0, 1.0, 1.0),
+    "S": (0.0, 0.0, 0.0),  # Svart/Black
+}
+
+def _mix(c1, c2, t):
+    return tuple((1 - t) * a + t * b for a, b in zip(c1, c2))
+
+def hue_to_rgb(hue: str):
+    if not hue or hue.upper() == "N":
+        return BASE["W"]
+    hue = hue.strip().upper()
+    if hue in BASE:
+        return BASE[hue]
+    m = re.match(r"^([RGBY])(\d{1,2})([RGBY])$", hue)
+    if m:
+        a, pct, b = m.group(1), int(m.group(2)), m.group(3)
+        t = pct / 100.0
+        return _mix(BASE[a], BASE[b], t)
+    letters = [ch for ch in hue if ch in BASE]
+    if not letters:
+        return BASE["W"]
+    r = sum(BASE[ch][0] for ch in letters) / len(letters)
+    g = sum(BASE[ch][1] for ch in letters) / len(letters)
+    b = sum(BASE[ch][2] for ch in letters) / len(letters)
+    return (r, g, b)
+
+def ncs_to_rgb(ncs_code: str):
+    """
+    Attend 'SBBCC-HUE' (ex: S0502-Y, S3560-Y30R, S0300-N)
+    Retourne un tuple (R,G,B) en 0..255
+    """
+    m = re.match(r"^S\s*(\d{2})(\d{2})\s*-\s*([A-Z](?:\d{1,2}[A-Z])?|N)$", (ncs_code or "").replace(" ", ""))
+    if not m:
+        return (200, 200, 200)
+    blackness = int(m.group(1))
+    chroma    = int(m.group(2))
+    hue       = m.group(3)
+    whiteness = max(0, 100 - blackness - chroma)
+
+    hr, hg, hb = hue_to_rgb(hue)
+    r = (chroma/100.0)*hr + (whiteness/100.0)*BASE["W"][0] + (blackness/100.0)*BASE["S"][0]
+    g = (chroma/100.0)*hg + (whiteness/100.0)*BASE["W"][1] + (blackness/100.0)*BASE["S"][1]
+    b = (chroma/100.0)*hb + (whiteness/100.0)*BASE["W"][2] + (blackness/100.0)*BASE["S"][2]
+    return (int(round(r*255)), int(round(g*255)), int(round(b*255)))
+
+def rgb_to_hex(rgb):
+    return "#{:02X}{:02X}{:02X}".format(*rgb)
+
+# =========================
+# Chargement des données
+# =========================
 st.set_page_config(page_title="Nuancier NCS", layout="wide")
 
-# -----------------------------
-# Chargement du CSV maître
-# -----------------------------
 @st.cache_data
 def load_data():
     return pd.read_csv("palette_ncs_avec_adjectifs.csv", sep=";")
+
 df = load_data()
 
-# -----------------------------
-# Menus 2-options (adjectifs)
-# -----------------------------
+# =========================
+# UI filtres (2 options)
+# =========================
 col1, col2, col3 = st.columns(3)
 temperature = col1.selectbox("Température", ["chaud", "froid"], index=0)
 clarte      = col2.selectbox("Clarté", ["clair", "foncé"], index=0)
 luminosite  = col3.selectbox("Luminance", ["lumineux", "mat"], index=0)
 inclure_neutres = st.toggle("Inclure aussi les neutres (autour de S3030)", value=False)
 
-# -----------------------------
+# =========================
 # Filtrage
-# -----------------------------
+# =========================
 mask = (
     (df["temperature"] == temperature) &
     (df["clarte"] == clarte) &
@@ -43,122 +99,88 @@ if inclure_neutres:
 
 result = df[mask].copy()
 st.write(f"**{len(result)} couleurs** trouvées")
-st.dataframe(result[["ncs_code","nom","noirceur%","saturation%","teinte"]], use_container_width=True)
 
-# -----------------------------
-# Conversion NCS -> RGB/HEX (approx)
-# -----------------------------
-BASE = {
-    "R": (1.0, 0.0, 0.0),
-    "Y": (1.0, 1.0, 0.0),
-    "G": (0.0, 1.0, 0.0),
-    "B": (0.0, 0.0, 1.0),
-    "W": (1.0, 1.0, 1.0),
-    "S": (0.0, 0.0, 0.0),  # Svart/Black
-}
-
-def mix(c1, c2, t):
-    return tuple((1-t)*a + t*b for a, b in zip(c1, c2))
-
-def hue_to_rgb(hue: str):
-    if hue is None or hue.upper() == "N":
-        return BASE["W"]
-    hue = hue.strip().upper()
-    if hue in BASE:
-        return BASE[hue]
-    m = re.match(r"^([RGBY])(\d{1,2})([RGBY])$", hue)
-    if m:
-        a, pct, b = m.group(1), int(m.group(2)), m.group(3)
-        t = pct / 100.0
-        return mix(BASE[a], BASE[b], t)
-    letters = [ch for ch in hue if ch in BASE]
-    if not letters:
-        return BASE["W"]
-    r = sum(BASE[ch][0] for ch in letters) / len(letters)
-    g = sum(BASE[ch][1] for ch in letters) / len(letters)
-    b = sum(BASE[ch][2] for ch in letters) / len(letters)
-    return (r, g, b)
-
-def ncs_to_rgb(ncs_code: str):
-    m = re.match(r"^S\s*(\d{2})(\d{2})\s*-\s*([A-Z](?:\d{1,2}[A-Z])?|N)$", ncs_code.replace(" ", ""))
-    if not m:
-        return (200, 200, 200)
-    b = int(m.group(1))   # blackness
-    c = int(m.group(2))   # chroma
-    hue = m.group(3)
-    w = max(0, 100 - b - c)  # whiteness
-
-    hue_rgb = hue_to_rgb(hue)
-    r = (c/100.0)*hue_rgb[0] + (w/100.0)*BASE["W"][0] + (b/100.0)*BASE["S"][0]
-    g = (c/100.0)*hue_rgb[1] + (w/100.0)*BASE["W"][1] + (b/100.0)*BASE["S"][1]
-    b_ = (c/100.0)*hue_rgb[2] + (w/100.0)*BASE["W"][2] + (b/100.0)*BASE["S"][2]
-    return (int(round(r*255)), int(round(g*255)), int(round(b_*255)))
-
-def rgb_to_hex(rgb): 
-    return "#{:02X}{:02X}{:02X}".format(*rgb)
-
-# Ajout des couleurs calculées
+# =========================
+# Couleurs HEX pour rendu
+# =========================
 result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
 result["hex"] = result["rgb"].apply(rgb_to_hex)
 
-# -----------------------------
+# =========================
+# Aperçu tableau
+# =========================
+st.dataframe(
+    result[["ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte"]],
+    use_container_width=True
+)
+
+# =========================
 # Export CSV
-# -----------------------------
+# =========================
 st.download_button(
     "Exporter la sélection (CSV)",
-    data=result[["ncs_code","nom","hex","noirceur%","saturation%","teinte"]].to_csv(index=False, sep=";").encode("utf-8"),
+    data=result[["ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte"]]
+         .to_csv(index=False, sep=";").encode("utf-8"),
     file_name="selection_couleurs.csv",
     mime="text/csv"
 )
 
-# -----------------------------
-# Génération du PDF
-# -----------------------------
-def generate_pdf(dataframe: pd.DataFrame) -> bytes:
-    buf = BytesIO()
-    c = canvas.Canvas(buf, pagesize=A4)
-    width, height = A4
+# =========================
+# PDF (via FPDF, pas reportlab)
+# =========================
+def generate_pdf(dataframe: pd.DataFrame, temperature: str, clarte: str, luminosite: str) -> bytes:
+    pdf = FPDF(orientation='P', unit='mm', format='A4')
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font("Helvetica", size=12)
+    pdf.cell(0, 8, f"Sélection ({temperature}, {clarte}, {luminosite})", ln=1)
 
-    margin = 1.5*cm
-    swatch_w = (width - 2*margin) / 3.0
-    swatch_h = 2.2*cm
-    x0 = margin
-    y = height - margin - swatch_h
-
-    c.setFont("Helvetica-Bold", 12)
-    titre = f"Sélection ({temperature}, {clarte}, {luminosite})"
-    c.drawString(margin, height - margin + 0.2*cm, titre)
+    # Grille 3 colonnes
+    left_margin = 15
+    right_margin = 15
+    usable_width = 210 - left_margin - right_margin
+    cols = 3
+    swatch_w = usable_width / cols
+    swatch_h = 25  # hauteur rectangle couleur
+    gap_y = 10
 
     col = 0
+    x0 = left_margin
+    y = pdf.get_y() + 5
 
     for _, row in dataframe.iterrows():
-        x = margin + col*swatch_w
+        x = x0 + col * swatch_w
 
+        # Pastille couleur
         r, g, b = row["rgb"]
-        c.setFillColor(Color(r/255.0, g/255.0, b/255.0))
-        c.rect(x, y, swatch_w, swatch_h, fill=1, stroke=0)
+        pdf.set_fill_color(r, g, b)
+        pdf.rect(x, y, swatch_w, swatch_h, style='F')
 
-        c.setFillColorRGB(0, 0, 0)
-        c.setFont("Helvetica", 9)
-        text_y = y - 0.15*cm
-        c.drawString(x, text_y, f"{row['ncs_code']}  |  {row['nom']}")
-        c.drawString(x, text_y - 0.4*cm, f"Noirceur: {row['noirceur%']}  |  Saturation: {row['saturation%']}  |  Teinte: {row['teinte']}  |  {row['hex']}")
+        # Texte
+        pdf.set_xy(x, y + swatch_h + 3)
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font("Helvetica", size=9)
+        label1 = f"{row['ncs_code']}  |  {row['nom']}"
+        label2 = f"Noirceur: {row['noirceur%']}  |  Saturation: {row['saturation%']}  |  Teinte: {row['teinte']}  |  {row['hex']}"
+        pdf.multi_cell(w=swatch_w, h=5, txt=label1, border=0, align='L')
+        pdf.set_x(x)
+        pdf.multi_cell(w=swatch_w, h=5, txt=label2, border=0, align='L')
 
         col += 1
-        if col >= 3:
+        if col >= cols:
             col = 0
-            y -= (swatch_h + 1.2*cm)
-            if y < margin + swatch_h:
-                c.showPage()
-                y = height - margin - swatch_h
-                c.setFont("Helvetica-Bold", 12)
-                c.drawString(margin, height - margin + 0.2*cm, "Sélection — suite")
+            y = pdf.get_y() + gap_y
+            # Nouvelle page si on arrive en bas
+            if y + swatch_h + 20 > 297 - 15:  # A4 hauteur 297mm
+                pdf.add_page()
+                y = pdf.get_y() + 5
 
-    c.save()
-    buf.seek(0)
-    return buf.getvalue()
+    # Retour bytes
+    out = BytesIO()
+    pdf.output(out)
+    return out.getvalue()
 
-pdf_bytes = generate_pdf(result)
+pdf_bytes = generate_pdf(result, temperature, clarte, luminosite)
 
 st.download_button(
     "Télécharger la sélection en PDF",
@@ -167,4 +189,4 @@ st.download_button(
     mime="application/pdf"
 )
 
-st.caption("Couleurs dans le PDF : conversion NCS→RGB approximative pour rendu écran.")
+st.caption("Note : conversion NCS→RGB approximative (fidèle pour écran).")
