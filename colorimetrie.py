@@ -39,7 +39,6 @@ def hue_to_rgb(hue: str):
         a, pct, b = m.group(1), int(m.group(2)), m.group(3)
         t = pct / 100.0
         return _mix(BASE[a], BASE[b], t)
-    # Fallback: moyenne des lettres présentes
     letters = [ch for ch in hue if ch in BASE]
     if not letters:
         return BASE["W"]
@@ -76,7 +75,6 @@ def rgb_to_hex(rgb):
 @st.cache_data
 def load_data(path: str):
     df = pd.read_csv(path, sep=";")
-    # Colonnes minimales attendues
     required = {"ncs_code", "nom", "noirceur%", "saturation%", "teinte",
                 "temperature", "clarte", "luminosite", "is_neutre"}
     missing = required - set(df.columns)
@@ -86,64 +84,107 @@ def load_data(path: str):
     return df
 
 df = load_data(CSV_PATH)
+df["nom"] = df["nom"].fillna("").astype(str)
 
 # =========================
-# UI filtres (2 options)
+# Sélection avec priorité
 # =========================
-col1, col2, col3 = st.columns(3)
-temperature = col1.selectbox("Température", ["chaud", "froid"], index=0)
-clarte      = col2.selectbox("Clarté", ["clair", "foncé"], index=0)
-luminosite  = col3.selectbox("Luminance", ["lumineux", "mat"], index=0)
-inclure_neutres = st.toggle("Inclure aussi les neutres (autour de S3030)", value=False)
+ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
+
+c1, c2, c3 = st.columns(3)
+adj1 = c1.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=0)
+adj2 = c2.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=2)
+adj3 = c3.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=4)
+
+colA, colB = st.columns(2)
+strict_mode = colA.toggle("Mode strict (afficher uniquement les couleurs qui matchent les 3)", value=False)
+hide_neutral_unless_chosen = colB.toggle("Masquer les neutres sauf si 'neutre' est choisi", value=False)
 
 # =========================
-# Filtrage
+# Matching des adjectifs
 # =========================
-mask = (
-    (df["temperature"] == temperature) &
-    (df["clarte"] == clarte) &
-    (df["luminosite"] == luminosite)
+def match_adjective(df: pd.DataFrame, adj: str) -> pd.Series:
+    if adj == "chaud":
+        return df["temperature"].eq("chaud")
+    if adj == "froid":
+        return df["temperature"].eq("froid")
+    if adj == "neutre":
+        return df["temperature"].eq("neutre")
+    if adj == "clair":
+        return df["clarte"].eq("clair")
+    if adj == "foncé":
+        return df["clarte"].eq("foncé")
+    if adj == "lumineux":
+        return df["luminosite"].eq("lumineux")
+    if adj == "mat":
+        return df["luminosite"].eq("mat")
+    return pd.Series(False, index=df.index)
+
+m1 = match_adjective(df, adj1)
+m2 = match_adjective(df, adj2)
+m3 = match_adjective(df, adj3)
+
+df_view = df.copy()
+
+# Option: masquer neutres si non choisis
+if hide_neutral_unless_chosen and ("neutre" not in {adj1, adj2, adj3}):
+    df_view = df_view[df_view["temperature"] != "neutre"]
+    m1 = m1.loc[df_view.index]
+    m2 = m2.loc[df_view.index]
+    m3 = m3.loc[df_view.index]
+
+# Calcul des RGB/HEX pour l’affichage & PDF
+df_view["rgb"] = df_view["ncs_code"].apply(ncs_to_rgb)
+df_view["hex"] = df_view["rgb"].apply(rgb_to_hex)
+
+# =========================
+# Tri par priorité (scoring)
+# =========================
+# On convertit les booléens en 0/1 et on trie par (match1, match2, match3, saturation% desc)
+df_view["match1"] = m1.astype(int)
+df_view["match2"] = m2.astype(int)
+df_view["match3"] = m3.astype(int)
+
+if strict_mode:
+    result = df_view[(df_view["match1"] == 1) & (df_view["match2"] == 1) & (df_view["match3"] == 1)].copy()
+else:
+    result = df_view.copy()
+
+# Tri : d’abord priorité 1, puis 2, puis 3, puis saturation décroissante (couleurs plus “présentes” en tête)
+result = result.sort_values(
+    by=["match1", "match2", "match3", "saturation%"],
+    ascending=[False, False, False, False]
+).reset_index(drop=True)
+
+# =========================
+# Feedback utilisateur
+# =========================
+tot = len(result)
+n1 = int(result["match1"].sum()) if not result.empty else 0
+n2 = int((result["match1"] & result["match2"]).sum()) if not result.empty else 0
+n3 = int((result["match1"] & result["match2"] & result["match3"]).sum()) if not result.empty else 0
+
+st.write(
+    f"**{tot} couleurs** trouvées | "
+    f"Match {adj1}: {n1} | "
+    f"Match {adj1}+{adj2}: {n2} | "
+    f"Match {adj1}+{adj2}+{adj3}: {n3}"
 )
-if inclure_neutres:
-    mask = mask | (
-        (df["temperature"] == "neutre") &
-        (df["clarte"] == clarte) &
-        (df["luminosite"] == luminosite)
-    )
-
-result = df[mask].copy()
-
-st.write(f"**{len(result)} couleurs** trouvées")
 
 if result.empty:
-    st.info("Aucune couleur ne correspond à ces 3 adjectifs. Essaie une autre combinaison ou active l’option 'Inclure aussi les neutres'.")
+    st.info("Aucune couleur ne correspond (selon le mode choisi). Change l’ordre/priorité, désactive le mode strict, ou autorise les neutres.")
     st.stop()
-
-# =========================
-# Couleurs HEX pour rendu
-# =========================
-# (évite les NaN pour 'nom' qui cassent FPDF plus loin)
-result["nom"] = result["nom"].fillna("").astype(str)
-
-# Ajout des RGB/HEX si pas déjà présent
-if "hex" not in result.columns or "rgb" not in result.columns:
-    result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
-    result["hex"] = result["rgb"].apply(rgb_to_hex)
-else:
-    # si 'rgb' est stocké en str, on pourrait reparser, mais ici on recalcule pour fiabilité
-    result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
-    result["hex"] = result["rgb"].apply(rgb_to_hex)
 
 # =========================
 # Aperçu tableau
 # =========================
 st.dataframe(
-    result[["ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte"]],
+    result[["ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte", "match1", "match2", "match3"]],
     use_container_width=True
 )
 
 # =========================
-# Export CSV
+# Export CSV (respecte l’ordre priorisé)
 # =========================
 st.download_button(
     "Exporter la sélection (CSV)",
@@ -169,19 +210,18 @@ def _latin1_safe(s: str) -> str:
         "—": "-",
         "•": "-",
         "…": "...",
-        "\u00A0": " ",  # espace insécable
+        "\u00A0": " ",
     }
     for a, b in repl.items():
         s = s.replace(a, b)
     return s.encode("latin-1", errors="replace").decode("latin-1")
 
-def generate_pdf(dataframe: pd.DataFrame, temperature: str, clarte: str, luminosite: str) -> bytes:
+def generate_pdf(dataframe: pd.DataFrame, title: str) -> bytes:
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
     pdf.set_font("Helvetica", size=12)
-    titre = f"Sélection ({temperature}, {clarte}, {luminosite})"
-    pdf.cell(0, 8, _latin1_safe(titre), ln=1)
+    pdf.cell(0, 8, _latin1_safe(title), ln=1)
 
     left_margin, right_margin = 15, 15
     usable_width = 210 - left_margin - right_margin
@@ -197,7 +237,7 @@ def generate_pdf(dataframe: pd.DataFrame, temperature: str, clarte: str, luminos
         pdf.set_fill_color(int(r), int(g), int(b))
         pdf.rect(x, y, swatch_w, swatch_h, style='F')
 
-        # Textes (assainis latin-1)
+        # Textes
         pdf.set_xy(x, y + swatch_h + 3)
         pdf.set_text_color(0, 0, 0)
         pdf.set_font("Helvetica", size=9)
@@ -216,15 +256,14 @@ def generate_pdf(dataframe: pd.DataFrame, temperature: str, clarte: str, luminos
         if col >= cols:
             col = 0
             y = pdf.get_y() + gap_y
-            # pagination
-            if y + swatch_h + 20 > 297 - 15:  # bas de page (A4=297mm)
+            if y + swatch_h + 20 > 297 - 15:
                 pdf.add_page()
                 y = pdf.get_y() + 5
 
-    # IMPORTANT: récupérer les bytes via dest='S' et encoder latin-1
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
-pdf_bytes = generate_pdf(result, temperature, clarte, luminosite)
+pdf_title = f"Priorité: {adj1} → {adj2} → {adj3}" + ("  |  Mode strict" if strict_mode else "")
+pdf_bytes = generate_pdf(result, pdf_title)
 
 st.download_button(
     "Télécharger la sélection en PDF",
@@ -233,4 +272,8 @@ st.download_button(
     mime="application/pdf"
 )
 
-st.caption("Note : conversion NCS→RGB approximative (suffisante pour l’écran).")
+st.caption(
+    "Tri par priorité : d’abord les couleurs qui matchent l’adjectif #1, puis #2, puis #3. "
+    "Active le mode strict pour imposer les trois à la fois. "
+    "Note : conversion NCS→RGB approximative (suffisante pour l’écran)."
+)
