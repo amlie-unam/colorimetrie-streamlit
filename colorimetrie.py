@@ -265,85 +265,117 @@ st.download_button(
 )
 
 # =========================
-# PDF (via FPDF)
+# PDF (groupé par familles de teinte)
 # =========================
 def _latin1_safe(s: str) -> str:
-    """Convertit les caractères non-latin1 pour éviter les erreurs FPDF."""
     if s is None:
         return ""
-    repl = {
-        "’": "'",
-        "‘": "'",
-        "“": '"',
-        "”": '"',
-        "–": "-",
-        "—": "-",
-        "•": "-",
-        "…": "...",
-        "\u00A0": " ",
-    }
+    repl = {"’": "'", "‘": "'", "“": '"', "”": '"', "–": "-", "—": "-", "•": "-",
+            "…": "...", "\u00A0": " "}
     for a, b in repl.items():
         s = s.replace(a, b)
     return s.encode("latin-1", errors="replace").decode("latin-1")
 
-def generate_pdf(dataframe: pd.DataFrame, title: str) -> bytes:
+def generate_pdf_grouped_by_family(dataframe: pd.DataFrame, title: str) -> bytes:
+    """
+    Crée un PDF où chaque page correspond à un groupe de familles de teinte.
+    Groupes proposés :
+      - Tons rosés : red, magenta, violet
+      - Tons orangés/jaunes : orange, yellow
+      - Tons verts : green, cyan
+      - Tons bleus : blue
+      - Tons neutres : grey, other
+    """
+    # S'assurer que 'famille' et 'rgb' existent
+    df_pdf = dataframe.copy()
+    if "famille" not in df_pdf.columns:
+        df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
+    if "rgb" not in df_pdf.columns:
+        df_pdf["rgb"] = df_pdf["ncs_code"].apply(ncs_to_rgb)
+
+    # Définition des groupes (ordre d'apparition dans le PDF)
+    PAGE_GROUPS = [
+        ("Tons rosés", {"red", "magenta", "violet"}),
+        ("Tons orangés/jaunes", {"orange", "yellow"}),
+        ("Tons verts", {"green", "cyan"}),
+        ("Tons bleus", {"blue"}),
+        ("Tons neutres", {"grey", "other"}),
+    ]
+
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
     pdf.set_font("Helvetica", size=12)
-    pdf.cell(0, 8, _latin1_safe(title), ln=1)
 
     left_margin, right_margin = 15, 15
     usable_width = 210 - left_margin - right_margin
     cols, swatch_h, gap_y = 3, 25, 10
     swatch_w = usable_width / cols
-    col, x0, y = 0, left_margin, pdf.get_y() + 5
 
-    for _, row in dataframe.iterrows():
-        x = x0 + col * swatch_w
+    # Fonction d'une page
+    def add_family_page(page_title: str, df_page: pd.DataFrame):
+        pdf.add_page()
+        pdf.set_font("Helvetica", size=13)
+        pdf.cell(0, 8, _latin1_safe(f"{title} — {page_title}"), ln=1)
+        pdf.ln(2)
 
-        # Pastille couleur
-        r, g, b = row["rgb"]
-        pdf.set_fill_color(int(r), int(g), int(b))
-        pdf.rect(x, y, swatch_w, swatch_h, style='F')
-
-        # Textes
-        pdf.set_xy(x, y + swatch_h + 3)
-        pdf.set_text_color(0, 0, 0)
         pdf.set_font("Helvetica", size=9)
+        col, x0, y = 0, left_margin, pdf.get_y() + 2
 
-        label1 = f"{row['ncs_code']}  |  {row['nom']}"
-        label2 = (
-            f"Noirceur: {row['noirceur%']}  |  "
-            f"Saturation: {row['saturation%']}  |  "
-            f"Teinte: {row['teinte']}  |  {row['hex']}"
-        )
-        pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(label1), border=0, align='L')
-        pdf.set_x(x)
-        pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(label2), border=0, align='L')
+        for _, row in df_page.iterrows():
+            x = x0 + col * swatch_w
 
-        col += 1
-        if col >= cols:
-            col = 0
-            y = pdf.get_y() + gap_y
-            if y + swatch_h + 20 > 297 - 15:
-                pdf.add_page()
-                y = pdf.get_y() + 5
+            # Pastille
+            r, g, b = row["rgb"]
+            pdf.set_fill_color(int(r), int(g), int(b))
+            pdf.rect(x, y, swatch_w, swatch_h, style='F')
+
+            # Libellés
+            pdf.set_xy(x, y + swatch_h + 3)
+            pdf.set_text_color(0, 0, 0)
+            pdf.multi_cell(w=swatch_w, h=5,
+                           txt=_latin1_safe(f"{row['ncs_code']}  |  {row['nom']}"),
+                           border=0, align='L')
+            pdf.set_x(x)
+            pdf.multi_cell(w=swatch_w, h=5,
+                           txt=_latin1_safe(
+                               f"Noirceur: {row['noirceur%']}  |  "
+                               f"Saturation: {row['saturation%']}  |  "
+                               f"Teinte: {row['teinte']}  |  {row['hex']}"
+                           ),
+                           border=0, align='L')
+
+            col += 1
+            if col >= cols:
+                col = 0
+                y = pdf.get_y() + gap_y
+                # Nouvelle page si on déborde
+                if y + swatch_h + 20 > 297 - 15:
+                    pdf.add_page()
+                    pdf.set_font("Helvetica", size=13)
+                    pdf.cell(0, 8, _latin1_safe(f"{title} — {page_title} (suite)"), ln=1)
+                    pdf.ln(2)
+                    pdf.set_font("Helvetica", size=9)
+                    y = pdf.get_y() + 2
+
+    # Pour chaque groupe, filtrer et créer la/les page(s)
+    for page_title, fam_set in PAGE_GROUPS:
+        df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
+        if df_group.empty:
+            continue
+        # conserver l'ordre actuel (déjà trié/équilibré dans result)
+        add_family_page(page_title, df_group)
 
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
+# --- Appel (remplace l'ancien appel generate_pdf) ---
 pdf_title = f"Priorité: {adj1} → {adj2} → {adj3}  |  Strict: ON  |  Seuil: {SEUIL_STRICT:.2f}  |  Équilibrage: ON"
-pdf_bytes = generate_pdf(result, pdf_title)
+pdf_bytes = generate_pdf_grouped_by_family(result, pdf_title)
 
 st.download_button(
-    "Télécharger la sélection en PDF",
+    "Télécharger la sélection en PDF (regroupée par teintes)",
     data=pdf_bytes,
-    file_name="selection_couleurs.pdf",
+    file_name="selection_couleurs_par_teintes.pdf",
     mime="application/pdf"
 )
 
-st.caption(
-    "Matching flou avec scoring (0..1), priorité pondérée (1>2>3), mode strict ON (seuil 0.65) et équilibrage des familles de teinte ON. "
-    "Note : conversion NCS→RGB approximative (suffisante pour l’écran)."
-)
 
