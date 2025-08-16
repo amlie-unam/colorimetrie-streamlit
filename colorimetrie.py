@@ -265,36 +265,52 @@ st.download_button(
 )
 
 # =========================
-# PDF (groupé par familles, tri en dégradé HSV) — HARD-CODÉ logo + crédits
+# PDF (groupé par familles, tri dégradé HSV) — logo/crédit hardcodés, footer propre
 # =========================
-
-# Chemin du logo client (image locale au projet)
-LOGO_PATH = "logo_client.png"  # ou "logo_client.jpg"
+LOGO_PATH = "logo_client.png"   # ou .jpg, posé à côté du script
 CREDIT_FOOTER = "Nuancier généré par Amélie Otto – Tous droits réservés"
 
+class PDF(FPDF):
+    def __init__(self, logo_path=None, credit=""):
+        super().__init__(orientation='P', unit='mm', format='A4')
+        self.logo_path = logo_path
+        self.credit = credit
+        self.current_title = ""  # mis à jour avant chaque add_page()
+
+    def header(self):
+        # Logo en haut droite (si présent)
+        if self.logo_path:
+            try:
+                self.image(self.logo_path, x=210-15-25, y=10, w=25)
+            except Exception:
+                pass
+        # Titre de page (nom du groupe)
+        self.set_font("Helvetica", size=14)
+        self.set_text_color(0, 0, 0)
+        self.set_xy(15, 12)
+        self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
+
+    def footer(self):
+        # Crédit en pied de page, sur TOUTES les pages, sans créer de page en plus
+        self.set_y(-12)
+        self.set_font("Helvetica", size=8)
+        self.set_text_color(120, 120, 120)
+        self.cell(0, 8, _latin1_safe(self.credit), align='R')
+
 def _latin1_safe(s: str) -> str:
-    if s is None:
-        return ""
+    if s is None: return ""
     repl = {"’": "'", "‘": "'", "“": '"', "”": '"', "–": "-", "—": "-", "•": "-",
             "…": "...", "\u00A0": " "}
-    for a, b in repl.items():
-        s = s.replace(a, b)
+    for a, b in repl.items(): s = s.replace(a, b)
     return s.encode("latin-1", errors="replace").decode("latin-1")
 
 def _rgb_to_hsv_tuple(rgb):
     r, g, b = [c / 255.0 for c in rgb]
-    h, s, v = colorsys.rgb_to_hsv(r, g, b)  # h ∈ [0,1), s,v ∈ [0,1]
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)
     return (h, s, v)
 
-def generate_pdf_grouped_by_family_pretty_hardcoded(dataframe: pd.DataFrame) -> bytes:
-    """
-    PDF multi-pages :
-      - 1 page par groupe (ex. 'Tons orangés/jaunes')
-      - Tri en dégradé (HSV) dans chaque page
-      - Logo client en en-tête (chemin LOGO_PATH)
-      - Crédit en pied de page (CREDIT_FOOTER)
-    """
-    # Préparation des données
+def generate_pdf_grouped_by_family_final(dataframe: pd.DataFrame) -> bytes:
+    # Prépa données
     df_pdf = dataframe.copy()
     if "rgb" not in df_pdf.columns:
         df_pdf["rgb"] = df_pdf["ncs_code"].apply(ncs_to_rgb)
@@ -302,7 +318,7 @@ def generate_pdf_grouped_by_family_pretty_hardcoded(dataframe: pd.DataFrame) -> 
         df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
     df_pdf[["H", "S", "V"]] = df_pdf["rgb"].apply(_rgb_to_hsv_tuple).apply(pd.Series)
 
-    # Groupes/familles et ordre d'apparition
+    # Groupes en pages
     PAGE_GROUPS = [
         ("Tons rosés", {"red", "magenta", "violet"}),
         ("Tons orangés/jaunes", {"orange", "yellow"}),
@@ -311,39 +327,36 @@ def generate_pdf_grouped_by_family_pretty_hardcoded(dataframe: pd.DataFrame) -> 
         ("Tons neutres", {"grey", "other"}),
     ]
 
-    pdf = FPDF(orientation='P', unit='mm', format='A4')
+    pdf = PDF(logo_path=LOGO_PATH, credit=CREDIT_FOOTER)
     pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.set_font("Helvetica", size=9)
 
+    # Mise en page
     left_margin, right_margin = 15, 15
     usable_width = 210 - left_margin - right_margin
     cols, swatch_h, gap_y = 3, 25, 10
     swatch_w = usable_width / cols
+    start_y = 25  # sous l’en-tête
+    bottom_limit = 297 - 15  # 15 mm de marge bas
 
-    def add_footer_credit():
-        pdf.set_y(-12)
-        pdf.set_font("Helvetica", size=8)
-        pdf.set_text_color(120, 120, 120)
-        pdf.cell(0, 8, _latin1_safe(CREDIT_FOOTER), align='R')
-
-    def add_family_page(page_title: str, df_page: pd.DataFrame):
+    def add_group_page(page_title: str, df_page: pd.DataFrame):
+        # Définir le titre courant et ouvrir la 1re page du groupe
+        pdf.current_title = page_title
         pdf.add_page()
-
-        # En-tête : logo + titre simple (nom du groupe)
-        try:
-            pdf.image(LOGO_PATH, x=210-15-25, y=10, w=25)  # logo en haut à droite (25 mm de large)
-        except Exception:
-            pass  # si le logo est introuvable, on continue sans
-
-        pdf.set_font("Helvetica", size=14)
-        pdf.set_text_color(0, 0, 0)
-        pdf.set_xy(left_margin, 12)
-        pdf.cell(0, 8, _latin1_safe(page_title), ln=1)
-
-        # Grille couleurs (uniquement le nom affiché sous chaque pastille)
-        pdf.set_font("Helvetica", size=9)
-        col, x0, y = 0, left_margin, 25  # 25 mm pour laisser l'en-tête
+        col = 0
+        x0 = left_margin
+        y = start_y
 
         for _, row in df_page.iterrows():
+            # Vérifier si le prochain swatch tiendra sur la page (pastille + libellé + marge)
+            needed = swatch_h + 3 + 10  # bloc + texte + marge
+            if y + needed > bottom_limit:
+                # nouvelle page du même groupe
+                pdf.current_title = f"{page_title} (suite)"
+                pdf.add_page()
+                col = 0
+                y = start_y
+
             x = x0 + col * swatch_w
 
             # Pastille couleur
@@ -351,57 +364,41 @@ def generate_pdf_grouped_by_family_pretty_hardcoded(dataframe: pd.DataFrame) -> 
             pdf.set_fill_color(int(r), int(g), int(b))
             pdf.rect(x, y, swatch_w, swatch_h, style='F')
 
-            # Libellé (juste le nom complet)
+            # Libellé (juste le nom)
             pdf.set_xy(x, y + swatch_h + 3)
             pdf.set_text_color(0, 0, 0)
-            pdf.multi_cell(w=swatch_w, h=5,
-                           txt=_latin1_safe(str(row.get("nom", ""))),
-                           border=0, align='L')
+            pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(str(row.get("nom", ""))), border=0, align='L')
 
+            # Avancer dans la grille
             col += 1
             if col >= cols:
                 col = 0
                 y = pdf.get_y() + gap_y
-                # Nouvelle page si on déborde → réimprimer en-tête
-                if y + swatch_h + 20 > 297 - 15:
-                    add_footer_credit()
-                    pdf.add_page()
-                    try:
-                        pdf.image(LOGO_PATH, x=210-15-25, y=10, w=25)
-                    except Exception:
-                        pass
-                    pdf.set_font("Helvetica", size=14)
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.set_xy(left_margin, 12)
-                    pdf.cell(0, 8, _latin1_safe(f"{page_title} (suite)"), ln=1)
-                    pdf.set_font("Helvetica", size=9)
-                    y = 25
+            else:
+                # rester sur la même ligne pour la prochaine cellule
+                y = y
 
-        add_footer_credit()
-
-    # Génération des pages par groupe, tri en "dégradé"
+    # Générer les pages (avec tri dégradé par famille)
     for page_title, fam_set in PAGE_GROUPS:
         df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
         if df_group.empty:
             continue
         if fam_set == {"grey", "other"}:
-            # neutres : du sombre au clair, puis saturation décroissante
             df_group = df_group.sort_values(by=["V", "S"], ascending=[True, False]).reset_index(drop=True)
         else:
-            # chromatiques : Hue ↑, Value ↑ (foncé→clair), Saturation ↓ (plus saturé d'abord à V égal)
             df_group = df_group.sort_values(by=["H", "V", "S"], ascending=[True, True, False]).reset_index(drop=True)
-
-        add_family_page(page_title, df_group)
+        add_group_page(page_title, df_group)
 
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
-# --- Appel : génère le PDF avec logo + crédits hardcodés ---
-pdf_bytes = generate_pdf_grouped_by_family_pretty_hardcoded(result)
-
+# --- Appel ---
+pdf_bytes = generate_pdf_grouped_by_family_final(result)
 st.download_button(
     "Télécharger le PDF (pages par teintes, logo & crédit inclus)",
     data=pdf_bytes,
     file_name="nuancier_par_teintes.pdf",
     mime="application/pdf"
 )
+
+# Mention Streamlit en bas (petit)
 st.caption("produit développé par Amélie Otto")
