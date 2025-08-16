@@ -203,7 +203,7 @@ df_view["s3"] = df_view.apply(lambda r: score_adjective(r, adj3), axis=1)
 w1, w2, w3 = 1.0, 0.6, 0.3
 
 # Mode strict ON + seuil fixe
-SEUIL_STRICT = 0.65
+SEUIL_STRICT = 0.60
 mask_strict = (df_view["s1"] >= SEUIL_STRICT) & (df_view["s2"] >= SEUIL_STRICT) & (df_view["s3"] >= SEUIL_STRICT)
 result = df_view.loc[mask_strict].copy()
 
