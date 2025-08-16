@@ -265,7 +265,7 @@ st.download_button(
 )
 
 # =========================
-# PDF (groupé par familles de teinte)
+# PDF (groupé par familles + tri en dégradé HSV)
 # =========================
 def _latin1_safe(s: str) -> str:
     if s is None:
@@ -276,24 +276,32 @@ def _latin1_safe(s: str) -> str:
         s = s.replace(a, b)
     return s.encode("latin-1", errors="replace").decode("latin-1")
 
+def _rgb_to_hsv_tuple(rgb):
+    r, g, b = [c / 255.0 for c in rgb]
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)  # h ∈ [0,1), s,v ∈ [0,1]
+    return (h, s, v)
+
 def generate_pdf_grouped_by_family(dataframe: pd.DataFrame, title: str) -> bytes:
     """
-    Crée un PDF où chaque page correspond à un groupe de familles de teinte.
-    Groupes proposés :
+    Crée un PDF multi-pages :
+      - 1 page par groupe de familles de teinte
+      - À l'intérieur de chaque page, tri en "dégradé" (HSV) :
+          Hue ↑, puis Value ↑ (sombre → clair), puis Saturation ↓ (plus saturé d'abord à V égal).
+    Groupes :
       - Tons rosés : red, magenta, violet
       - Tons orangés/jaunes : orange, yellow
       - Tons verts : green, cyan
       - Tons bleus : blue
-      - Tons neutres : grey, other
+      - Tons neutres : grey, other  (triés surtout par luminosité)
     """
-    # S'assurer que 'famille' et 'rgb' existent
+    # Préparation
     df_pdf = dataframe.copy()
-    if "famille" not in df_pdf.columns:
-        df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
     if "rgb" not in df_pdf.columns:
         df_pdf["rgb"] = df_pdf["ncs_code"].apply(ncs_to_rgb)
+    if "famille" not in df_pdf.columns:
+        df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
 
-    # Définition des groupes (ordre d'apparition dans le PDF)
+    # Définition des groupes et de leur ordre d'apparition
     PAGE_GROUPS = [
         ("Tons rosés", {"red", "magenta", "violet"}),
         ("Tons orangés/jaunes", {"orange", "yellow"}),
@@ -302,29 +310,33 @@ def generate_pdf_grouped_by_family(dataframe: pd.DataFrame, title: str) -> bytes
         ("Tons neutres", {"grey", "other"}),
     ]
 
+    # Calcule HSV une fois pour toutes
+    df_pdf[["H", "S", "V"]] = df_pdf["rgb"].apply(_rgb_to_hsv_tuple).apply(pd.Series)
+
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.set_font("Helvetica", size=12)
 
+    # Mise en page
     left_margin, right_margin = 15, 15
     usable_width = 210 - left_margin - right_margin
     cols, swatch_h, gap_y = 3, 25, 10
     swatch_w = usable_width / cols
 
-    # Fonction d'une page
     def add_family_page(page_title: str, df_page: pd.DataFrame):
+        # En-tête de page
         pdf.add_page()
         pdf.set_font("Helvetica", size=13)
         pdf.cell(0, 8, _latin1_safe(f"{title} — {page_title}"), ln=1)
         pdf.ln(2)
-
         pdf.set_font("Helvetica", size=9)
+
         col, x0, y = 0, left_margin, pdf.get_y() + 2
 
         for _, row in df_page.iterrows():
             x = x0 + col * swatch_w
 
-            # Pastille
+            # Pastille couleur
             r, g, b = row["rgb"]
             pdf.set_fill_color(int(r), int(g), int(b))
             pdf.rect(x, y, swatch_w, swatch_h, style='F')
@@ -348,7 +360,7 @@ def generate_pdf_grouped_by_family(dataframe: pd.DataFrame, title: str) -> bytes
             if col >= cols:
                 col = 0
                 y = pdf.get_y() + gap_y
-                # Nouvelle page si on déborde
+                # Si on déborde, nouvelle page (avec mention "suite")
                 if y + swatch_h + 20 > 297 - 15:
                     pdf.add_page()
                     pdf.set_font("Helvetica", size=13)
@@ -357,24 +369,35 @@ def generate_pdf_grouped_by_family(dataframe: pd.DataFrame, title: str) -> bytes
                     pdf.set_font("Helvetica", size=9)
                     y = pdf.get_y() + 2
 
-    # Pour chaque groupe, filtrer et créer la/les page(s)
+    # Génération des pages
     for page_title, fam_set in PAGE_GROUPS:
         df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
         if df_group.empty:
             continue
-        # conserver l'ordre actuel (déjà trié/équilibré dans result)
+
+        # TRI EN DÉGRADÉ :
+        # - Pour neutres : priorité à V (luminosité) pour un vrai nuancier de gris/beiges, puis S (au cas où).
+        if fam_set == {"grey", "other"}:
+            df_group = df_group.sort_values(by=["V", "S"], ascending=[True, False]).reset_index(drop=True)
+        else:
+            # Couleurs chromatiques : Hue ↑ (continu), Value ↑ (foncé -> clair), Saturation ↓ (plus saturé d'abord à V égal)
+            df_group = df_group.sort_values(
+                by=["H", "V", "S"],
+                ascending=[True, True, False]
+            ).reset_index(drop=True)
+
         add_family_page(page_title, df_group)
 
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
-# --- Appel (remplace l'ancien appel generate_pdf) ---
+# --- Appel (remplace ton ancien generate_pdf) ---
 pdf_title = f"Priorité: {adj1} → {adj2} → {adj3}  |  Strict: ON  |  Seuil: {SEUIL_STRICT:.2f}  |  Équilibrage: ON"
 pdf_bytes = generate_pdf_grouped_by_family(result, pdf_title)
 
 st.download_button(
-    "Télécharger la sélection en PDF (regroupée par teintes)",
+    "Télécharger la sélection en PDF (dégradés par teintes)",
     data=pdf_bytes,
-    file_name="selection_couleurs_par_teintes.pdf",
+    file_name="selection_couleurs_par_teintes_degrades.pdf",
     mime="application/pdf"
 )
 
