@@ -290,7 +290,7 @@ class PDF(FPDF):
             try:
                 # A4 = 297mm haut ; on place le coin haut du logo à 15mm du bas
                 # et on donne 35mm de large (ajuste w si besoin)
-                self.image(self.logo_path, x=15, y=297 - 15 - 35, w=45)
+                self.image(self.logo_path, x=15, y=297 - 0 - 35, w=45)
             except Exception:
                 pass
         # Crédit en bas à droite
