@@ -88,23 +88,19 @@ df = load_data(CSV_PATH)
 df["nom"] = df["nom"].fillna("").astype(str)
 
 # =========================
-# Sélection avec priorité
+# Sélection avec priorité (adjectifs)
 # =========================
+# Tu peux garder toutes les options, mais par défaut on propose chaud/clair/lumineux
 ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
 
 c1, c2, c3 = st.columns(3)
-adj1 = c1.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=0)
-adj2 = c2.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=2)
-adj3 = c3.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=4)
+adj1 = c1.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=0)  # chaud
+adj2 = c2.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=2)  # clair
+adj3 = c3.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=4)  # lumineux
 
-colA, colB = st.columns(2)
-strict_mode = colA.toggle("Mode strict (afficher uniquement les couleurs qui matchent les 3)", value=False)
-hide_neutral_unless_chosen = colB.toggle("Masquer les neutres sauf si 'neutre' est choisi", value=False)
-
-# Réglages supplémentaires
-colC, colD = st.columns(2)
-balance_by_family = colC.toggle("Équilibrer les familles de teinte (diversifier le top)", value=True)
-strict_threshold = colD.slider("Seuil strict (si mode strict)", 0.0, 1.0, 0.7, 0.05)
+# On garde seulement ce toggle (utile en pratique)
+colA, _ = st.columns(2)
+hide_neutral_unless_chosen = colA.toggle("Masquer les neutres sauf si 'neutre' est choisi", value=False)
 
 # =========================
 # Préparation des données
@@ -127,7 +123,7 @@ def score_adjective(row: pd.Series, adj: str) -> float:
     Retourne un score 0..1 pour l'adjectif demandé, en combinant les colonnes disponibles.
     Logique:
       - chaud/froid/neutre : s'appuie sur 'temperature' avec tolérance
-      - clair/foncé        : s'appuie sur 'noirceur%' (blackness)
+      - clair/foncé        : s'appuie sur 'noirceur%' (blackness) + étiquette 'clarte'
       - lumineux/mat       : s'appuie d'abord sur 'luminosite' (catégoriel), sinon la saturation%
     """
     temp = (row.get("temperature") or "").strip().lower()
@@ -137,25 +133,20 @@ def score_adjective(row: pd.Series, adj: str) -> float:
     sat  = float(row.get("saturation%", 0))    # 0..100
 
     if adj == "chaud":
-        # exact chaud = 1, neutre = 0.6, froid = 0
         return 1.0 if temp == "chaud" else (0.6 if temp == "neutre" else 0.0)
 
     if adj == "froid":
         return 1.0 if temp == "froid" else (0.6 if temp == "neutre" else 0.0)
 
     if adj == "neutre":
-        # neutre “température”, mais on tolère les couleurs quasi-grises (faible saturation)
         if temp == "neutre":
             base = 1.0
         else:
             base = 0.0
-        # Bonus si très peu saturée (proche des gris/beiges)
         bonus = max(0.0, (10.0 - sat) / 10.0)  # sat<=10 → bonus jusqu’à +1
         return min(1.0, base + 0.6 * bonus)
 
     if adj == "clair":
-        # plus c'est clair, plus la noirceur est faible → score haut
-        # et on donne un petit bonus si 'clarte' == 'clair'
         s = 1.0 - (noir / 100.0)
         if clar == "clair":
             s = min(1.0, s + 0.15)
@@ -168,7 +159,6 @@ def score_adjective(row: pd.Series, adj: str) -> float:
         return s
 
     if adj == "lumineux":
-        # Priorité à l'étiquette catégorielle; sinon, proxy par saturation (plus saturée = plus “lumineuse” à l’écran)
         if lumo == "lumineux":
             return 1.0
         return 0.3 + 0.7 * (sat / 100.0)
@@ -184,7 +174,7 @@ def color_family_from_rgb(rgb_tuple):
     """
     Classe une couleur en famille basique via HSV.hue:
       red, orange, yellow, green, cyan, blue, violet, magenta, grey
-    Sert uniquement si on active l'option d'équilibrage par familles.
+    Utilisé pour diversifier automatiquement le top (équilibrage actif en dur).
     """
     r, g, b = [c / 255.0 for c in rgb_tuple]
     h, s, v = colorsys.rgb_to_hsv(r, g, b)  # h in [0,1)
@@ -207,31 +197,27 @@ df_view["s2"] = df_view.apply(lambda r: score_adjective(r, adj2), axis=1)
 df_view["s3"] = df_view.apply(lambda r: score_adjective(r, adj3), axis=1)
 
 # =========================
-# Tri par priorité (scoring pondéré)
+# Tri par priorité (strict ON, seuil fixe, équilibrage ON)
 # =========================
 # Pondérations par priorité (1>2>3)
 w1, w2, w3 = 1.0, 0.6, 0.3
 
-if strict_mode:
-    mask_strict = (df_view["s1"] >= strict_threshold) & (df_view["s2"] >= strict_threshold) & (df_view["s3"] >= strict_threshold)
-    result = df_view.loc[mask_strict].copy()
-else:
-    result = df_view.copy()
+# Mode strict ON + seuil fixe
+SEUIL_STRICT = 0.65
+mask_strict = (df_view["s1"] >= SEUIL_STRICT) & (df_view["s2"] >= SEUIL_STRICT) & (df_view["s3"] >= SEUIL_STRICT)
+result = df_view.loc[mask_strict].copy()
 
-# Score global (on ajoute un micro-bonus à la saturation pour trier les couleurs "présentes")
+# Score global (bonus léger à la saturation)
 result["score_global"] = (w1 * result["s1"] + w2 * result["s2"] + w3 * result["s3"]) + 0.05 * (result["saturation%"] / 100.0)
 
-# Famille de teinte (pour diversifier)
-if "rgb" not in result.columns:
-    result["rgb"] = result["ncs_code"].apply(ncs_to_rgb)
+# Famille de teinte + tri
 result["famille"] = result["rgb"].apply(color_family_from_rgb)
-
-# Tri par score décroissant
 result = result.sort_values(by="score_global", ascending=False).reset_index(drop=True)
 
-# Équilibrage: si activé, on réordonne le top pour alterner les familles
-if balance_by_family and not result.empty:
-    top = result.head(200).copy()
+# Équilibrage ON (round-robin par familles sur le top N)
+if not result.empty:
+    topN = 200
+    top = result.head(topN).copy()
     groups = {fam: df_fam.reset_index(drop=True) for fam, df_fam in top.groupby("famille")}
     order = []
     fams = list(groups.keys())
@@ -243,29 +229,16 @@ if balance_by_family and not result.empty:
             groups[fam] = groups[fam].iloc[1:]
         i += 1
     diversified = pd.DataFrame(order)
-    # concat avec le reste
-    result = pd.concat([diversified, result.iloc[200:]], ignore_index=True)
+    result = pd.concat([diversified, result.iloc[topN:]], ignore_index=True)
 
 # =========================
 # Feedback utilisateur
 # =========================
 tot = len(result)
-st.write(
-    f"**{tot} couleurs** trouvées "
-    + ("| Mode strict actif" if strict_mode else "")
-)
-
-if strict_mode:
-    st.caption(f"{tot} couleurs dépassent le seuil {strict_threshold:.2f} pour **{adj1} + {adj2} + {adj3}**.")
-else:
-    strong = lambda s: int((result[s] >= 0.7).sum())
-    st.caption(
-        f"Scores ≥ 0.7 — {adj1}: {strong('s1')} | {adj2}: {strong('s2')} | {adj3}: {strong('s3')}. "
-        "Tri: score global pondéré (+ léger bonus saturation) avec option d’équilibrage par familles."
-    )
+st.write(f"**{tot} couleurs** trouvées | Mode strict: **ON** | Seuil: **{SEUIL_STRICT:.2f}** | Équilibrage familles: **ON**")
 
 if result.empty:
-    st.info("Aucune couleur ne correspond (selon le mode choisi). Change l’ordre/priorité, réduis le seuil strict, ou autorise les neutres.")
+    st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
     st.stop()
 
 # =========================
@@ -292,7 +265,7 @@ st.download_button(
 )
 
 # =========================
-# PDF (via FPDF, pas reportlab)
+# PDF (via FPDF)
 # =========================
 def _latin1_safe(s: str) -> str:
     """Convertit les caractères non-latin1 pour éviter les erreurs FPDF."""
@@ -359,11 +332,7 @@ def generate_pdf(dataframe: pd.DataFrame, title: str) -> bytes:
 
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
-pdf_title = (
-    f"Priorité: {adj1} → {adj2} → {adj3}"
-    + ("  |  Mode strict" if strict_mode else "")
-    + (f"  |  Équilibrage familles" if balance_by_family else "")
-)
+pdf_title = f"Priorité: {adj1} → {adj2} → {adj3}  |  Strict: ON  |  Seuil: {SEUIL_STRICT:.2f}  |  Équilibrage: ON"
 pdf_bytes = generate_pdf(result, pdf_title)
 
 st.download_button(
@@ -374,6 +343,7 @@ st.download_button(
 )
 
 st.caption(
-    "Matching flou avec scoring (0..1), priorité pondérée (1>2>3) et option d’équilibrage par familles de teinte. "
+    "Matching flou avec scoring (0..1), priorité pondérée (1>2>3), mode strict ON (seuil 0.65) et équilibrage des familles de teinte ON. "
     "Note : conversion NCS→RGB approximative (suffisante pour l’écran)."
 )
+
