@@ -265,11 +265,12 @@ st.download_button(
 )
 
 # =========================
-# PDF (groupé par familles, tri en dégradé HSV, logo + crédit)
+# PDF (groupé par familles, tri en dégradé HSV) — HARD-CODÉ logo + crédits
 # =========================
-# UI pour logo + crédit
-logo_file = st.file_uploader("Logo du client (PNG/JPG)", type=["png", "jpg", "jpeg"])
-credit_text = st.text_input("Crédit (pied de page)", value="Code développé par Votre Nom / Votre Studio")
+
+# Chemin du logo client (image locale au projet)
+LOGO_PATH = "logo_client.png"  # ou "logo_client.jpg"
+CREDIT_FOOTER = "Nuancier généré par Amélie Otto – Tous droits réservés"
 
 def _latin1_safe(s: str) -> str:
     if s is None:
@@ -285,13 +286,13 @@ def _rgb_to_hsv_tuple(rgb):
     h, s, v = colorsys.rgb_to_hsv(r, g, b)  # h ∈ [0,1), s,v ∈ [0,1]
     return (h, s, v)
 
-def generate_pdf_grouped_by_family_pretty(dataframe: pd.DataFrame, page_groups, logo_bytes: bytes | None, credit: str) -> bytes:
+def generate_pdf_grouped_by_family_pretty_hardcoded(dataframe: pd.DataFrame) -> bytes:
     """
     PDF multi-pages :
       - 1 page par groupe (ex. 'Tons orangés/jaunes')
       - Tri en dégradé (HSV) dans chaque page
-      - Logo client en en-tête si fourni
-      - Crédit en pied de page
+      - Logo client en en-tête (chemin LOGO_PATH)
+      - Crédit en pied de page (CREDIT_FOOTER)
     """
     # Préparation des données
     df_pdf = dataframe.copy()
@@ -301,50 +302,46 @@ def generate_pdf_grouped_by_family_pretty(dataframe: pd.DataFrame, page_groups, 
         df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
     df_pdf[["H", "S", "V"]] = df_pdf["rgb"].apply(_rgb_to_hsv_tuple).apply(pd.Series)
 
+    # Groupes/familles et ordre d'apparition
+    PAGE_GROUPS = [
+        ("Tons rosés", {"red", "magenta", "violet"}),
+        ("Tons orangés/jaunes", {"orange", "yellow"}),
+        ("Tons verts", {"green", "cyan"}),
+        ("Tons bleus", {"blue"}),
+        ("Tons neutres", {"grey", "other"}),
+    ]
+
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
 
-    # Marges / grille
-    left_margin, right_margin, top_margin = 15, 15, 15
+    left_margin, right_margin = 15, 15
     usable_width = 210 - left_margin - right_margin
     cols, swatch_h, gap_y = 3, 25, 10
     swatch_w = usable_width / cols
 
-    # Si logo fourni : l'enregistrer dans un fichier temporaire (FPDF classique préfère un chemin)
-    logo_path = None
-    if logo_bytes:
-        tmp_ext = ".png"
-        try:
-            # Essai de détecter le format grossièrement
-            if logo_bytes[:3] == b"\xff\xd8\xff":
-                tmp_ext = ".jpg"
-        except Exception:
-            pass
-        logo_path = f"/tmp/client_logo{tmp_ext}"
-        with open(logo_path, "wb") as f:
-            f.write(logo_bytes)
-
     def add_footer_credit():
-        # Pied de page avec crédit
         pdf.set_y(-12)
         pdf.set_font("Helvetica", size=8)
         pdf.set_text_color(120, 120, 120)
-        pdf.cell(0, 8, _latin1_safe(credit or ""), align='R')
+        pdf.cell(0, 8, _latin1_safe(CREDIT_FOOTER), align='R')
 
     def add_family_page(page_title: str, df_page: pd.DataFrame):
         pdf.add_page()
-        # En-tête : logo (optionnel) + titre de page (groupe)
-        if logo_path:
-            # Insérer le logo en haut à droite (largeur ~25mm)
-            pdf.image(logo_path, x=210-15-25, y=10, w=25)
+
+        # En-tête : logo + titre simple (nom du groupe)
+        try:
+            pdf.image(LOGO_PATH, x=210-15-25, y=10, w=25)  # logo en haut à droite (25 mm de large)
+        except Exception:
+            pass  # si le logo est introuvable, on continue sans
+
         pdf.set_font("Helvetica", size=14)
         pdf.set_text_color(0, 0, 0)
         pdf.set_xy(left_margin, 12)
         pdf.cell(0, 8, _latin1_safe(page_title), ln=1)
 
-        # Position de départ, sous l'en-tête
+        # Grille couleurs (uniquement le nom affiché sous chaque pastille)
         pdf.set_font("Helvetica", size=9)
-        col, x0, y = 0, left_margin, 25  # 25mm sous le haut pour laisser de la place au logo/titre
+        col, x0, y = 0, left_margin, 25  # 25 mm pour laisser l'en-tête
 
         for _, row in df_page.iterrows():
             x = x0 + col * swatch_w
@@ -354,7 +351,7 @@ def generate_pdf_grouped_by_family_pretty(dataframe: pd.DataFrame, page_groups, 
             pdf.set_fill_color(int(r), int(g), int(b))
             pdf.rect(x, y, swatch_w, swatch_h, style='F')
 
-            # Libellé (uniquement le "nom" complet)
+            # Libellé (juste le nom complet)
             pdf.set_xy(x, y + swatch_h + 3)
             pdf.set_text_color(0, 0, 0)
             pdf.multi_cell(w=swatch_w, h=5,
@@ -369,8 +366,10 @@ def generate_pdf_grouped_by_family_pretty(dataframe: pd.DataFrame, page_groups, 
                 if y + swatch_h + 20 > 297 - 15:
                     add_footer_credit()
                     pdf.add_page()
-                    if logo_path:
-                        pdf.image(logo_path, x=210-15-25, y=10, w=25)
+                    try:
+                        pdf.image(LOGO_PATH, x=210-15-25, y=10, w=25)
+                    except Exception:
+                        pass
                     pdf.set_font("Helvetica", size=14)
                     pdf.set_text_color(0, 0, 0)
                     pdf.set_xy(left_margin, 12)
@@ -380,38 +379,29 @@ def generate_pdf_grouped_by_family_pretty(dataframe: pd.DataFrame, page_groups, 
 
         add_footer_credit()
 
-    # Générer les pages
-    for page_title, fam_set in page_groups:
+    # Génération des pages par groupe, tri en "dégradé"
+    for page_title, fam_set in PAGE_GROUPS:
         df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
         if df_group.empty:
             continue
-        # Tri en dégradé
         if fam_set == {"grey", "other"}:
+            # neutres : du sombre au clair, puis saturation décroissante
             df_group = df_group.sort_values(by=["V", "S"], ascending=[True, False]).reset_index(drop=True)
         else:
+            # chromatiques : Hue ↑, Value ↑ (foncé→clair), Saturation ↓ (plus saturé d'abord à V égal)
             df_group = df_group.sort_values(by=["H", "V", "S"], ascending=[True, True, False]).reset_index(drop=True)
-        # Page
+
         add_family_page(page_title, df_group)
 
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
-# Groupes/familles et ordre d'apparition
-PAGE_GROUPS = [
-    ("Tons rosés", {"red", "magenta", "violet"}),
-    ("Tons orangés/jaunes", {"orange", "yellow"}),
-    ("Tons verts", {"green", "cyan"}),
-    ("Tons bleus", {"blue"}),
-    ("Tons neutres", {"grey", "other"}),
-]
-
-# Appel : plus de titre “Priorité…”, on ne met que le nom du groupe en haut
-logo_bytes = logo_file.read() if logo_file is not None else None
-pdf_bytes = generate_pdf_grouped_by_family_pretty(result, PAGE_GROUPS, logo_bytes, credit_text)
+# --- Appel : génère le PDF avec logo + crédits hardcodés ---
+pdf_bytes = generate_pdf_grouped_by_family_pretty_hardcoded(result)
 
 st.download_button(
-    "Télécharger le PDF (pages par teintes, logo & crédit)",
+    "Télécharger le PDF (pages par teintes, logo & crédit inclus)",
     data=pdf_bytes,
     file_name="nuancier_par_teintes.pdf",
     mime="application/pdf"
 )
-
+st.caption("produit développé par Amélie Otto")
