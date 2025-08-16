@@ -397,7 +397,7 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
 # --- Appel & bouton ---
 pdf_bytes = generate_pdf_grouped_by_family_with_footer(result)
 st.download_button(
-    "Télécharger le PDF (pages par teintes, logo bas-gauche & crédit)",
+    "Télécharger le PDF",
     data=pdf_bytes,
     file_name="nuancier_par_teintes.pdf",
     mime="application/pdf"
