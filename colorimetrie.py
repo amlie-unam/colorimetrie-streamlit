@@ -267,8 +267,8 @@ st.download_button(
 # =========================
 # PDF (groupé par familles, tri dégradé HSV) — logo/crédit hardcodés, footer propre
 # =========================
-LOGO_PATH = "logo_client.png"   # ou .jpg, posé à côté du script
-CREDIT_FOOTER = "Nuancier généré par Amélie Otto – Tous droits réservés"
+LOGO_PATH = "logo_coloriste.png"   # ou .jpg, posé à côté du script
+CREDIT_FOOTER = "Nuancier généré par Otto Amélie– Tous droits réservés"
 
 class PDF(FPDF):
     def __init__(self, logo_path=None, credit=""):
@@ -394,11 +394,11 @@ def generate_pdf_grouped_by_family_final(dataframe: pd.DataFrame) -> bytes:
 # --- Appel ---
 pdf_bytes = generate_pdf_grouped_by_family_final(result)
 st.download_button(
-    "Télécharger le PDF (pages par teintes, logo & crédit inclus)",
+    "Télécharger le PDF",
     data=pdf_bytes,
     file_name="nuancier_par_teintes.pdf",
     mime="application/pdf"
 )
 
 # Mention Streamlit en bas (petit)
-st.caption("produit développé par Amélie Otto")
+st.caption("produit développé par Otto Amélie")
