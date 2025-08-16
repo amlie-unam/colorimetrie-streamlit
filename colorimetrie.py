@@ -290,12 +290,20 @@ class PDF(FPDF):
         self.set_xy(15, 12)
         self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
 
-    def footer(self):
-        # Crédit en pied de page, sur TOUTES les pages, sans créer de page en plus
-        self.set_y(-12)
-        self.set_font("Helvetica", size=8)
-        self.set_text_color(120, 120, 120)
-        self.cell(0, 8, _latin1_safe(self.credit), align='R')
+   def footer(self):
+    # Logo en bas à gauche
+    if self.logo_path:
+        try:
+            # largeur ~35 mm (au lieu de 25 avant) → plus grand
+            self.image(self.logo_path, x=15, y=297-15-35, w=45)
+        except Exception:
+            pass
+
+    # Crédit en bas à droite
+    self.set_y(-12)
+    self.set_font("Helvetica", size=8)
+    self.set_text_color(120, 120, 120)
+    self.cell(0, 8, _latin1_safe(self.credit), align='R')
 
 def _latin1_safe(s: str) -> str:
     if s is None: return ""
