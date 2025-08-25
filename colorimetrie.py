@@ -373,5 +373,5 @@ class PDF(FPDF):
         self.set_font("Helvetica", size=14)
         self.set_text_color(62, 47, 42)  # brun café
         self.set_xy(15, 12)
-        self.cell(0, 8, _latin1_safe(self.current_title
+        self.cell(0, 8, _latin1_safe(self.current_title)
 
