@@ -73,6 +73,14 @@ div[data-testid="stSidebar"] {{
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+/* Cache le header + toolbar Streamlit */
+header[data-testid="stHeader"] { display: none; }
+div[data-testid="stToolbar"] { display: none; }
+</style>
+""", unsafe_allow_html=True)
+
 # =========================
 # Header
 # =========================
