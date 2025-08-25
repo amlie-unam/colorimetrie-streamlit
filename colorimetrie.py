@@ -12,6 +12,89 @@ from fpdf import FPDF
 # =========================
 st.set_page_config(page_title="Nuancier NCS", layout="wide")
 
+# =========================
+# UI THEME (neutre, chic)
+# =========================
+# [ADD] coller juste après st.set_page_config
+THEME = {
+    "bg": "#F4F1EC",      # beige sable
+    "panel": "#FFFFFF",   # cartes
+    "text": "#3E2F2A",    # brun café
+    "muted": "#6B5E56",   # taupe
+    "accent": "#C8A165",  # cuivre/doré doux
+    "accent_hover": "#A48B78",
+    "shadow": "rgba(0,0,0,0.06)"
+}
+
+st.markdown(f"""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+html, body, [data-testid="stAppViewContainer"] {{
+  background: {THEME['bg']} !important;
+  color: {THEME['text']};
+  font-family: 'Nunito', sans-serif;
+}}
+
+.block-container {{ padding-top: 1rem; }}
+
+h1,h2,h3,.stMarkdown h1,.stMarkdown h2,.stMarkdown h3 {{
+  font-family: 'Playfair Display', serif;
+  color: {THEME['text']};
+}}
+
+div[data-testid="stSidebar"] {{
+  background: {THEME['panel']};
+  border-right: 1px solid rgba(0,0,0,0.05);
+}}
+
+.stSelectbox [data-baseweb="select"] > div {{
+  border-radius:14px; 
+  background: white;
+  box-shadow: 0 2px 6px {THEME['shadow']};
+}}
+.stSelectbox label {{ color: {THEME['muted']}; font-weight:600; }}
+
+.stButton>button {{
+  background: {THEME['accent']};
+  color: white; font-weight:700;
+  border: 0; border-radius:14px; padding:10px 16px;
+  box-shadow: 0 6px 18px {THEME['shadow']};
+}}
+.stButton>button:hover {{ background: {THEME['accent_hover']}; }}
+
+.card {{
+  background: {THEME['panel']}; 
+  border-radius:18px; 
+  padding:12px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 8px 22px {THEME['shadow']};
+}}
+.swatch {{ height: 96px; border-radius:14px; margin-bottom:10px; }}
+</style>
+""", unsafe_allow_html=True)
+# =========================
+# Header
+# =========================
+col_logo, col_title = st.columns([1,5])
+with col_logo:
+    st.image("logo_coloriste.png", use_container_width=True)
+with col_title:
+    st.markdown(
+        f"""
+        <div style="line-height:1.1">
+          <div style="font-family:'Playfair Display', serif;
+                      font-size:36px; font-weight:700; color:{THEME['text']}">
+              Nuancier personnalisé
+          </div>
+          <div style="color:{THEME['muted']}; margin-top:4px">
+              Outil neutre & professionnel — adapté à toutes les palettes
+          </div>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
 # =========================
@@ -88,15 +171,28 @@ df = load_data(CSV_PATH)
 df["nom"] = df["nom"].fillna("").astype(str)
 
 # =========================
-# Sélection avec priorité (adjectifs)
+# Filtres (sidebar)
 # =========================
-# Tu peux garder toutes les options, mais par défaut on propose chaud/clair/lumineux
-ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
+# [REPLACE] l'ancien bloc selectbox + toggle par ceci
+with st.sidebar:
+    st.markdown("### Vos critères")
+    ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
+    presets = {
+        "Classique (chaud/clair/lumineux)": ("chaud","clair","lumineux"),
+        "Frais (froid/clair/lumineux)": ("froid","clair","lumineux"),
+        "Neutres doux (neutre/clair/mat)": ("neutre","clair","mat"),
+    }
+    preset_choice = st.radio("Presets rapides", list(presets.keys()), index=0)
+    base = presets[preset_choice]
 
-c1, c2, c3 = st.columns(3)
-adj1 = c1.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=0)  # chaud
-adj2 = c2.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=2)  # clair
-adj3 = c3.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=4)  # lumineux
+    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[0]))
+    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[1]))
+    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[2]))
+
+    with st.expander("Options avancées"):
+        SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05)
+        TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10)
+
 
 
 
@@ -211,7 +307,7 @@ result = result.sort_values(by="score_global", ascending=False).reset_index(drop
 
 # Équilibrage ON (round-robin par familles sur le top N)
 if not result.empty:
-    topN = 200
+    topN = TOPN
     top = result.head(topN).copy()
     groups = {fam: df_fam.reset_index(drop=True) for fam, df_fam in top.groupby("famille")}
     order = []
@@ -236,16 +332,54 @@ if result.empty:
     st.stop()
 
 # =========================
-# Aperçu tableau
+# Grille de cartes (UX)
 # =========================
-st.dataframe(
-    result[[
-        "ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte",
-        "temperature", "clarte", "luminosite", "famille",
-        "s1", "s2", "s3", "score_global"
-    ]],
-    use_container_width=True
-)
+import math
+
+def swatch_card(row):
+    r,g,b = row["rgb"]
+    hexcode = row["hex"]
+    ncs = row["ncs_code"]
+    nom = row.get("nom","")
+    st.markdown(
+        f"""
+        <div class="card">
+          <div class="swatch" style="background: rgb({r},{g},{b});"></div>
+          <div style="font-weight:700">{_latin1_safe(nom)}</div>
+          <div style="font-size:12px; color:{THEME['muted']}; opacity:0.9">{ncs}</div>
+        </div>
+        """, unsafe_allow_html=True
+    )
+    # petit input pour copier le HEX facilement
+    st.text_input("HEX", value=hexcode, label_visibility="collapsed")
+
+# Pagination simple
+PAGE_SIZE = 12
+total = len(result)
+pages = max(1, math.ceil(total / PAGE_SIZE))
+page = st.segmented_control("Page", options=list(range(1, pages+1))) if pages > 1 else 1
+start, end = (page-1)*PAGE_SIZE, (page-1)*PAGE_SIZE + PAGE_SIZE
+chunk = result.iloc[start:end].copy()
+
+cols_per_row = 3
+rows = math.ceil(len(chunk) / cols_per_row)
+for r in range(rows):
+    cols = st.columns(cols_per_row)
+    for j in range(cols_per_row):
+        idx = r*cols_per_row + j
+        if idx < len(chunk):
+            with cols[j]:
+                swatch_card(chunk.iloc[idx])
+
+with st.expander("Voir la table détaillée"):
+    st.dataframe(
+        result[[
+            "ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte",
+            "temperature", "clarte", "luminosite", "famille", "score_global"
+        ]],
+        use_container_width=True
+    )
+
 
 
 # =========================
@@ -261,12 +395,19 @@ class PDF(FPDF):
         self.credit = credit
         self.current_title = ""  # défini avant chaque add_page()
 
+    # [REPLACE] header() par :
     def header(self):
-        # Titre de page (nom du groupe) en haut gauche
-        self.set_font("Helvetica", size=14)
-        self.set_text_color(0, 0, 0)
-        self.set_xy(15, 12)
-        self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
+    self.set_font("Helvetica", size=14)
+    self.set_text_color(62, 47, 42)  # brun café
+    self.set_xy(15, 12)
+    self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
+    # filet taupe
+    self.set_draw_color(164, 139, 120)
+    self.set_line_width(0.6)
+    self.line(15, 22, 195, 22)
+
+
+
 
     def footer(self):
         # Logo en bas à gauche (plus grand)
@@ -280,7 +421,7 @@ class PDF(FPDF):
         # Crédit en bas à droite
         self.set_y(-12)
         self.set_font("Helvetica", size=8)
-        self.set_text_color(120, 120, 120)
+        self.set_text_color(107, 94, 86)
         self.cell(0, 8, _latin1_safe(self.credit), align='R')
 
 def _latin1_safe(s: str) -> str:
