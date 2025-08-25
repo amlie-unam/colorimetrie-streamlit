@@ -332,7 +332,7 @@ PAGE_SIZE = 12
 total = int(len(result))
 pages = max(1, math.ceil(total / PAGE_SIZE))
 
-# ✅ Toujours un entier, jamais None
+# Toujours un entier (jamais None)
 if pages > 1:
     page = st.slider("Page", min_value=1, max_value=pages, value=1, key="pager")
 else:
@@ -342,6 +342,7 @@ start = (page - 1) * PAGE_SIZE
 end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
 
+# Affichage en grille
 cols_per_row = 3
 rows = math.ceil(len(chunk) / cols_per_row)
 for r in range(rows):
@@ -351,7 +352,6 @@ for r in range(rows):
         if idx < len(chunk):
             with cols[j]:
                 swatch_card(chunk.iloc[idx])
-
 
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
