@@ -98,18 +98,13 @@ adj1 = c1.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=0)  # chaud
 adj2 = c2.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=2)  # clair
 adj3 = c3.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=4)  # lumineux
 
-# On garde seulement ce toggle (utile en pratique)
-colA, _ = st.columns(2)
-hide_neutral_unless_chosen = colA.toggle("Masquer les neutres sauf si 'neutre' est choisi", value=False)
+
 
 # =========================
 # Préparation des données
 # =========================
 df_view = df.copy()
 
-# Option: masquer neutres si non choisis
-if hide_neutral_unless_chosen and ("neutre" not in {adj1, adj2, adj3}):
-    df_view = df_view[df_view["temperature"] != "neutre"]
 
 # Calcul des RGB/HEX pour l’affichage & PDF
 df_view["rgb"] = df_view["ncs_code"].apply(ncs_to_rgb)
@@ -235,7 +230,6 @@ if not result.empty:
 # Feedback utilisateur
 # =========================
 tot = len(result)
-st.write(f"**{tot} couleurs** trouvées | Mode strict: **ON** | Seuil: **{SEUIL_STRICT:.2f}** | Équilibrage familles: **ON**")
 
 if result.empty:
     st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
@@ -253,16 +247,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# =========================
-# Export CSV (respecte l’ordre priorisé)
-# =========================
-st.download_button(
-    "Exporter la sélection (CSV)",
-    data=result[["ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte"]]
-         .to_csv(index=False, sep=";").encode("utf-8"),
-    file_name="selection_couleurs.csv",
-    mime="text/csv"
-)
 
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
