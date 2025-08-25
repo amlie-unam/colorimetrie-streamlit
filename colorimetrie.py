@@ -134,7 +134,7 @@ def hue_to_rgb(hue: str):
 def ncs_to_rgb(ncs_code: str):
     """
     Attend 'SBBCC-HUE' (ex: S0502-Y, S3560-Y30R, S0300-N)
-    Retourne un tuple (R,G,B) en 0..255
+    Retourne (R,G,B) en 0..255
     """
     m = re.match(r"^S\s*(\d{2})(\d{2})\s*-\s*([A-Z](?:\d{1,2}[A-Z])?|N)$", (ncs_code or "").replace(" ", ""))
     if not m:
@@ -176,15 +176,21 @@ df["nom"] = df["nom"].fillna("").astype(str)
 with st.sidebar:
     st.markdown("### Vos critères")
     ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
-    
 
-    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[0]))
-    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[1]))
-    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[2]))
+    # Sélecteurs simples (valeurs par défaut)
+    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index("chaud"))
+    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index("clair"))
+    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("lumineux"))
 
-    #with st.expander("Options avancées"):
-        #SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05)
-        #TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10)
+    with st.expander("Options avancées"):
+        SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
+        TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
+
+# Valeurs par défaut si l'expander est fermé (sécurité)
+if "SEUIL_STRICT" not in locals():
+    SEUIL_STRICT = 0.60
+if "TOPN" not in locals():
+    TOPN = 200
 
 # =========================
 # Préparation des données
@@ -200,8 +206,8 @@ def score_adjective(row: pd.Series, adj: str) -> float:
     temp = (row.get("temperature") or "").strip().lower()
     clar = (row.get("clarte") or "").strip().lower()
     lumo = (row.get("luminosite") or "").strip().lower()
-    noir = float(row.get("noirceur%", 0))      # 0..100
-    sat  = float(row.get("saturation%", 0))    # 0..100
+    noir = float(row.get("noirceur%", 0))
+    sat  = float(row.get("saturation%", 0))
 
     if adj == "chaud":
         return 1.0 if temp == "chaud" else (0.6 if temp == "neutre" else 0.0)
@@ -233,7 +239,7 @@ def score_adjective(row: pd.Series, adj: str) -> float:
 
 def color_family_from_rgb(rgb_tuple):
     r, g, b = [c / 255.0 for c in rgb_tuple]
-    h, s, v = colorsys.rgb_to_hsv(r, g, b)  # h in [0,1)
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)
     if s < 0.05 or v < 0.1:
         return "grey"
     deg = h * 360.0
@@ -292,7 +298,7 @@ if result.empty:
     st.stop()
 
 # =========================
-# Grille de cartes (UX)
+# Grille de cartes (UX) + Pagination robuste
 # =========================
 import math
 
@@ -320,14 +326,17 @@ def swatch_card(row):
         """,
         unsafe_allow_html=True
     )
-    # petit input pour copier le HEX facilement
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
-# Pagination boutons (sans slider)
+# Pagination (boutons) — jamais None
+PAGE_SIZE = 12
+total = int(len(result))
+pages = max(1, math.ceil(total / PAGE_SIZE))
+
 if "page" not in st.session_state:
     st.session_state.page = 1
 
-col_prev, col_info, col_next = st.columns([1,2,1])
+col_prev, col_info, col_next = st.columns([1, 2, 1])
 with col_prev:
     if st.button("◀︎ Précédent", use_container_width=True) and st.session_state.page > 1:
         st.session_state.page -= 1
@@ -341,7 +350,26 @@ page = st.session_state.page
 start = (page - 1) * PAGE_SIZE
 end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
-# ... puis la même grille qu’au-dessus
+
+# Affichage en grille
+cols_per_row = 3
+rows = math.ceil(len(chunk) / cols_per_row)
+for r in range(rows):
+    cols = st.columns(cols_per_row)
+    for j in range(cols_per_row):
+        idx = r * cols_per_row + j
+        if idx < len(chunk):
+            with cols[j]:
+                swatch_card(chunk.iloc[idx])
+
+with st.expander("Voir la table détaillée"):
+    st.dataframe(
+        result[[
+            "ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte",
+            "temperature", "clarte", "luminosite", "famille", "score_global"
+        ]],
+        use_container_width=True
+    )
 
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
@@ -370,9 +398,7 @@ class PDF(FPDF):
         # Logo en bas à gauche (plus grand)
         if self.logo_path:
             try:
-                # A4 = 297mm haut ; on place le coin haut du logo à 15mm du bas
-                # et on donne 35mm de large (ajuste w si besoin)
-                self.image(self.logo_path, x=15, y=297 - 0 - 35, w=45)
+                self.image(self.logo_path, x=15, y=297 - 35, w=45)
             except Exception:
                 pass
         # Crédit en bas à droite
@@ -413,8 +439,8 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
     usable_width = 210 - left_margin - right_margin
     cols, swatch_h, gap_y = 3, 25, 10
     swatch_w = usable_width / cols
-    start_y = 25  # sous le titre
-    bottom_limit = 297 - 15  # marge bas = 15mm
+    start_y = 25
+    bottom_limit = 297 - 15
 
     def add_group_pages(page_title: str, df_page: pd.DataFrame):
         pdf.current_title = page_title
@@ -449,11 +475,8 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
             if col >= cols:
                 col = 0
                 y = pdf.get_y() + gap_y
-            else:
-                # rester sur la même ligne (y inchangé)
-                pass
 
-    # Génération des pages, tri “dégradé” dans chaque groupe
+    # Génération des pages
     for page_title, fam_set in PAGE_GROUPS:
         df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
         if df_group.empty:
