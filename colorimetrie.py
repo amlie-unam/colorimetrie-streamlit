@@ -333,7 +333,12 @@ def swatch_card(row):
 PAGE_SIZE = 12
 total = len(result)
 pages = max(1, math.ceil(total / PAGE_SIZE))
-page = st.segmented_control("Page", options=list(range(1, pages + 1))) if pages > 1 else 1
+try:
+    page = st.segmented_control("Page", options=list(range(1, pages + 1))) if pages > 1 else 1
+except Exception:
+    # fallback si votre version de Streamlit n'a pas segmented_control
+    page = st.slider("Page", 1, pages, 1) if pages > 1 else 1
+
 start, end = (page - 1) * PAGE_SIZE, (page - 1) * PAGE_SIZE + PAGE_SIZE
 chunk = result.iloc[start:end].copy()
 
@@ -373,5 +378,123 @@ class PDF(FPDF):
         self.set_font("Helvetica", size=14)
         self.set_text_color(62, 47, 42)  # brun café
         self.set_xy(15, 12)
-        self.cell(0, 8, _latin1_safe(self.current_title)
+        self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
+        # filet taupe
+        self.set_draw_color(164, 139, 120)
+        self.set_line_width(0.6)
+        self.line(15, 22, 195, 22)
 
+    def footer(self):
+        # Logo en bas à gauche (plus grand)
+        if self.logo_path:
+            try:
+                # A4 = 297mm haut ; on place le coin haut du logo à 15mm du bas
+                # et on donne 35mm de large (ajuste w si besoin)
+                self.image(self.logo_path, x=15, y=297 - 0 - 35, w=45)
+            except Exception:
+                pass
+        # Crédit en bas à droite
+        self.set_y(-12)
+        self.set_font("Helvetica", size=8)
+        self.set_text_color(107, 94, 86)
+        self.cell(0, 8, _latin1_safe(self.credit), align='R')
+
+def _rgb_to_hsv_tuple(rgb):
+    r, g, b = [c / 255.0 for c in rgb]
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)
+    return (h, s, v)
+
+def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes:
+    # Préparation des données
+    df_pdf = dataframe.copy()
+    if "rgb" not in df_pdf.columns:
+        df_pdf["rgb"] = df_pdf["ncs_code"].apply(ncs_to_rgb)
+    if "famille" not in df_pdf.columns:
+        df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
+    df_pdf[["H", "S", "V"]] = df_pdf["rgb"].apply(_rgb_to_hsv_tuple).apply(pd.Series)
+
+    # Groupes/familles (ordre des pages)
+    PAGE_GROUPS = [
+        ("Tons rosés", {"red", "magenta", "violet"}),
+        ("Tons orangés/jaunes", {"orange", "yellow"}),
+        ("Tons verts", {"green", "cyan"}),
+        ("Tons bleus", {"blue"}),
+        ("Tons neutres", {"grey", "other"}),
+    ]
+
+    pdf = PDF(logo_path=LOGO_PATH, credit=CREDIT_FOOTER)
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.set_font("Helvetica", size=9)
+
+    # Mise en page
+    left_margin, right_margin = 15, 15
+    usable_width = 210 - left_margin - right_margin
+    cols, swatch_h, gap_y = 3, 25, 10
+    swatch_w = usable_width / cols
+    start_y = 25  # sous le titre
+    bottom_limit = 297 - 15  # marge bas = 15mm
+
+    def add_group_pages(page_title: str, df_page: pd.DataFrame):
+        pdf.current_title = page_title
+        pdf.add_page()
+        col = 0
+        x0 = left_margin
+        y = start_y
+
+        for _, row in df_page.iterrows():
+            # Espace requis pour le prochain bloc (pastille + libellé + marge)
+            needed = swatch_h + 3 + 10
+            if y + needed > bottom_limit:
+                pdf.current_title = f"{page_title} (suite)"
+                pdf.add_page()
+                col = 0
+                y = start_y
+
+            x = x0 + col * swatch_w
+
+            # Pastille couleur
+            r, g, b = row["rgb"]
+            pdf.set_fill_color(int(r), int(g), int(b))
+            pdf.rect(x, y, swatch_w, swatch_h, style='F')
+
+            # Libellé : uniquement le nom complet
+            pdf.set_xy(x, y + swatch_h + 3)
+            pdf.set_text_color(0, 0, 0)
+            pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(str(row.get("nom", ""))), border=0, align='L')
+
+            # Avance dans la grille
+            col += 1
+            if col >= cols:
+                col = 0
+                y = pdf.get_y() + gap_y
+            else:
+                # rester sur la même ligne (y inchangé)
+                pass
+
+    # Génération des pages, tri “dégradé” dans chaque groupe
+    for page_title, fam_set in PAGE_GROUPS:
+        df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
+        if df_group.empty:
+            continue
+        if fam_set == {"grey", "other"}:
+            # Neutres : foncé -> clair, puis saturation décroissante
+            df_group = df_group.sort_values(by=["V", "S"], ascending=[True, False]).reset_index(drop=True)
+        else:
+            # Chromatiques : Hue ↑, Value ↑ (foncé -> clair), Saturation ↓
+            df_group = df_group.sort_values(by=["H", "V", "S"], ascending=[True, True, False]).reset_index(drop=True)
+
+        add_group_pages(page_title, df_group)
+
+    return pdf.output(dest='S').encode('latin-1', 'replace')
+
+# --- Appel & bouton ---
+pdf_bytes = generate_pdf_grouped_by_family_with_footer(result)
+st.download_button(
+    "Télécharger le PDF",
+    data=pdf_bytes,
+    file_name="nuancier_par_teintes.pdf",
+    mime="application/pdf"
+)
+
+# Mention Streamlit (petit, en bas de page app)
+st.caption("Produit développé par Otto Amélie")
