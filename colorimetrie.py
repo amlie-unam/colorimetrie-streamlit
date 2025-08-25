@@ -329,37 +329,31 @@ def swatch_card(row):
     # petit input pour copier le HEX facilement
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
+# =========================
 # Pagination simple
+# =========================
 PAGE_SIZE = 12
 total = len(result)
 pages = max(1, math.ceil(total / PAGE_SIZE))
-try:
-    page = st.segmented_control("Page", options=list(range(1, pages + 1))) if pages > 1 else 1
-except Exception:
-    # fallback si votre version de Streamlit n'a pas segmented_control
-    page = st.slider("Page", 1, pages, 1) if pages > 1 else 1
 
+# Gestion du choix de page
+if pages > 1:
+    # Si segmented_control dispo
+    try:
+        page = st.segmented_control("Page", options=list(range(1, pages + 1)))
+    except Exception:
+        # Fallback avec un slider
+        page = st.slider("Page", 1, pages, 1)
+else:
+    page = 1
+
+# Forcer page en entier (au cas où)
+page = int(page)
+
+# Découpage du DataFrame
 start, end = (page - 1) * PAGE_SIZE, (page - 1) * PAGE_SIZE + PAGE_SIZE
 chunk = result.iloc[start:end].copy()
 
-cols_per_row = 3
-rows = math.ceil(len(chunk) / cols_per_row)
-for r in range(rows):
-    cols = st.columns(cols_per_row)
-    for j in range(cols_per_row):
-        idx = r * cols_per_row + j
-        if idx < len(chunk):
-            with cols[j]:
-                swatch_card(chunk.iloc[idx])
-
-with st.expander("Voir la table détaillée"):
-    st.dataframe(
-        result[[
-            "ncs_code", "nom", "hex", "noirceur%", "saturation%", "teinte",
-            "temperature", "clarte", "luminosite", "famille", "score_global"
-        ]],
-        use_container_width=True
-    )
 
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
