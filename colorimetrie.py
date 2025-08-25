@@ -15,7 +15,6 @@ st.set_page_config(page_title="Nuancier NCS", layout="wide")
 # =========================
 # UI THEME (neutre, chic)
 # =========================
-# [ADD] coller juste après st.set_page_config
 THEME = {
     "bg": "#F4F1EC",      # beige sable
     "panel": "#FFFFFF",   # cartes
@@ -73,10 +72,11 @@ div[data-testid="stSidebar"] {{
 .swatch {{ height: 96px; border-radius:14px; margin-bottom:10px; }}
 </style>
 """, unsafe_allow_html=True)
+
 # =========================
 # Header
 # =========================
-col_logo, col_title = st.columns([1,5])
+col_logo, col_title = st.columns([1, 5])
 with col_logo:
     st.image("logo_coloriste.png", use_container_width=True)
 with col_title:
@@ -91,9 +91,9 @@ with col_title:
               Outil neutre & professionnel — adapté à toutes les palettes
           </div>
         </div>
-        """, unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
-
 
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
@@ -173,14 +173,13 @@ df["nom"] = df["nom"].fillna("").astype(str)
 # =========================
 # Filtres (sidebar)
 # =========================
-# [REPLACE] l'ancien bloc selectbox + toggle par ceci
 with st.sidebar:
     st.markdown("### Vos critères")
     ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
     presets = {
-        "Classique (chaud/clair/lumineux)": ("chaud","clair","lumineux"),
-        "Frais (froid/clair/lumineux)": ("froid","clair","lumineux"),
-        "Neutres doux (neutre/clair/mat)": ("neutre","clair","mat"),
+        "Classique (chaud/clair/lumineux)": ("chaud", "clair", "lumineux"),
+        "Frais (froid/clair/lumineux)": ("froid", "clair", "lumineux"),
+        "Neutres doux (neutre/clair/mat)": ("neutre", "clair", "mat"),
     }
     preset_choice = st.radio("Presets rapides", list(presets.keys()), index=0)
     base = presets[preset_choice]
@@ -193,16 +192,10 @@ with st.sidebar:
         SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05)
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10)
 
-
-
-
 # =========================
 # Préparation des données
 # =========================
 df_view = df.copy()
-
-
-# Calcul des RGB/HEX pour l’affichage & PDF
 df_view["rgb"] = df_view["ncs_code"].apply(ncs_to_rgb)
 df_view["hex"] = df_view["rgb"].apply(rgb_to_hex)
 
@@ -210,13 +203,6 @@ df_view["hex"] = df_view["rgb"].apply(rgb_to_hex)
 # Matching flou (scoring 0..1)
 # =========================
 def score_adjective(row: pd.Series, adj: str) -> float:
-    """
-    Retourne un score 0..1 pour l'adjectif demandé, en combinant les colonnes disponibles.
-    Logique:
-      - chaud/froid/neutre : s'appuie sur 'temperature' avec tolérance
-      - clair/foncé        : s'appuie sur 'noirceur%' (blackness) + étiquette 'clarte'
-      - lumineux/mat       : s'appuie d'abord sur 'luminosite' (catégoriel), sinon la saturation%
-    """
     temp = (row.get("temperature") or "").strip().lower()
     clar = (row.get("clarte") or "").strip().lower()
     lumo = (row.get("luminosite") or "").strip().lower()
@@ -225,48 +211,33 @@ def score_adjective(row: pd.Series, adj: str) -> float:
 
     if adj == "chaud":
         return 1.0 if temp == "chaud" else (0.6 if temp == "neutre" else 0.0)
-
     if adj == "froid":
         return 1.0 if temp == "froid" else (0.6 if temp == "neutre" else 0.0)
-
     if adj == "neutre":
-        if temp == "neutre":
-            base = 1.0
-        else:
-            base = 0.0
+        base = 1.0 if temp == "neutre" else 0.0
         bonus = max(0.0, (10.0 - sat) / 10.0)  # sat<=10 → bonus jusqu’à +1
         return min(1.0, base + 0.6 * bonus)
-
     if adj == "clair":
         s = 1.0 - (noir / 100.0)
         if clar == "clair":
             s = min(1.0, s + 0.15)
         return s
-
     if adj == "foncé":
         s = noir / 100.0
         if clar == "foncé":
             s = min(1.0, s + 0.15)
         return s
-
     if adj == "lumineux":
         if lumo == "lumineux":
             return 1.0
         return 0.3 + 0.7 * (sat / 100.0)
-
     if adj == "mat":
         if lumo == "mat":
             return 1.0
         return 0.7 * (1.0 - sat / 100.0)
-
     return 0.0
 
 def color_family_from_rgb(rgb_tuple):
-    """
-    Classe une couleur en famille basique via HSV.hue:
-      red, orange, yellow, green, cyan, blue, violet, magenta, grey
-    Utilisé pour diversifier automatiquement le top (équilibrage actif en dur).
-    """
     r, g, b = [c / 255.0 for c in rgb_tuple]
     h, s, v = colorsys.rgb_to_hsv(r, g, b)  # h in [0,1)
     if s < 0.05 or v < 0.1:
@@ -282,19 +253,16 @@ def color_family_from_rgb(rgb_tuple):
     if  300 <= deg < 345:          return "magenta"
     return "other"
 
-# Scores par adjectif (pondérés plus tard)
+# Scores par adjectif
 df_view["s1"] = df_view.apply(lambda r: score_adjective(r, adj1), axis=1)
 df_view["s2"] = df_view.apply(lambda r: score_adjective(r, adj2), axis=1)
 df_view["s3"] = df_view.apply(lambda r: score_adjective(r, adj3), axis=1)
 
 # =========================
-# Tri par priorité (strict ON, seuil fixe, équilibrage ON)
+# Tri par priorité (strict ON, équilibrage ON)
 # =========================
-# Pondérations par priorité (1>2>3)
 w1, w2, w3 = 1.0, 0.6, 0.3
 
-# Mode strict ON + seuil fixe
-SEUIL_STRICT = 0.60
 mask_strict = (df_view["s1"] >= SEUIL_STRICT) & (df_view["s2"] >= SEUIL_STRICT) & (df_view["s3"] >= SEUIL_STRICT)
 result = df_view.loc[mask_strict].copy()
 
@@ -325,8 +293,6 @@ if not result.empty:
 # =========================
 # Feedback utilisateur
 # =========================
-tot = len(result)
-
 if result.empty:
     st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
     st.stop()
@@ -336,11 +302,20 @@ if result.empty:
 # =========================
 import math
 
+def _latin1_safe(s: str) -> str:
+    if s is None:
+        return ""
+    repl = {"’": "'", "‘": "'", "“": '"', "”": '"', "–": "-", "—": "-", "•": "-",
+            "…": "...", "\u00A0": " "}
+    for a, b in repl.items():
+        s = s.replace(a, b)
+    return s.encode("latin-1", errors="replace").decode("latin-1")
+
 def swatch_card(row):
-    r,g,b = row["rgb"]
+    r, g, b = row["rgb"]
     hexcode = row["hex"]
     ncs = row["ncs_code"]
-    nom = row.get("nom","")
+    nom = row.get("nom", "")
     st.markdown(
         f"""
         <div class="card">
@@ -348,7 +323,8 @@ def swatch_card(row):
           <div style="font-weight:700">{_latin1_safe(nom)}</div>
           <div style="font-size:12px; color:{THEME['muted']}; opacity:0.9">{ncs}</div>
         </div>
-        """, unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
     # petit input pour copier le HEX facilement
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
@@ -357,8 +333,8 @@ def swatch_card(row):
 PAGE_SIZE = 12
 total = len(result)
 pages = max(1, math.ceil(total / PAGE_SIZE))
-page = st.segmented_control("Page", options=list(range(1, pages+1))) if pages > 1 else 1
-start, end = (page-1)*PAGE_SIZE, (page-1)*PAGE_SIZE + PAGE_SIZE
+page = st.segmented_control("Page", options=list(range(1, pages + 1))) if pages > 1 else 1
+start, end = (page - 1) * PAGE_SIZE, (page - 1) * PAGE_SIZE + PAGE_SIZE
 chunk = result.iloc[start:end].copy()
 
 cols_per_row = 3
@@ -366,7 +342,7 @@ rows = math.ceil(len(chunk) / cols_per_row)
 for r in range(rows):
     cols = st.columns(cols_per_row)
     for j in range(cols_per_row):
-        idx = r*cols_per_row + j
+        idx = r * cols_per_row + j
         if idx < len(chunk):
             with cols[j]:
                 swatch_card(chunk.iloc[idx])
@@ -379,8 +355,6 @@ with st.expander("Voir la table détaillée"):
         ]],
         use_container_width=True
     )
-
-
 
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
@@ -395,138 +369,9 @@ class PDF(FPDF):
         self.credit = credit
         self.current_title = ""  # défini avant chaque add_page()
 
-    # [REPLACE] header() par :
     def header(self):
-    self.set_font("Helvetica", size=14)
-    self.set_text_color(62, 47, 42)  # brun café
-    self.set_xy(15, 12)
-    self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
-    # filet taupe
-    self.set_draw_color(164, 139, 120)
-    self.set_line_width(0.6)
-    self.line(15, 22, 195, 22)
+        self.set_font("Helvetica", size=14)
+        self.set_text_color(62, 47, 42)  # brun café
+        self.set_xy(15, 12)
+        self.cell(0, 8, _latin1_safe(self.current_title
 
-
-
-
-    def footer(self):
-        # Logo en bas à gauche (plus grand)
-        if self.logo_path:
-            try:
-                # A4 = 297mm haut ; on place le coin haut du logo à 15mm du bas
-                # et on donne 35mm de large (ajuste w si besoin)
-                self.image(self.logo_path, x=15, y=297 - 0 - 35, w=45)
-            except Exception:
-                pass
-        # Crédit en bas à droite
-        self.set_y(-12)
-        self.set_font("Helvetica", size=8)
-        self.set_text_color(107, 94, 86)
-        self.cell(0, 8, _latin1_safe(self.credit), align='R')
-
-def _latin1_safe(s: str) -> str:
-    if s is None: return ""
-    repl = {"’": "'", "‘": "'", "“": '"', "”": '"', "–": "-", "—": "-", "•": "-",
-            "…": "...", "\u00A0": " "}
-    for a, b in repl.items(): s = s.replace(a, b)
-    return s.encode("latin-1", errors="replace").decode("latin-1")
-
-def _rgb_to_hsv_tuple(rgb):
-    r, g, b = [c / 255.0 for c in rgb]
-    h, s, v = colorsys.rgb_to_hsv(r, g, b)
-    return (h, s, v)
-
-def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes:
-    # Préparation des données
-    df_pdf = dataframe.copy()
-    if "rgb" not in df_pdf.columns:
-        df_pdf["rgb"] = df_pdf["ncs_code"].apply(ncs_to_rgb)
-    if "famille" not in df_pdf.columns:
-        df_pdf["famille"] = df_pdf["rgb"].apply(color_family_from_rgb)
-    df_pdf[["H", "S", "V"]] = df_pdf["rgb"].apply(_rgb_to_hsv_tuple).apply(pd.Series)
-
-    # Groupes/familles (ordre des pages)
-    PAGE_GROUPS = [
-        ("Tons rosés", {"red", "magenta", "violet"}),
-        ("Tons orangés/jaunes", {"orange", "yellow"}),
-        ("Tons verts", {"green", "cyan"}),
-        ("Tons bleus", {"blue"}),
-        ("Tons neutres", {"grey", "other"}),
-    ]
-
-    pdf = PDF(logo_path=LOGO_PATH, credit=CREDIT_FOOTER)
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.set_font("Helvetica", size=9)
-
-    # Mise en page
-    left_margin, right_margin = 15, 15
-    usable_width = 210 - left_margin - right_margin
-    cols, swatch_h, gap_y = 3, 25, 10
-    swatch_w = usable_width / cols
-    start_y = 25  # sous le titre
-    bottom_limit = 297 - 15  # marge bas = 15mm
-
-    def add_group_pages(page_title: str, df_page: pd.DataFrame):
-        pdf.current_title = page_title
-        pdf.add_page()
-        col = 0
-        x0 = left_margin
-        y = start_y
-
-        for _, row in df_page.iterrows():
-            # Espace requis pour le prochain bloc (pastille + libellé + marge)
-            needed = swatch_h + 3 + 10
-            if y + needed > bottom_limit:
-                pdf.current_title = f"{page_title} (suite)"
-                pdf.add_page()
-                col = 0
-                y = start_y
-
-            x = x0 + col * swatch_w
-
-            # Pastille couleur
-            r, g, b = row["rgb"]
-            pdf.set_fill_color(int(r), int(g), int(b))
-            pdf.rect(x, y, swatch_w, swatch_h, style='F')
-
-            # Libellé : uniquement le nom complet
-            pdf.set_xy(x, y + swatch_h + 3)
-            pdf.set_text_color(0, 0, 0)
-            pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(str(row.get("nom", ""))), border=0, align='L')
-
-            # Avance dans la grille
-            col += 1
-            if col >= cols:
-                col = 0
-                y = pdf.get_y() + gap_y
-            else:
-                # rester sur la même ligne (y inchangé)
-                pass
-
-    # Génération des pages, tri “dégradé” dans chaque groupe
-    for page_title, fam_set in PAGE_GROUPS:
-        df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
-        if df_group.empty:
-            continue
-        if fam_set == {"grey", "other"}:
-            # Neutres : foncé -> clair, puis saturation décroissante
-            df_group = df_group.sort_values(by=["V", "S"], ascending=[True, False]).reset_index(drop=True)
-        else:
-            # Chromatiques : Hue ↑, Value ↑ (foncé -> clair), Saturation ↓
-            df_group = df_group.sort_values(by=["H", "V", "S"], ascending=[True, True, False]).reset_index(drop=True)
-
-        add_group_pages(page_title, df_group)
-
-    return pdf.output(dest='S').encode('latin-1', 'replace')
-
-# --- Appel & bouton ---
-pdf_bytes = generate_pdf_grouped_by_family_with_footer(result)
-st.download_button(
-    "Télécharger le PDF",
-    data=pdf_bytes,
-    file_name="nuancier_par_teintes.pdf",
-    mime="application/pdf"
-)
-
-# Mention Streamlit (petit, en bas de page app)
-st.caption("produit développé par Otto Amélie")
