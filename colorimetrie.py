@@ -330,29 +330,42 @@ def swatch_card(row):
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
 # =========================
-# Pagination simple
+# Pagination simple (corrigée)
 # =========================
 PAGE_SIZE = 12
 total = len(result)
 pages = max(1, math.ceil(total / PAGE_SIZE))
 
-# Gestion du choix de page
+# Choix de page : segmented_control si dispo, sinon slider
+page = 1  # valeur par défaut
+
 if pages > 1:
-    # Si segmented_control dispo
     try:
         page = st.segmented_control("Page", options=list(range(1, pages + 1)))
     except Exception:
-        # Fallback avec un slider
         page = st.slider("Page", 1, pages, 1)
-else:
+
+# Si jamais page ressort None → on retombe sur 1
+if page is None:
     page = 1
 
-# Forcer page en entier (au cas où)
+# Forcer en entier
 page = int(page)
 
 # Découpage du DataFrame
 start, end = (page - 1) * PAGE_SIZE, (page - 1) * PAGE_SIZE + PAGE_SIZE
 chunk = result.iloc[start:end].copy()
+
+# Affichage en grille
+cols_per_row = 3
+rows = math.ceil(len(chunk) / cols_per_row)
+for r in range(rows):
+    cols = st.columns(cols_per_row)
+    for j in range(cols_per_row):
+        idx = r * cols_per_row + j
+        if idx < len(chunk):
+            with cols[j]:
+                swatch_card(chunk.iloc[idx])
 
 
 # =========================
