@@ -176,21 +176,15 @@ df["nom"] = df["nom"].fillna("").astype(str)
 with st.sidebar:
     st.markdown("### Vos critères")
     ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
-    presets = {
-        "Classique (chaud/clair/lumineux)": ("chaud", "clair", "lumineux"),
-        "Frais (froid/clair/lumineux)": ("froid", "clair", "lumineux"),
-        "Neutres doux (neutre/clair/mat)": ("neutre", "clair", "mat"),
-    }
-    preset_choice = st.radio("Presets rapides", list(presets.keys()), index=0)
-    base = presets[preset_choice]
+    
 
     adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[0]))
     adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[1]))
     adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index(base[2]))
 
-    with st.expander("Options avancées"):
-        SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05)
-        TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10)
+    #with st.expander("Options avancées"):
+        #SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05)
+        #TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10)
 
 # =========================
 # Préparation des données
@@ -330,13 +324,12 @@ def swatch_card(row):
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
 # =========================
-# Pagination simple (corrigée)
+# Pagination simple (anti-None)
 # =========================
 PAGE_SIZE = 12
 total = len(result)
 pages = max(1, math.ceil(total / PAGE_SIZE))
 
-# Choix de page : segmented_control si dispo, sinon slider
 page = 1  # valeur par défaut
 
 if pages > 1:
@@ -345,7 +338,7 @@ if pages > 1:
     except Exception:
         page = st.slider("Page", 1, pages, 1)
 
-# Si jamais page ressort None → on retombe sur 1
+# Sécurité anti-None
 if page is None:
     page = 1
 
