@@ -324,32 +324,24 @@ def swatch_card(row):
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
 # =========================
-# Pagination simple (anti-None)
+# Pagination simple (robuste)
 # =========================
+import math
+
 PAGE_SIZE = 12
-total = len(result)
+total = int(len(result))
 pages = max(1, math.ceil(total / PAGE_SIZE))
 
-page = 1  # valeur par défaut
-
+# ✅ Toujours un entier, jamais None
 if pages > 1:
-    try:
-        page = st.segmented_control("Page", options=list(range(1, pages + 1)))
-    except Exception:
-        page = st.slider("Page", 1, pages, 1)
-
-# Sécurité anti-None
-if page is None:
+    page = st.slider("Page", min_value=1, max_value=pages, value=1, key="pager")
+else:
     page = 1
 
-# Forcer en entier
-page = int(page)
-
-# Découpage du DataFrame
-start, end = (page - 1) * PAGE_SIZE, (page - 1) * PAGE_SIZE + PAGE_SIZE
+start = (page - 1) * PAGE_SIZE
+end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
 
-# Affichage en grille
 cols_per_row = 3
 rows = math.ceil(len(chunk) / cols_per_row)
 for r in range(rows):
