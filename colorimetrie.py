@@ -323,35 +323,25 @@ def swatch_card(row):
     # petit input pour copier le HEX facilement
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
-# =========================
-# Pagination simple (robuste)
-# =========================
-import math
+# Pagination boutons (sans slider)
+if "page" not in st.session_state:
+    st.session_state.page = 1
 
-PAGE_SIZE = 12
-total = int(len(result))
-pages = max(1, math.ceil(total / PAGE_SIZE))
+col_prev, col_info, col_next = st.columns([1,2,1])
+with col_prev:
+    if st.button("◀︎ Précédent", use_container_width=True) and st.session_state.page > 1:
+        st.session_state.page -= 1
+with col_next:
+    if st.button("Suivant ▶︎", use_container_width=True) and st.session_state.page < pages:
+        st.session_state.page += 1
+with col_info:
+    st.markdown(f"<div style='text-align:center'>Page {st.session_state.page} / {pages}</div>", unsafe_allow_html=True)
 
-# Toujours un entier (jamais None)
-if pages > 1:
-    page = st.slider("Page", min_value=1, max_value=pages, value=1, key="pager")
-else:
-    page = 1
-
+page = st.session_state.page
 start = (page - 1) * PAGE_SIZE
 end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
-
-# Affichage en grille
-cols_per_row = 3
-rows = math.ceil(len(chunk) / cols_per_row)
-for r in range(rows):
-    cols = st.columns(cols_per_row)
-    for j in range(cols_per_row):
-        idx = r * cols_per_row + j
-        if idx < len(chunk):
-            with cols[j]:
-                swatch_card(chunk.iloc[idx])
+# ... puis la même grille qu’au-dessus
 
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
