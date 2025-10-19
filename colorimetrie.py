@@ -10,7 +10,7 @@ from fpdf import FPDF
 # =========================
 # App config
 # =========================
-st.set_page_config(page_title="Nuancier NCS", layout="wide")
+st.set_page_config(page_title="Nuancier NCS", layout="wide", initial_sidebar_state="expanded")
 
 # =========================
 # UI THEME (neutre, chic)
@@ -47,6 +47,14 @@ div[data-testid="stSidebar"] {{
   border-right: 1px solid rgba(0,0,0,0.05);
 }}
 
+/* Forcer la sidebar ouverte et cacher les contrôles de repli */
+div[data-testid="collapsedControl"] {{ display: none !important; }}
+button[aria-label="Hide sidebar"] {{ display: none !important; }}
+button[aria-label="Show sidebar"] {{ display: none !important; }}
+section[data-testid="stSidebar"] {{
+  transform: none !important; visibility: visible !important; opacity: 1 !important;
+}}
+
 .stSelectbox [data-baseweb="select"] > div {{
   border-radius:14px; 
   background: white;
@@ -65,11 +73,14 @@ div[data-testid="stSidebar"] {{
 .card {{
   background: {THEME['panel']}; 
   border-radius:18px; 
-  padding:12px;
+  padding:8px;                     /* plus compact */
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 8px 22px {THEME['shadow']};
 }}
-.swatch {{ height: 96px; border-radius:14px; margin-bottom:10px; }}
+.swatch {{ height: 72px; border-radius:14px; margin-bottom:8px; }} /* plus petit */
+
+/* Titre centré */
+.app-title {{ text-align:center; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -81,27 +92,31 @@ div[data-testid="stToolbar"] { display: none; }
 </style>
 """, unsafe_allow_html=True)
 
+# === Logo fixe bas-gauche (overlay) ===
+LOGO_PATH = "logo_coloriste.png"   # ou .jpg, mis à côté du script
+st.markdown(f"""
+<div style="position:fixed; left:16px; bottom:16px; z-index:1000; opacity:0.98">
+  <img src="{LOGO_PATH}" style="height:38px;">
+</div>
+""", unsafe_allow_html=True)
+
 # =========================
-# Header
+# Header (titre centré)
 # =========================
-col_logo, col_title = st.columns([1, 5])
-with col_logo:
-    st.image("logo_coloriste.png", use_container_width=True)
-with col_title:
-    st.markdown(
-        f"""
-        <div style="line-height:1.1">
-          <div style="font-family:'Playfair Display', serif;
-                      font-size:36px; font-weight:700; color:{THEME['text']}">
-              Nuancier personnalisé
-          </div>
-          <div style="color:{THEME['muted']}; margin-top:4px">
-              Outil neutre & professionnel — adapté à toutes les palettes
-          </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+st.markdown(
+    f"""
+    <div class="app-title" style="line-height:1.1">
+      <div style="font-family:'Playfair Display', serif;
+                  font-size:36px; font-weight:700; color:{THEME['text']}">
+          Nuancier personnalisé
+      </div>
+      <div style="color:{THEME['muted']}; margin-top:4px">
+          Outil neutre & professionnel — adapté à toutes les palettes
+      </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
@@ -337,7 +352,7 @@ def swatch_card(row):
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
 # Pagination (boutons) — jamais None
-PAGE_SIZE = 12
+PAGE_SIZE = 36              # 6x6
 total = int(len(result))
 pages = max(1, math.ceil(total / PAGE_SIZE))
 
@@ -360,7 +375,7 @@ end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
 
 # Affichage en grille
-cols_per_row = 3
+cols_per_row = 6            # 6 par ligne
 rows = math.ceil(len(chunk) / cols_per_row)
 for r in range(rows):
     cols = st.columns(cols_per_row)
@@ -382,7 +397,6 @@ with st.expander("Voir la table détaillée"):
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
 # =========================
-LOGO_PATH = "logo_coloriste.png"   # ou .jpg, mis à côté du script
 CREDIT_FOOTER = "Nuancier généré par Otto Amélie – Tous droits réservés"
 
 class PDF(FPDF):
