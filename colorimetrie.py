@@ -217,16 +217,7 @@ with st.sidebar:
         SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
 
-    # --- Logo en bas de la sidebar (ancré) ---
-    st.markdown(
-        f"""
-        <div class="sidebar-logo">
-            <img src="{LOGO_PATH}" style="height:40px;">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
+    
 # Valeurs par défaut si l'expander est fermé (sécurité)
 if "SEUIL_STRICT" not in locals():
     SEUIL_STRICT = 0.60
