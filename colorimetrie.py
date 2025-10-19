@@ -55,10 +55,10 @@ div[data-testid="stSidebar"] {{
 }}
 
 /* Sidebar toujours visible et non repliable */
-div[data-testid="collapsedControl"] button {{
-  visibility: hidden !important;
-  pointer-events: none !important;
-}}
+/*div[data-testid="collapsedControl"] button {{/*
+  /*visibility: hidden !important;/*
+  /*pointer-events: none !important;/*
+/*}}/*
 section[data-testid="stSidebar"] {{
   transform: none !important;
   visibility: visible !important;
