@@ -121,24 +121,20 @@ st.markdown(f"""
 # =========================
 # Header
 # =========================
-col_logo, col_title = st.columns([1, 5])
-with col_logo:
-    st.image("logo_coloriste.png", use_container_width=True)
-with col_title:
-    st.markdown(
-        f"""
-        <div style="line-height:1.1">
-          <div style="font-family:'Playfair Display', serif;
-                      font-size:36px; font-weight:700; color:{THEME['text']}">
-              Nuancier personnalisé
-          </div>
-          <div style="color:{THEME['muted']}; margin-top:4px">
-              Outil neutre & professionnel — adapté à toutes les palettes
-          </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+st.markdown(
+    f"""
+    <div style="text-align:center; line-height:1.1">
+      <div style="font-family:'Playfair Display', serif;
+                  font-size:36px; font-weight:700; color:{THEME['text']}">
+          Nuancier personnalisé
+      </div>
+      <div style="color:{THEME['muted']}; margin-top:4px">
+          Outil neutre & professionnel — adapté à toutes les palettes
+      </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
@@ -236,6 +232,20 @@ if "SEUIL_STRICT" not in locals():
     SEUIL_STRICT = 0.60
 if "TOPN" not in locals():
     TOPN = 200
+# --- Logo en bas de la sidebar ---
+st.markdown(
+    """
+    <div style="
+        position: fixed;
+        bottom: 15px;
+        left: 20px;
+        z-index: 100;
+    ">
+        <img src='logo_coloriste.png' style="height:40px; opacity:0.95;">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # =========================
 # Préparation des données
