@@ -54,18 +54,7 @@ div[data-testid="stSidebar"] {{
   border-right: 1px solid rgba(0,0,0,0.05);
 }}
 
-/* Sidebar toujours visible et non repliable */
-/*div[data-testid="collapsedControl"] button {{/*
-  /*visibility: hidden !important;/*
-  /*pointer-events: none !important;/*
-/*}}/*
-section[data-testid="stSidebar"] {{
-  transform: none !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-width: 18rem !important;
-  position: relative !important; /* <-- nécessaire pour ancrer le logo en bas */
-}}
+
 /* Conteneur du logo en bas de la sidebar */
 section[data-testid="stSidebar"] .sidebar-logo {{
   position: absolute;
@@ -73,6 +62,14 @@ section[data-testid="stSidebar"] .sidebar-logo {{
   bottom: 16px;
   z-index: 10;
   opacity: 0.98;
+}}
+
+section[data-testid="stSidebar"] {{
+  transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 18rem !important;
+  position: relative !important; /* <-- nécessaire pour ancrer le logo en bas */
 }}
 
 .stSelectbox [data-baseweb="select"] > div {{
