@@ -75,6 +75,21 @@ div[data-testid="stSidebar"] {{
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+/* Empêche de cacher la sidebar tout en la gardant structurellement visible */
+div[data-testid="collapsedControl"] button {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+section[data-testid="stSidebar"] {
+  transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 18rem !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <style>
