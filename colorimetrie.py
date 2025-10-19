@@ -27,6 +27,9 @@ THEME = {
     "shadow": "rgba(0,0,0,0.06)"
 }
 
+# Logo (utilisé pour la sidebar et le PDF)
+LOGO_PATH = "logo_coloriste.png"   # mets l'image à côté de ce script
+
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
@@ -47,6 +50,27 @@ h1,h2,h3,.stMarkdown h1,.stMarkdown h2,.stMarkdown h3 {{
 div[data-testid="stSidebar"] {{
   background: {THEME['panel']};
   border-right: 1px solid rgba(0,0,0,0.05);
+}}
+
+/* Sidebar toujours visible et non repliable */
+div[data-testid="collapsedControl"] button {{
+  visibility: hidden !important;
+  pointer-events: none !important;
+}}
+section[data-testid="stSidebar"] {{
+  transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 18rem !important;
+  position: relative !important; /* <-- nécessaire pour ancrer le logo en bas */
+}}
+/* Conteneur du logo en bas de la sidebar */
+section[data-testid="stSidebar"] .sidebar-logo {{
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 10;
+  opacity: 0.98;
 }}
 
 .stSelectbox [data-baseweb="select"] > div {{
@@ -72,58 +96,22 @@ div[data-testid="stSidebar"] {{
   box-shadow: 0 8px 22px {THEME['shadow']};
 }}
 .swatch {{ height: 72px; border-radius:14px; margin-bottom:10px; }}
+
+/* Titre centré */
+.app-title {{ text-align:center !important; }}
+
+/* Cartes plus compactes */
+.card {{ padding:8px !important; border-radius:14px !important; }}
+.swatch {{ height: 72px !important; }}
 </style>
 """, unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* Empêche de cacher la sidebar tout en la gardant structurellement visible */
-div[data-testid="collapsedControl"] button {
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-section[data-testid="stSidebar"] {
-  transform: none !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-width: 18rem !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* Always show sidebar and hide collapse toggle */
-div[data-testid="collapsedControl"] button { visibility: hidden !important; pointer-events: none !important; }
-button[aria-label="Hide sidebar"] { display: none !important; }
-button[aria-label="Show sidebar"] { display: none !important; }
-section[data-testid="stSidebar"] { transform: none !important; visibility: visible !important; opacity: 1 !important; }
-/* Center the custom header/title block */
-.app-title { text-align:center !important; }
-/* Smaller cards & swatches */
-.card { padding:8px !important; border-radius:14px !important; }
-.swatch { height: 72px !important; }
-</style>
-""", unsafe_allow_html=True)
-
-# Bottom-left fixed logo (uses LOGO_PATH if present)
-try:
-    _LOGO_PATH = LOGO_PATH  # noqa
-except Exception:
-    _LOGO_PATH = "logo.png"
-st.markdown(f"""
-<div style="position:fixed; left:16px; bottom:16px; z-index:1000; opacity:0.95">
-  <img src="{_LOGO_PATH}" style="height:38px;">
-</div>
-""", unsafe_allow_html=True)
-
 
 # =========================
-# Header
+# Header (titre centré, sans logo)
 # =========================
 st.markdown(
     f"""
-    <div style="text-align:center; line-height:1.1">
+    <div class="app-title" style="line-height:1.1">
       <div style="font-family:'Playfair Display', serif;
                   font-size:36px; font-weight:700; color:{THEME['text']}">
           Nuancier personnalisé
@@ -227,25 +215,21 @@ with st.sidebar:
         SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
 
+    # --- Logo en bas de la sidebar (ancré) ---
+    st.markdown(
+        f"""
+        <div class="sidebar-logo">
+            <img src="{LOGO_PATH}" style="height:40px;">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 # Valeurs par défaut si l'expander est fermé (sécurité)
 if "SEUIL_STRICT" not in locals():
     SEUIL_STRICT = 0.60
 if "TOPN" not in locals():
     TOPN = 200
-# --- Logo en bas de la sidebar ---
-st.markdown(
-    """
-    <div style="
-        position: fixed;
-        bottom: 15px;
-        left: 20px;
-        z-index: 100;
-    ">
-        <img src='logo_coloriste.png' style="height:40px; opacity:0.95;">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 # =========================
 # Préparation des données
@@ -270,7 +254,7 @@ def score_adjective(row: pd.Series, adj: str) -> float:
         return 1.0 if temp == "froid" else (0.6 if temp == "neutre" else 0.0)
     if adj == "neutre":
         base = 1.0 if temp == "neutre" else 0.0
-        bonus = max(0.0, (10.0 - sat) / 10.0)  # sat<=10 → bonus jusqu’à +1
+        bonus = max(0.0, (10.0 - sat) / 10.0)
         return min(1.0, base + 0.6 * bonus)
     if adj == "clair":
         s = 1.0 - (noir / 100.0)
@@ -429,7 +413,6 @@ with st.expander("Voir la table détaillée"):
 # =========================
 # PDF (familles + dégradé HSV) — logo bas-gauche + crédit bas-droite
 # =========================
-LOGO_PATH = "logo_coloriste.png"   # ou .jpg, mis à côté du script
 CREDIT_FOOTER = "Nuancier généré par Otto Amélie – Tous droits réservés"
 
 class PDF(FPDF):
