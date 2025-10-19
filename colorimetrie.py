@@ -104,6 +104,16 @@ section[data-testid="stSidebar"] {{
 .swatch {{ height: 72px !important; }}
 </style>
 """, unsafe_allow_html=True)
+st.markdown("""
+<style>
+/* Cache totalement le bouton "≪" qui replie la sidebar */
+div[data-testid="collapsedControl"], 
+div[data-testid="collapsedControl"] * {
+    display: none !important;
+    visibility: hidden !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # =========================
 # Header (titre centré, sans logo)
