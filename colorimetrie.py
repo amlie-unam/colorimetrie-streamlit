@@ -6,6 +6,10 @@ from io import BytesIO
 import pandas as pd
 import streamlit as st
 from fpdf import FPDF
+from pathlib import Path
+
+# chemin absolu vers le logo (robuste même si tu lances Streamlit depuis un autre dossier)
+LOGO_PATH = Path(__file__).parent / "logo_coloriste.png"
 
 # =========================
 # App config
@@ -27,8 +31,6 @@ THEME = {
     "shadow": "rgba(0,0,0,0.06)"
 }
 
-# Logo (utilisé pour la sidebar et le PDF)
-LOGO_PATH = "logo_coloriste.png"   # mets l'image à côté de ce script
 
 st.markdown(f"""
 <style>
@@ -230,6 +232,23 @@ if "SEUIL_STRICT" not in locals():
     SEUIL_STRICT = 0.60
 if "TOPN" not in locals():
     TOPN = 200
+# --- Logo en bas de la sidebar ---
+if LOGO_PATH.exists():
+    st.markdown(
+        f"""
+        <div style="
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            z-index: 100;
+        ">
+            <img src="file://{LOGO_PATH}" style="height:40px; opacity:0.95;">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.warning("⚠️ Logo introuvable (logo_coloriste.png)")
 
 # =========================
 # Préparation des données
