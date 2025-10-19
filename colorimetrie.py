@@ -5,6 +5,7 @@ from io import BytesIO
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 from fpdf import FPDF
 from pathlib import Path
 
@@ -31,7 +32,9 @@ THEME = {
     "shadow": "rgba(0,0,0,0.06)"
 }
 
-
+# =========================
+# CSS de base
+# =========================
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
@@ -53,7 +56,6 @@ div[data-testid="stSidebar"] {{
   background: {THEME['panel']};
   border-right: 1px solid rgba(0,0,0,0.05);
 }}
-
 
 /* Conteneur du logo en bas de la sidebar */
 section[data-testid="stSidebar"] .sidebar-logo {{
@@ -104,16 +106,79 @@ section[data-testid="stSidebar"] {{
 .swatch {{ height: 72px !important; }}
 </style>
 """, unsafe_allow_html=True)
+
+# =========================
+# CSS "bulldozer" pour faire disparaître les flèches (contrôle de repli)
+# Place ce bloc APRÈS tous les autres styles
+# =========================
 st.markdown("""
 <style>
-/* Cache totalement le bouton "≪" qui replie la sidebar */
-div[data-testid="collapsedControl"], 
-div[data-testid="collapsedControl"] * {
-    display: none !important;
-    visibility: hidden !important;
+/* Cache et supprime l'espace du bouton de repli "≪" */
+html body [data-testid="collapsedControl"],
+html body [data-testid="collapsedControl"] * {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Fallbacks selon versions/langues */
+button[title*="Collapse sidebar"],
+button[aria-label*="Collapse"],
+button[aria-label*="Réduire"],
+button[aria-label*="Replier"],
+[data-testid="baseButton-headerNoPadding"] {
+  display: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
+# =========================
+# JS "ceinture & bretelles" via components.html (si Streamlit recrée le bouton)
+# =========================
+components.html("""
+<!DOCTYPE html>
+<html><body>
+<script>
+(function() {
+  function hideOnce(root) {
+    const sels = [
+      '[data-testid="collapsedControl"]',
+      'button[title*="Collapse"]',
+      'button[aria-label*="Collapse"]',
+      'button[aria-label*="Réduire"]',
+      'button[aria-label*="Replier"]',
+      '[data-testid="baseButton-headerNoPadding"]'
+    ];
+    for (const s of sels) {
+      const el = (root || document).querySelector(s);
+      if (el) {
+        el.style.display = 'none';
+        el.style.visibility = 'hidden';
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+        el.style.width = '0';
+        el.style.height = '0';
+        el.style.margin = '0';
+        el.style.padding = '0';
+      }
+    }
+  }
+  try { hideOnce(document); } catch(e) {}
+  try { hideOnce(window.parent && window.parent.document); } catch(e) {}
+  const obs = new MutationObserver(() => {
+    try { hideOnce(document); } catch(e) {}
+    try { hideOnce(window.parent && window.parent.document); } catch(e) {}
+  });
+  obs.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+</body></html>
+""", height=0, scrolling=False)
 
 # =========================
 # Header (titre centré, sans logo)
@@ -224,13 +289,13 @@ with st.sidebar:
         SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
 
-    
 # Valeurs par défaut si l'expander est fermé (sécurité)
 if "SEUIL_STRICT" not in locals():
     SEUIL_STRICT = 0.60
 if "TOPN" not in locals():
     TOPN = 200
-# --- Logo en bas de la sidebar ---
+
+# --- Logo en bas de la sidebar (optionnel, garde si tu veux) ---
 if LOGO_PATH.exists():
     st.markdown(
         f"""
