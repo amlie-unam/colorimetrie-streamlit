@@ -10,7 +10,9 @@ from fpdf import FPDF
 # =========================
 # App config
 # =========================
-st.set_page_config(page_title="Nuancier NCS", layout="wide", initial_sidebar_state="expanded", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Nuancier NCS",
+                   layout="wide",
+                   initial_sidebar_state="expanded")
 
 # =========================
 # UI THEME (neutre, chic)
