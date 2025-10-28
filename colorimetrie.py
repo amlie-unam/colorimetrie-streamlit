@@ -25,6 +25,9 @@ st.set_page_config(page_title="Nuancier NCS",
 LOGO_PATH = Path(__file__).parent / "logo_coloriste.png"
 LOGO_URL = st.secrets.get("LOGO_URL", "").strip()
 
+# ---- Taille du logo (modifiable) ----
+LOGO_MAX_PX = 48  # <== change cette valeur pour agrandir/rétrécir le logo
+
 _pdf_logo_path = None
 _html_logo_src = None
 
@@ -44,8 +47,7 @@ def _load_logo_sources():
             resp.raise_for_status()
             _html_logo_src = LOGO_URL
             tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
-            tmp.write(resp.content)
-            tmp.flush()
+            tmp.write(resp.content); tmp.flush()
             _pdf_logo_path = tmp.name
             return
         except Exception:
@@ -73,8 +75,9 @@ st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
-/* Variable dynamique pour suivre la sidebar */
-:root {{ --sidebar-right: 0px; }}
+:root {{
+  --logo-max-height: {LOGO_MAX_PX}px; /* <- tu peux aussi modifier la taille ici */
+}}
 
 html, body, [data-testid="stAppViewContainer"] {{
   background: {THEME['bg']} !important;
@@ -88,9 +91,11 @@ h1,h2,h3,.stMarkdown h1,.stMarkdown h2,.stMarkdown h3 {{
   color: {THEME['text']};
 }}
 
+/* On rend la sidebar "relative" pour pouvoir ancrer un enfant en bas à gauche */
 div[data-testid="stSidebar"] {{
   background: {THEME['panel']};
   border-right: 1px solid rgba(0,0,0,0.05);
+  position: relative;
 }}
 
 .stSelectbox [data-baseweb="select"] > div {{
@@ -122,36 +127,55 @@ div[data-testid="stSidebar"] {{
 .card {{ padding:8px !important; border-radius:14px !important; }}
 .swatch {{ height: 72px !important; }}
 
-/* Logo fixe qui suit la sidebar */
+/* ---- LOGOS ---- */
+
+/* Logo INSIDE sidebar (visible quand la sidebar est ouverte) */
+.sidebar-logo-wrapper {{
+  position: absolute;  /* ancré au container de la sidebar */
+  left: 14px;
+  bottom: 14px;
+  z-index: 10;
+  pointer-events: none;   /* ne bloque pas les clics */
+}}
+.sidebar-logo-wrapper img {{
+  max-height: var(--logo-max-height);
+  filter: drop-shadow(0 2px 6px {THEME['shadow']});
+}}
+
+/* Logo FIXE dans le viewport (visible quand la sidebar est cachée) */
 .page-logo-fixed {{
   position: fixed;
-  left: calc(var(--sidebar-right, 0px) + 14px);
+  left: 14px;
   bottom: 14px;
   z-index: 1000;
   opacity: .98;
   pointer-events: none;
+  display: none;          /* masqué par défaut, JS le montrera si sidebar cachée */
 }}
 .page-logo-fixed img {{
-  max-height: 44px;
+  max-height: var(--logo-max-height);
   filter: drop-shadow(0 2px 6px {THEME['shadow']});
 }}
 </style>
 """, unsafe_allow_html=True)
 
 # =========================
-# Affichage logo
+# Insertion des logos (un dans la sidebar, un fixe en fallback)
 # =========================
 if _html_logo_src:
-    st.markdown(f'<div class="page-logo-fixed"><img src="{_html_logo_src}" alt="logo"/></div>', unsafe_allow_html=True)
+    with st.sidebar:
+        st.markdown(f'<div class="sidebar-logo-wrapper"><img src="{_html_logo_src}" alt="logo"/></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="page-logo-fixed" id="fallback-logo"><img src="{_html_logo_src}" alt="logo"/></div>', unsafe_allow_html=True)
 else:
     st.info("ℹ️ Ajoute `logo_coloriste.png` au repo ou définis `LOGO_URL` dans les *Secrets* pour afficher le logo.")
 
 # =========================
-# JS (masquer flèches + suivre sidebar)
+# JS (optionnel: masquer flèches + toggle des logos selon visibilité sidebar)
 # =========================
 components.html("""
 <!DOCTYPE html><html><body><script>
 (function(){
+  /* Masquer les flèches (peut être supprimé si tu veux les garder) */
   function hideCollapseButtons(root){
     const sels=[
       '[data-testid="collapsedControl"]',
@@ -172,43 +196,37 @@ components.html("""
     }
   }
 
-  function updateSidebarVar(){
+  /* Montre le logo fixe si la sidebar est cachée; sinon montre le logo dans la sidebar */
+  function toggleLogos(){
     try{
-      const d = document;
-      const pd = (window.parent && window.parent.document) || null;
-      function computeRight(doc){
-        const sb = doc && doc.querySelector('[data-testid="stSidebar"]');
-        if(!sb) return 0;
-        const style = (doc.defaultView || window).getComputedStyle(sb);
-        if(style.display === 'none' || sb.offsetWidth === 0) return 0;
-        const r = sb.getBoundingClientRect().right;
-        return Math.max(0, Math.round(r));
-      }
-      const val = computeRight(pd) || computeRight(d) || 0;
-      d.documentElement.style.setProperty('--sidebar-right', val + 'px');
-      if(pd) pd.documentElement.style.setProperty('--sidebar-right', val + 'px');
+      const pd = (window.parent && window.parent.document) || document;
+      const sb = pd.querySelector('[data-testid="stSidebar"]');
+      const fb = document.getElementById('fallback-logo'); // logo fixe dans l'app
+      const visible = sb && (sb.offsetWidth > 0) && getComputedStyle(sb).display !== 'none';
+      if(fb){ fb.style.display = visible ? 'none' : 'block'; }
     }catch(e){}
   }
 
+  // Initial
   hideCollapseButtons(document);
   try{ hideCollapseButtons(window.parent && window.parent.document); }catch(e){}
-  updateSidebarVar();
+  toggleLogos();
 
   const opts = {childList:true, subtree:true, attributes:true};
-  new MutationObserver(()=>{ hideCollapseButtons(document); updateSidebarVar(); })
+  new MutationObserver(()=>{ hideCollapseButtons(document); toggleLogos(); })
       .observe(document.documentElement, opts);
 
   try{
     const pd = window.parent && window.parent.document;
     if(pd){
-      new MutationObserver(()=>{ hideCollapseButtons(pd); updateSidebarVar(); })
+      new MutationObserver(()=>{ hideCollapseButtons(pd); toggleLogos(); })
           .observe(pd.documentElement, opts);
       const sb = pd.querySelector('[data-testid="stSidebar"]');
-      if(sb){ new ResizeObserver(updateSidebarVar).observe(sb); }
-      pd.defaultView && pd.defaultView.addEventListener('resize', updateSidebarVar);
+      if(sb){ new ResizeObserver(toggleLogos).observe(sb); }
+      pd.defaultView && pd.defaultView.addEventListener('resize', toggleLogos);
     }
   }catch(e){}
-  window.addEventListener('resize', updateSidebarVar);
+  window.addEventListener('resize', toggleLogos);
 })();
 </script></body></html>
 """, height=0, scrolling=False)
@@ -230,6 +248,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
 # =========================
