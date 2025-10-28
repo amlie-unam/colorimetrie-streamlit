@@ -291,14 +291,12 @@ else:
 components.html("""
 <!DOCTYPE html><html><body><script>
 (function(){
-  // Détection robuste de la visibilité de la sidebar
   function isSidebarVisible() {
     try {
       // Essaye d'abord dans le parent (cas Streamlit Cloud/iframe), sinon dans le document courant
       const docs = [];
       if (window.parent && window.parent.document) docs.push(window.parent.document);
       docs.push(document);
-
       for (const doc of docs) {
         const sb = doc.querySelector('[data-testid="stSidebar"]');
         if (!sb) continue;
@@ -313,18 +311,15 @@ components.html("""
 
   function toggleFallbackLogo(){
     try{
-      const fb = document.getElementById('fallback-logo'); // <div class="page-logo-fixed" id="fallback-logo">...</div>
+      const fb = document.getElementById('fallback-logo');
       if (!fb) return;
       const open = isSidebarVisible();
-      // si la sidebar est ouverte -> cacher le logo fixe ; sinon -> afficher le logo fixe
       fb.classList.toggle('is-hidden', open);
     }catch(e){}
   }
 
-  // Initial
   toggleFallbackLogo();
 
-  // Observe mutations et resize pour suivre les changements Streamlit
   const opts = {childList:true, subtree:true, attributes:true};
   new MutationObserver(toggleFallbackLogo).observe(document.documentElement, opts);
 
@@ -337,7 +332,6 @@ components.html("""
       pd.defaultView && pd.defaultView.addEventListener('resize', toggleFallbackLogo);
     }
   } catch(e) {}
-
   window.addEventListener('resize', toggleFallbackLogo);
 })();
 </script></body></html>
