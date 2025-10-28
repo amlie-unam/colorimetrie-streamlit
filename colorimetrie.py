@@ -26,7 +26,7 @@ LOGO_PATH = Path(__file__).parent / "logo_coloriste.png"
 LOGO_URL = st.secrets.get("LOGO_URL", "").strip()
 
 # ---- Taille du logo (modifiable) ----
-LOGO_MAX_PX = 48  # <== change cette valeur pour agrandir/rétrécir le logo
+LOGO_MAX_PX = 64  # <== change cette valeur pour agrandir/rétrécir le logo
 
 _pdf_logo_path = None
 _html_logo_src = None
