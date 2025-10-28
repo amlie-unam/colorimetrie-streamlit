@@ -54,6 +54,119 @@ def _load_logo_sources():
             pass
 
 _load_logo_sources()
+# === À COLLER IMMÉDIATEMENT APRÈS _load_logo_sources() ===
+
+# 1) Mini-CSS pour le logo (indépendant de ton THEME)
+st.markdown(f"""
+<style>
+:root {{
+  --logo-max-height: {LOGO_MAX_PX}px;  /* <- tu peux aussi modifier ici si tu veux */
+}}
+/* Logo collé en bas-gauche DANS la sidebar */
+.sidebar-logo-wrapper {{
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  pointer-events: none;
+  z-index: 10;
+}}
+.sidebar-logo-wrapper img {{
+  max-height: var(--logo-max-height);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.06));
+}}
+
+/* Logo fixe bas-gauche du viewport (fallback quand la sidebar est cachée) */
+.page-logo-fixed {{
+  position: fixed;
+  left: 14px;
+  bottom: 14px;
+  z-index: 1000;
+  opacity: .98;
+  pointer-events: none;
+}}
+.page-logo-fixed img {{
+  max-height: var(--logo-max-height);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.06));
+}}
+/* Utilitaire pour masquer via JS */
+.is-hidden {{ display: none !important; }}
+</style>
+""", unsafe_allow_html=True)
+
+# 2) Insertion du logo (sidebar + fallback fixe)
+if _html_logo_src:
+    # Dans la sidebar (bas-gauche) – visible quand la sidebar est ouverte
+    with st.sidebar:
+        st.markdown(
+            f'''
+            <div class="sidebar-logo-wrapper">
+              <img src="{_html_logo_src}" alt="logo">
+            </div>
+            ''',
+            unsafe_allow_html=True
+        )
+    # Fallback fixe (bas-gauche) – visible quand la sidebar est fermée
+    st.markdown(
+        f'''
+        <div class="page-logo-fixed is-hidden" id="fallback-logo">
+          <img src="{_html_logo_src}" alt="logo">
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
+else:
+    st.info("ℹ️ Ajoute `logo_coloriste.png` au repo ou définis `LOGO_URL` dans les *Secrets* pour afficher le logo.")
+
+# 3) JS qui alterne l'affichage selon que la sidebar est visible ou non
+import streamlit.components.v1 as components
+components.html("""
+<!DOCTYPE html><html><body><script>
+(function(){
+  function isSidebarVisible() {
+    try {
+      const docs = [];
+      if (window.parent && window.parent.document) docs.push(window.parent.document);
+      docs.push(document);
+      for (const doc of docs) {
+        const sb = doc.querySelector('[data-testid="stSidebar"]');
+        if (!sb) continue;
+        const cs = (doc.defaultView || window).getComputedStyle(sb);
+        const rect = sb.getBoundingClientRect();
+        const visible = rect.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
+        if (visible) return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  function toggleFallbackLogo(){
+    try{
+      const fb = document.getElementById('fallback-logo');
+      if (!fb) return;
+      const open = isSidebarVisible();
+      fb.classList.toggle('is-hidden', open); // sidebar ouverte -> cacher le fallback; fermée -> montrer
+    }catch(e){}
+  }
+
+  toggleFallbackLogo();
+
+  const opts = {childList:true, subtree:true, attributes:true};
+  new MutationObserver(toggleFallbackLogo).observe(document.documentElement, opts);
+
+  try{
+    const pd = window.parent && window.parent.document;
+    if (pd) {
+      new MutationObserver(toggleFallbackLogo).observe(pd.documentElement, opts);
+      const sb = pd.querySelector('[data-testid="stSidebar"]');
+      if (sb) new ResizeObserver(toggleFallbackLogo).observe(sb);
+      pd.defaultView && pd.defaultView.addEventListener('resize', toggleFallbackLogo);
+    }
+  } catch(e) {}
+  window.addEventListener('resize', toggleFallbackLogo);
+})();
+</script></body></html>
+""", height=0, scrolling=False)
+# === FIN DU BLOC À COLLER ===
 
 # =========================
 # UI THEME (neutre, chic)
@@ -142,20 +255,23 @@ div[data-testid="stSidebar"] {{
   filter: drop-shadow(0 2px 6px {THEME['shadow']});
 }}
 
-/* Logo FIXE dans le viewport (visible quand la sidebar est cachée) */
+/* Logo FIXE dans le viewport (fallback quand la sidebar est cachée) */
 .page-logo-fixed {{
   position: fixed;
   left: 14px;
-  bottom: 14px;
+  bottom: 14px;          /* <-- garantit le bas-gauche */
   z-index: 1000;
   opacity: .98;
   pointer-events: none;
-  display: none;          /* masqué par défaut, JS le montrera si sidebar cachée */
 }}
 .page-logo-fixed img {{
-  max-height: var(--logo-max-height);
+  max-height: var(--logo-max-height, 48px);
   filter: drop-shadow(0 2px 6px {THEME['shadow']});
 }}
+/* Utilitaire pour masquer proprement via JS */
+.is-hidden {{ display: none !important; }}
+</style>
+""", unsafe_allow_html=True)
 </style>
 """, unsafe_allow_html=True)
 
@@ -175,58 +291,54 @@ else:
 components.html("""
 <!DOCTYPE html><html><body><script>
 (function(){
-  /* Masquer les flèches (peut être supprimé si tu veux les garder) */
-  function hideCollapseButtons(root){
-    const sels=[
-      '[data-testid="collapsedControl"]',
-      'button[title*="Collapse"]',
-      'button[aria-label*="Collapse"]',
-      'button[aria-label*="Réduire"]',
-      'button[aria-label*="Replier"]',
-      '[data-testid="baseButton-headerNoPadding"]'
-    ];
-    for(const s of sels){
-      const el=(root||document).querySelector(s);
-      if(el){
-        Object.assign(el.style,{
-          display:'none',visibility:'hidden',opacity:'0',
-          pointerEvents:'none',width:'0px',height:'0px',margin:'0',padding:'0'
-        });
+  // Détection robuste de la visibilité de la sidebar
+  function isSidebarVisible() {
+    try {
+      // Essaye d'abord dans le parent (cas Streamlit Cloud/iframe), sinon dans le document courant
+      const docs = [];
+      if (window.parent && window.parent.document) docs.push(window.parent.document);
+      docs.push(document);
+
+      for (const doc of docs) {
+        const sb = doc.querySelector('[data-testid="stSidebar"]');
+        if (!sb) continue;
+        const cs = (doc.defaultView || window).getComputedStyle(sb);
+        const rect = sb.getBoundingClientRect();
+        const visible = rect.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
+        if (visible) return true;
       }
-    }
+    } catch (e) {}
+    return false;
   }
 
-  /* Montre le logo fixe si la sidebar est cachée; sinon montre le logo dans la sidebar */
-  function toggleLogos(){
+  function toggleFallbackLogo(){
     try{
-      const pd = (window.parent && window.parent.document) || document;
-      const sb = pd.querySelector('[data-testid="stSidebar"]');
-      const fb = document.getElementById('fallback-logo'); // logo fixe dans l'app
-      const visible = sb && (sb.offsetWidth > 0) && getComputedStyle(sb).display !== 'none';
-      if(fb){ fb.style.display = visible ? 'none' : 'block'; }
+      const fb = document.getElementById('fallback-logo'); // <div class="page-logo-fixed" id="fallback-logo">...</div>
+      if (!fb) return;
+      const open = isSidebarVisible();
+      // si la sidebar est ouverte -> cacher le logo fixe ; sinon -> afficher le logo fixe
+      fb.classList.toggle('is-hidden', open);
     }catch(e){}
   }
 
   // Initial
-  hideCollapseButtons(document);
-  try{ hideCollapseButtons(window.parent && window.parent.document); }catch(e){}
-  toggleLogos();
+  toggleFallbackLogo();
 
+  // Observe mutations et resize pour suivre les changements Streamlit
   const opts = {childList:true, subtree:true, attributes:true};
-  new MutationObserver(()=>{ hideCollapseButtons(document); toggleLogos(); })
-      .observe(document.documentElement, opts);
+  new MutationObserver(toggleFallbackLogo).observe(document.documentElement, opts);
 
   try{
     const pd = window.parent && window.parent.document;
-    if(pd){
-      new MutationObserver(()=>{ hideCollapseButtons(pd); toggleLogos(); })
-          .observe(pd.documentElement, opts);
+    if (pd) {
+      new MutationObserver(toggleFallbackLogo).observe(pd.documentElement, opts);
       const sb = pd.querySelector('[data-testid="stSidebar"]');
-      if(sb){ new ResizeObserver(toggleLogos).observe(sb); }
-      pd.defaultView && pd.defaultView.addEventListener('resize', toggleLogos);
+      if (sb) new ResizeObserver(toggleFallbackLogo).observe(sb);
+      pd.defaultView && pd.defaultView.addEventListener('resize', toggleFallbackLogo);
     }
-  }catch(e){}
-  window.addEventListener('resize', toggleLogos);
+  } catch(e) {}
+
+  window.addEventListener('resize', toggleFallbackLogo);
 })();
 </script></body></html>
 """, height=0, scrolling=False)
