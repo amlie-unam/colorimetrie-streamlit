@@ -22,19 +22,15 @@ st.set_page_config(page_title="Nuancier NCS",
 # =========================
 # Logo config (local + GitHub)
 # =========================
-# 1) Fichier local dans ton repo (ex: app/logo_coloriste.png)
 LOGO_PATH = Path(__file__).parent / "logo_coloriste.png"
-# 2) (Optionnel) URL GitHub brute dans secrets (ex: https://raw.githubusercontent.com/tonuser/tonrepo/main/logo_coloriste.png)
 LOGO_URL = st.secrets.get("LOGO_URL", "").strip()
 
-# Essaie d’obtenir un chemin image exploitable pour HTML (src) ET pour FPDF (fichier)
-_pdf_logo_path = None  # chemin fichier pour FPDF
-_html_logo_src = None  # src pour <img>
+_pdf_logo_path = None
+_html_logo_src = None
 
 def _load_logo_sources():
     global _pdf_logo_path, _html_logo_src
     if LOGO_PATH.exists():
-        # Embedding data URI pour l'app (robuste), et chemin réel pour PDF
         try:
             b64 = base64.b64encode(LOGO_PATH.read_bytes()).decode("utf-8")
             _html_logo_src = f"data:image/png;base64,{b64}"
@@ -42,14 +38,11 @@ def _load_logo_sources():
             return
         except Exception:
             pass
-    # Sinon, on tente l’URL (GitHub raw)
     if LOGO_URL:
         try:
             resp = requests.get(LOGO_URL, timeout=10)
             resp.raise_for_status()
-            # Pour l'HTML: on peut garder l'URL directe
             _html_logo_src = LOGO_URL
-            # Pour le PDF: il faut un fichier — on écrit dans un tmp
             tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
             tmp.write(resp.content)
             tmp.flush()
@@ -64,21 +57,24 @@ _load_logo_sources()
 # UI THEME (neutre, chic)
 # =========================
 THEME = {
-    "bg": "#FEFEFE",      # beige sable
-    "panel": "#F4F1EC",   # cartes
-    "text": "#3E2F2A",    # brun café
-    "muted": "#6B5E56",   # taupe
-    "accent": "#C8A165",  # cuivre/doré doux
+    "bg": "#FEFEFE",
+    "panel": "#F4F1EC",
+    "text": "#3E2F2A",
+    "muted": "#6B5E56",
+    "accent": "#C8A165",
     "accent_hover": "#A48B78",
     "shadow": "rgba(0,0,0,0.06)"
 }
 
 # =========================
-# CSS de base
+# CSS
 # =========================
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+/* Variable dynamique pour suivre la sidebar */
+:root {{ --sidebar-right: 0px; }}
 
 html, body, [data-testid="stAppViewContainer"] {{
   background: {THEME['bg']} !important;
@@ -121,17 +117,19 @@ div[data-testid="stSidebar"] {{
 }}
 .swatch {{ height: 72px; border-radius:14px; margin-bottom:10px; }}
 
-/* Titre centré */
 .app-title {{ text-align:center !important; }}
 
-/* Cartes plus compactes */
 .card {{ padding:8px !important; border-radius:14px !important; }}
 .swatch {{ height: 72px !important; }}
 
-/* Logo fixe bas-gauche du viewport */
+/* Logo fixe qui suit la sidebar */
 .page-logo-fixed {{
-  position: fixed; left: 14px; bottom: 14px;
-  z-index: 1000; opacity: .98; pointer-events: none;
+  position: fixed;
+  left: calc(var(--sidebar-right, 0px) + 14px);
+  bottom: 14px;
+  z-index: 1000;
+  opacity: .98;
+  pointer-events: none;
 }}
 .page-logo-fixed img {{
   max-height: 44px;
@@ -140,55 +138,83 @@ div[data-testid="stSidebar"] {{
 </style>
 """, unsafe_allow_html=True)
 
-# Injecte le logo bas-gauche si disponible
+# =========================
+# Affichage logo
+# =========================
 if _html_logo_src:
     st.markdown(f'<div class="page-logo-fixed"><img src="{_html_logo_src}" alt="logo"/></div>', unsafe_allow_html=True)
 else:
-    st.info("ℹ️ Ajoute `logo_coloriste.png` au repo ou définis `LOGO_URL` (raw GitHub) dans les *Secrets* pour afficher le logo.")
+    st.info("ℹ️ Ajoute `logo_coloriste.png` au repo ou définis `LOGO_URL` dans les *Secrets* pour afficher le logo.")
 
 # =========================
-# CSS "bulldozer" pour enlever les flèches (repli sidebar)
+# JS (masquer flèches + suivre sidebar)
 # =========================
-st.markdown("""
-<style>
-html body [data-testid="collapsedControl"],
-html body [data-testid="collapsedControl"] * {
-  display: none !important; visibility: hidden !important; opacity: 0 !important;
-  width: 0 !important; height: 0 !important; margin: 0 !important; padding: 0 !important;
-  pointer-events: none !important;
-}
-/* Fallbacks */
-button[title*="Collapse sidebar"],
-button[aria-label*="Collapse"],
-button[aria-label*="Réduire"],
-button[aria-label*="Replier"],
-[data-testid="baseButton-headerNoPadding"] { display: none !important; }
-</style>
-""", unsafe_allow_html=True)
-
-# JS anti-réapparition (Streamlit re-render)
 components.html("""
 <!DOCTYPE html><html><body><script>
 (function(){
-  function hide(root){
-    const sels=['[data-testid="collapsedControl"]','button[title*="Collapse"]',
-      'button[aria-label*="Collapse"]','button[aria-label*="Réduire"]',
-      'button[aria-label*="Replier"]','[data-testid="baseButton-headerNoPadding"]'];
-    for(const s of sels){const el=(root||document).querySelector(s);
-      if(el){Object.assign(el.style,{display:'none',visibility:'hidden',opacity:'0',
-        pointerEvents:'none',width:'0px',height:'0px',margin:'0',padding:'0'});}}
+  function hideCollapseButtons(root){
+    const sels=[
+      '[data-testid="collapsedControl"]',
+      'button[title*="Collapse"]',
+      'button[aria-label*="Collapse"]',
+      'button[aria-label*="Réduire"]',
+      'button[aria-label*="Replier"]',
+      '[data-testid="baseButton-headerNoPadding"]'
+    ];
+    for(const s of sels){
+      const el=(root||document).querySelector(s);
+      if(el){
+        Object.assign(el.style,{
+          display:'none',visibility:'hidden',opacity:'0',
+          pointerEvents:'none',width:'0px',height:'0px',margin:'0',padding:'0'
+        });
+      }
+    }
   }
-  try{hide(document)}catch(e){}
-  try{hide(window.parent&&window.parent.document)}catch(e){}
-  new MutationObserver(()=>{try{hide(document)}catch(e){}
-    try{hide(window.parent&&window.parent.document)}catch(e){}}).observe(
-      document.documentElement,{childList:true,subtree:true});
+
+  function updateSidebarVar(){
+    try{
+      const d = document;
+      const pd = (window.parent && window.parent.document) || null;
+      function computeRight(doc){
+        const sb = doc && doc.querySelector('[data-testid="stSidebar"]');
+        if(!sb) return 0;
+        const style = (doc.defaultView || window).getComputedStyle(sb);
+        if(style.display === 'none' || sb.offsetWidth === 0) return 0;
+        const r = sb.getBoundingClientRect().right;
+        return Math.max(0, Math.round(r));
+      }
+      const val = computeRight(pd) || computeRight(d) || 0;
+      d.documentElement.style.setProperty('--sidebar-right', val + 'px');
+      if(pd) pd.documentElement.style.setProperty('--sidebar-right', val + 'px');
+    }catch(e){}
+  }
+
+  hideCollapseButtons(document);
+  try{ hideCollapseButtons(window.parent && window.parent.document); }catch(e){}
+  updateSidebarVar();
+
+  const opts = {childList:true, subtree:true, attributes:true};
+  new MutationObserver(()=>{ hideCollapseButtons(document); updateSidebarVar(); })
+      .observe(document.documentElement, opts);
+
+  try{
+    const pd = window.parent && window.parent.document;
+    if(pd){
+      new MutationObserver(()=>{ hideCollapseButtons(pd); updateSidebarVar(); })
+          .observe(pd.documentElement, opts);
+      const sb = pd.querySelector('[data-testid="stSidebar"]');
+      if(sb){ new ResizeObserver(updateSidebarVar).observe(sb); }
+      pd.defaultView && pd.defaultView.addEventListener('resize', updateSidebarVar);
+    }
+  }catch(e){}
+  window.addEventListener('resize', updateSidebarVar);
 })();
 </script></body></html>
 """, height=0, scrolling=False)
 
 # =========================
-# Header (titre centré)
+# HEADER
 # =========================
 st.markdown(
     f"""
@@ -204,7 +230,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
 # =========================
