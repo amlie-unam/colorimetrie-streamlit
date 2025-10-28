@@ -54,13 +54,14 @@ def _load_logo_sources():
             pass
 
 _load_logo_sources()
-# === À COLLER IMMÉDIATEMENT APRÈS _load_logo_sources() ===
 
-# 1) Mini-CSS pour le logo (indépendant de ton THEME)
+# =========================
+# CSS minimal pour les logos (indépendant du reste de ton thème)
+# =========================
 st.markdown(f"""
 <style>
 :root {{
-  --logo-max-height: {LOGO_MAX_PX}px;  /* <- tu peux aussi modifier ici si tu veux */
+  --logo-max-height: {LOGO_MAX_PX}px;
 }}
 /* Logo collé en bas-gauche DANS la sidebar */
 .sidebar-logo-wrapper {{
@@ -93,7 +94,9 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# 2) Insertion du logo (sidebar + fallback fixe)
+# =========================
+# Insertion du logo (sidebar + fallback fixe)
+# =========================
 if _html_logo_src:
     # Dans la sidebar (bas-gauche) – visible quand la sidebar est ouverte
     with st.sidebar:
@@ -117,176 +120,8 @@ if _html_logo_src:
 else:
     st.info("ℹ️ Ajoute `logo_coloriste.png` au repo ou définis `LOGO_URL` dans les *Secrets* pour afficher le logo.")
 
-# 3) JS qui alterne l'affichage selon que la sidebar est visible ou non
-import streamlit.components.v1 as components
-components.html("""
-<!DOCTYPE html><html><body><script>
-(function(){
-  function isSidebarVisible() {
-    try {
-      const docs = [];
-      if (window.parent && window.parent.document) docs.push(window.parent.document);
-      docs.push(document);
-      for (const doc of docs) {
-        const sb = doc.querySelector('[data-testid="stSidebar"]');
-        if (!sb) continue;
-        const cs = (doc.defaultView || window).getComputedStyle(sb);
-        const rect = sb.getBoundingClientRect();
-        const visible = rect.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
-        if (visible) return true;
-      }
-    } catch (e) {}
-    return false;
-  }
-
-  function toggleFallbackLogo(){
-    try{
-      const fb = document.getElementById('fallback-logo');
-      if (!fb) return;
-      const open = isSidebarVisible();
-      fb.classList.toggle('is-hidden', open); // sidebar ouverte -> cacher le fallback; fermée -> montrer
-    }catch(e){}
-  }
-
-  toggleFallbackLogo();
-
-  const opts = {childList:true, subtree:true, attributes:true};
-  new MutationObserver(toggleFallbackLogo).observe(document.documentElement, opts);
-
-  try{
-    const pd = window.parent && window.parent.document;
-    if (pd) {
-      new MutationObserver(toggleFallbackLogo).observe(pd.documentElement, opts);
-      const sb = pd.querySelector('[data-testid="stSidebar"]');
-      if (sb) new ResizeObserver(toggleFallbackLogo).observe(sb);
-      pd.defaultView && pd.defaultView.addEventListener('resize', toggleFallbackLogo);
-    }
-  } catch(e) {}
-  window.addEventListener('resize', toggleFallbackLogo);
-})();
-</script></body></html>
-""", height=0, scrolling=False)
-# === FIN DU BLOC À COLLER ===
-
 # =========================
-# UI THEME (neutre, chic)
-# =========================
-THEME = {
-    "bg": "#FEFEFE",
-    "panel": "#F4F1EC",
-    "text": "#3E2F2A",
-    "muted": "#6B5E56",
-    "accent": "#C8A165",
-    "accent_hover": "#A48B78",
-    "shadow": "rgba(0,0,0,0.06)"
-}
-
-# =========================
-# CSS
-# =========================
-st.markdown(f"""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
-
-:root {{
-  --logo-max-height: {LOGO_MAX_PX}px; /* <- tu peux aussi modifier la taille ici */
-}}
-
-html, body, [data-testid="stAppViewContainer"] {{
-  background: {THEME['bg']} !important;
-  color: {THEME['text']};
-  font-family: 'Nunito', sans-serif;
-}}
-.block-container {{ padding-top: 1rem; }}
-
-h1,h2,h3,.stMarkdown h1,.stMarkdown h2,.stMarkdown h3 {{
-  font-family: 'Playfair Display', serif;
-  color: {THEME['text']};
-}}
-
-/* On rend la sidebar "relative" pour pouvoir ancrer un enfant en bas à gauche */
-div[data-testid="stSidebar"] {{
-  background: {THEME['panel']};
-  border-right: 1px solid rgba(0,0,0,0.05);
-  position: relative;
-}}
-
-.stSelectbox [data-baseweb="select"] > div {{
-  border-radius:14px; 
-  background: white;
-  box-shadow: 0 2px 6px {THEME['shadow']};
-}}
-.stSelectbox label {{ color: {THEME['muted']}; font-weight:600; }}
-
-.stButton>button {{
-  background: {THEME['accent']};
-  color: white; font-weight:700;
-  border: 0; border-radius:14px; padding:10px 16px;
-  box-shadow: 0 6px 18px {THEME['shadow']};
-}}
-.stButton>button:hover {{ background: {THEME['accent_hover']}; }}
-
-.card {{
-  background: {THEME['panel']}; 
-  border-radius:18px; 
-  padding:12px;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 8px 22px {THEME['shadow']};
-}}
-.swatch {{ height: 72px; border-radius:14px; margin-bottom:10px; }}
-
-.app-title {{ text-align:center !important; }}
-
-.card {{ padding:8px !important; border-radius:14px !important; }}
-.swatch {{ height: 72px !important; }}
-
-/* ---- LOGOS ---- */
-
-/* Logo INSIDE sidebar (visible quand la sidebar est ouverte) */
-.sidebar-logo-wrapper {{
-  position: absolute;  /* ancré au container de la sidebar */
-  left: 14px;
-  bottom: 14px;
-  z-index: 10;
-  pointer-events: none;   /* ne bloque pas les clics */
-}}
-.sidebar-logo-wrapper img {{
-  max-height: var(--logo-max-height);
-  filter: drop-shadow(0 2px 6px {THEME['shadow']});
-}}
-
-/* Logo FIXE dans le viewport (fallback quand la sidebar est cachée) */
-.page-logo-fixed {{
-  position: fixed;
-  left: 14px;
-  bottom: 14px;          /* <-- garantit le bas-gauche */
-  z-index: 1000;
-  opacity: .98;
-  pointer-events: none;
-}}
-.page-logo-fixed img {{
-  max-height: var(--logo-max-height, 48px);
-  filter: drop-shadow(0 2px 6px {THEME['shadow']});
-}}
-/* Utilitaire pour masquer proprement via JS */
-.is-hidden {{ display: none !important; }}
-</style>
-""", unsafe_allow_html=True)
-</style>
-""", unsafe_allow_html=True)
-
-# =========================
-# Insertion des logos (un dans la sidebar, un fixe en fallback)
-# =========================
-if _html_logo_src:
-    with st.sidebar:
-        st.markdown(f'<div class="sidebar-logo-wrapper"><img src="{_html_logo_src}" alt="logo"/></div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="page-logo-fixed" id="fallback-logo"><img src="{_html_logo_src}" alt="logo"/></div>', unsafe_allow_html=True)
-else:
-    st.info("ℹ️ Ajoute `logo_coloriste.png` au repo ou définis `LOGO_URL` dans les *Secrets* pour afficher le logo.")
-
-# =========================
-# JS (optionnel: masquer flèches + toggle des logos selon visibilité sidebar)
+# JS: affiche/cache le logo fixe selon visibilité de la sidebar
 # =========================
 components.html("""
 <!DOCTYPE html>
@@ -296,7 +131,6 @@ components.html("""
       (function(){
         function isSidebarVisible() {
           try {
-            /* Essaye d'abord dans le parent (cas Streamlit Cloud/iframe), sinon dans le document courant */
             const docs = [];
             if (window.parent && window.parent.document) docs.push(window.parent.document);
             docs.push(document);
@@ -344,22 +178,17 @@ components.html("""
 """, height=0, scrolling=False)
 
 # =========================
-# HEADER
+# UI THEME (neutre, chic) - minimal (le swatch_card utilise THEME['muted'])
 # =========================
-st.markdown(
-    f"""
-    <div class="app-title" style="line-height:1.1">
-      <div style="font-family:'Playfair Display', serif;
-                  font-size:36px; font-weight:700; color:{THEME['text']}">
-          Nuancier personnalisé
-      </div>
-      <div style="color:{THEME['muted']}; margin-top:4px">
-          Outil neutre & professionnel — adapté à toutes les palettes
-      </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+THEME = {
+    "bg": "#FEFEFE",
+    "panel": "#F4F1EC",
+    "text": "#3E2F2A",
+    "muted": "#6B5E56",
+    "accent": "#C8A165",
+    "accent_hover": "#A48B78",
+    "shadow": "rgba(0,0,0,0.06)"
+}
 
 CSV_PATH = "palette_ncs_avec_adjectifs.csv"  # doit être à côté de ce fichier
 
