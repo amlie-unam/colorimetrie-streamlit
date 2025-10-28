@@ -289,52 +289,58 @@ else:
 # JS (optionnel: masquer flèches + toggle des logos selon visibilité sidebar)
 # =========================
 components.html("""
-<!DOCTYPE html><html><body><script>
-(function(){
-  function isSidebarVisible() {
-    try {
-      // Essaye d'abord dans le parent (cas Streamlit Cloud/iframe), sinon dans le document courant
-      const docs = [];
-      if (window.parent && window.parent.document) docs.push(window.parent.document);
-      docs.push(document);
-      for (const doc of docs) {
-        const sb = doc.querySelector('[data-testid="stSidebar"]');
-        if (!sb) continue;
-        const cs = (doc.defaultView || window).getComputedStyle(sb);
-        const rect = sb.getBoundingClientRect();
-        const visible = rect.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
-        if (visible) return true;
-      }
-    } catch (e) {}
-    return false;
-  }
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      (function(){
+        function isSidebarVisible() {
+          try {
+            /* Essaye d'abord dans le parent (cas Streamlit Cloud/iframe), sinon dans le document courant */
+            const docs = [];
+            if (window.parent && window.parent.document) docs.push(window.parent.document);
+            docs.push(document);
+            for (const doc of docs) {
+              const sb = doc.querySelector('[data-testid="stSidebar"]');
+              if (!sb) continue;
+              const cs = (doc.defaultView || window).getComputedStyle(sb);
+              const rect = sb.getBoundingClientRect();
+              const visible = rect.width > 0 && cs.display !== 'none' &&
+                              cs.visibility !== 'hidden' && cs.opacity !== '0';
+              if (visible) return true;
+            }
+          } catch (e) {}
+          return false;
+        }
 
-  function toggleFallbackLogo(){
-    try{
-      const fb = document.getElementById('fallback-logo');
-      if (!fb) return;
-      const open = isSidebarVisible();
-      fb.classList.toggle('is-hidden', open);
-    }catch(e){}
-  }
+        function toggleFallbackLogo(){
+          try{
+            const fb = document.getElementById('fallback-logo');
+            if (!fb) return;
+            const open = isSidebarVisible();
+            fb.classList.toggle('is-hidden', open);
+          }catch(e){}
+        }
 
-  toggleFallbackLogo();
+        toggleFallbackLogo();
 
-  const opts = {childList:true, subtree:true, attributes:true};
-  new MutationObserver(toggleFallbackLogo).observe(document.documentElement, opts);
+        const opts = {childList:true, subtree:true, attributes:true};
+        new MutationObserver(toggleFallbackLogo).observe(document.documentElement, opts);
 
-  try{
-    const pd = window.parent && window.parent.document;
-    if (pd) {
-      new MutationObserver(toggleFallbackLogo).observe(pd.documentElement, opts);
-      const sb = pd.querySelector('[data-testid="stSidebar"]');
-      if (sb) new ResizeObserver(toggleFallbackLogo).observe(sb);
-      pd.defaultView && pd.defaultView.addEventListener('resize', toggleFallbackLogo);
-    }
-  } catch(e) {}
-  window.addEventListener('resize', toggleFallbackLogo);
-})();
-</script></body></html>
+        try{
+          const pd = window.parent && window.parent.document;
+          if (pd) {
+            new MutationObserver(toggleFallbackLogo).observe(pd.documentElement, opts);
+            const sb = pd.querySelector('[data-testid="stSidebar"]');
+            if (sb) new ResizeObserver(toggleFallbackLogo).observe(sb);
+            pd.defaultView && pd.defaultView.addEventListener('resize', toggleFallbackLogo);
+          }
+        } catch(e) {}
+        window.addEventListener('resize', toggleFallbackLogo);
+      })();
+    </script>
+  </body>
+</html>
 """, height=0, scrolling=False)
 
 # =========================
