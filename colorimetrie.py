@@ -490,7 +490,7 @@ class PDF(FPDF):
     def footer(self):
         if self.logo_path:
             try:
-                self.image(self.logo_path, x=15, y=297 - 35, w=30)
+                self.image(self.logo_path, x=15, y=282, w=25)
             except Exception:
                 pass
         self.set_y(-12)
