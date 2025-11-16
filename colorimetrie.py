@@ -292,7 +292,7 @@ def ncs_to_rgb(ncs_code: str):
     b = (chroma/100.0)*hb + (whiteness/100.0)*BASE["W"][2] + (blackness/100.0)*BASE["S"][2]
     return (int(round(r*255)), int(round(g*255)), int(round(b*255)))
 
-def rgb_to_hex(rgb): return "#{:02X}{:02X}{:02X}".forMat(*rgb)
+def rgb_to_hex(rgb): return "#{:02X}{:02X}{:02X}".format(*rgb)
 
 # =========================
 # Chargement des données
@@ -318,7 +318,7 @@ with st.sidebar:
     st.markdown("### Vos critères")
     ADJ_OPTIONS = ["Chaud", "Froid", "Clair", "Foncé", "Lumineux", "Mat", "Neutre"]
     adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Chaud"))
-    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index("clair"))
+    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Clair"))
     adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Lumineux"))
     with st.expander("Options avancées"):
         SEUIL_STRICT = st.slider("Exigence du Matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
@@ -345,9 +345,9 @@ def score_adjective(row: pd.Series, adj: str) -> float:
         base = 1.0 if temp == "Neutre" else 0.0
         bonus = max(0.0, (10.0 - sat) / 10.0)
         return min(1.0, base + 0.6 * bonus)
-    if adj == "clair":
+    if adj == "Clair":
         s = 1.0 - (noir / 100.0)
-        if clar == "clair": s = min(1.0, s + 0.15)
+        if clar == "Clair": s = min(1.0, s + 0.15)
         return s
     if adj == "Foncé":
         s = noir / 100.0
@@ -519,7 +519,7 @@ CREDIT_FOOTER = "Nuancier généré par Otto Amélie – Tous droits réservés"
 
 class PDF(FPDF):
     def __init__(self, logo_path=None, credit=""):
-        super().__init__(orientation='P', unit='mm', forMat='A4')
+        super().__init__(orientation='P', unit='mm', format='A4')
         self.logo_path = logo_path
         self.credit = credit
         self.current_title = ""
