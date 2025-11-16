@@ -377,30 +377,26 @@ df_view["s2"] = df_view.apply(lambda r: score_adjective(r, adj2), axis=1)
 df_view["s3"] = df_view.apply(lambda r: score_adjective(r, adj3), axis=1)
 
 # =========================
-# Tri & équilibrage
+# Tri de base (score + famille)
 # =========================
 w1, w2, w3 = 1.0, 0.6, 0.3
-mask_strict = (df_view["s1"] >= SEUIL_STRICT) & (df_view["s2"] >= SEUIL_STRICT) & (df_view["s3"] >= SEUIL_STRICT)
-result = df_view.loc[mask_strict].copy()
-result["score_global"] = (w1*result["s1"] + w2*result["s2"] + w3*result["s3"]) + 0.05*(result["saturation%"]/100.0)
-result["famille"] = result["rgb"].apply(color_family_from_rgb)
-result = result.sort_values(by="score_global", ascending=False).reset_index(drop=True)
 
-if not result.empty:
-    import math
-    topN = TOPN
-    top = result.head(topN).copy()
-    groups = {fam: df_fam.reset_index(drop=True) for fam, df_fam in top.groupby("famille")}
-    order = []
-    fams = list(groups.keys()); i = 0
-    while any(len(g)>0 for g in groups.values()):
-        fam = fams[i % len(fams)]
-        if len(groups[fam])>0:
-            order.append(groups[fam].iloc[0])
-            groups[fam] = groups[fam].iloc[1:]
-        i += 1
-    diversified = pd.DataFrame(order)
-    result = pd.concat([diversified, result.iloc[topN:]], ignore_index=True)
+mask_strict = (
+    (df_view["s1"] >= SEUIL_STRICT) &
+    (df_view["s2"] >= SEUIL_STRICT) &
+    (df_view["s3"] >= SEUIL_STRICT)
+)
+
+result = df_view.loc[mask_strict].copy()
+
+# score global (toujours utile pour filtrer / info)
+result["score_global"] = (
+    w1*result["s1"] + w2*result["s2"] + w3*result["s3"]
+) + 0.05*(result["saturation%"]/100.0)
+
+# famille de couleur
+result["famille"] = result["rgb"].apply(color_family_from_rgb)
+
 
 if result.empty:
     st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
