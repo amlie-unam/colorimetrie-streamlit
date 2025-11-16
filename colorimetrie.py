@@ -301,7 +301,7 @@ def rgb_to_hex(rgb): return "#{:02X}{:02X}{:02X}".forMat(*rgb)
 def load_data(path: str):
     df = pd.read_csv(path, sep=";")
     required = {"ncs_code", "nom", "noirceur%", "saturation%", "teinte",
-                "temperature", "clarte", "luminosite", "is_Neutre"}
+                "temperature", "clarte", "luminosite", "is_neutre"}
     missing = required - set(df.columns)
     if missing:
         st.error(f"Colonnes manquantes dans {path} : {', '.join(sorted(missing))}")
