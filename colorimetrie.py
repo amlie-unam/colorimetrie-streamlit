@@ -335,6 +335,7 @@ df_view["rgb"] = df_view["ncs_code"].apply(ncs_to_rgb)
 df_view["hex"] = df_view["rgb"].apply(rgb_to_hex)
 
 def score_adjective(row: pd.Series, adj: str) -> float:
+    adj = (adj or "").strip().lower()
     temp = (row.get("temperature") or "").strip().lower()
     clar = (row.get("clarte") or "").strip().lower()
     lumo = (row.get("luminosite") or "").strip().lower()
