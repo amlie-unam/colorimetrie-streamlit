@@ -402,6 +402,56 @@ if result.empty:
     st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
     st.stop()
 
+def _rgb_to_hsv_tuple(rgb):
+    r, g, b = [c / 255.0 for c in rgb]
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)
+    return (h, s, v)
+# =========================
+# Ordre d'affichage par familles (comme le PDF)
+# =========================
+import math
+
+if result.empty:
+    st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
+    st.stop()
+
+# On ajoute H, S, V pour pouvoir trier finement
+result[["H", "S", "V"]] = result["rgb"].apply(_rgb_to_hsv_tuple).apply(pd.Series)
+
+PAGE_GROUPS = [
+    ("Tons rosés", {"red", "magenta", "violet"}),
+    ("Tons orangés/jaunes", {"orange", "yellow"}),
+    ("Tons verts", {"green", "cyan"}),
+    ("Tons bleus", {"blue"}),
+    ("Tons neutres", {"grey", "other"}),
+]
+
+ordered_chunks = []
+
+for _, fam_set in PAGE_GROUPS:
+    df_group = result[result["famille"].isin(fam_set)].copy()
+    if df_group.empty:
+        continue
+
+    # même logique que pour le PDF :
+    if fam_set == {"grey", "other"}:
+        df_group = df_group.sort_values(by=["V", "S"],
+                                        ascending=[True, False]).reset_index(drop=True)
+    else:
+        df_group = df_group.sort_values(by=["H", "V", "S"],
+                                        ascending=[True, True, False]).reset_index(drop=True)
+
+    ordered_chunks.append(df_group)
+
+# On concatène dans l'ordre des groupes pour construire l'ordre final d'affichage
+if ordered_chunks:
+    result = pd.concat(ordered_chunks, ignore_index=True)
+else:
+    # Par sécurité, même cas que plus haut
+    st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
+    st.stop()
+
+
 # =========================
 # Grille + pagination
 # =========================
