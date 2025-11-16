@@ -56,7 +56,7 @@ def _load_logo_sources():
 _load_logo_sources()
 
 # =========================
-# UI THEME (neutre, chic)
+# UI THEME (Neutre, chic)
 # =========================
 THEME = {
     "bg": "#FEFEFE",
@@ -242,7 +242,7 @@ st.markdown(
           Nuancier personnalisé
       </div>
       <div style="color:{THEME['muted']}; margin-top:4px">
-          Outil neutre & professionnel — adapté à toutes les palettes
+          Outil Neutre & professionnel — adapté à toutes les palettes
       </div>
     </div>
     """,
@@ -269,7 +269,7 @@ def hue_to_rgb(hue: str):
     if not hue or hue.upper() == "N": return BASE["W"]
     hue = hue.strip().upper()
     if hue in BASE: return BASE[hue]
-    m = re.match(r"^([RGBY])(\d{1,2})([RGBY])$", hue)
+    m = re.Match(r"^([RGBY])(\d{1,2})([RGBY])$", hue)
     if m:
         a, pct, b = m.group(1), int(m.group(2)), m.group(3)
         t = pct / 100.0
@@ -282,7 +282,7 @@ def hue_to_rgb(hue: str):
     return (r, g, b)
 
 def ncs_to_rgb(ncs_code: str):
-    m = re.match(r"^S\s*(\d{2})(\d{2})\s*-\s*([A-Z](?:\d{1,2}[A-Z])?|N)$", (ncs_code or "").replace(" ", ""))
+    m = re.Match(r"^S\s*(\d{2})(\d{2})\s*-\s*([A-Z](?:\d{1,2}[A-Z])?|N)$", (ncs_code or "").replace(" ", ""))
     if not m: return (200, 200, 200)
     blackness = int(m.group(1)); chroma = int(m.group(2)); hue = m.group(3)
     whiteness = max(0, 100 - blackness - chroma)
@@ -292,7 +292,7 @@ def ncs_to_rgb(ncs_code: str):
     b = (chroma/100.0)*hb + (whiteness/100.0)*BASE["W"][2] + (blackness/100.0)*BASE["S"][2]
     return (int(round(r*255)), int(round(g*255)), int(round(b*255)))
 
-def rgb_to_hex(rgb): return "#{:02X}{:02X}{:02X}".format(*rgb)
+def rgb_to_hex(rgb): return "#{:02X}{:02X}{:02X}".forMat(*rgb)
 
 # =========================
 # Chargement des données
@@ -301,7 +301,7 @@ def rgb_to_hex(rgb): return "#{:02X}{:02X}{:02X}".format(*rgb)
 def load_data(path: str):
     df = pd.read_csv(path, sep=";")
     required = {"ncs_code", "nom", "noirceur%", "saturation%", "teinte",
-                "temperature", "clarte", "luminosite", "is_neutre"}
+                "temperature", "clarte", "luminosite", "is_Neutre"}
     missing = required - set(df.columns)
     if missing:
         st.error(f"Colonnes manquantes dans {path} : {', '.join(sorted(missing))}")
@@ -316,12 +316,12 @@ df["nom"] = df["nom"].fillna("").astype(str)
 # =========================
 with st.sidebar:
     st.markdown("### Vos critères")
-    ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
-    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index("chaud"))
+    ADJ_OPTIONS = ["Chaud", "Froid", "Clair", "Foncé", "Lumineux", "Mat", "Neutre"]
+    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Chaud"))
     adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index("clair"))
-    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("lumineux"))
+    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Lumineux"))
     with st.expander("Options avancées"):
-        SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
+        SEUIL_STRICT = st.slider("Exigence du Matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
 
 if "SEUIL_STRICT" not in locals(): SEUIL_STRICT = 0.60
@@ -339,22 +339,22 @@ def score_adjective(row: pd.Series, adj: str) -> float:
     clar = (row.get("clarte") or "").strip().lower()
     lumo = (row.get("luminosite") or "").strip().lower()
     noir = float(row.get("noirceur%", 0)); sat  = float(row.get("saturation%", 0))
-    if adj == "chaud":  return 1.0 if temp == "chaud" else (0.6 if temp == "neutre" else 0.0)
-    if adj == "froid":  return 1.0 if temp == "froid" else (0.6 if temp == "neutre" else 0.0)
-    if adj == "neutre":
-        base = 1.0 if temp == "neutre" else 0.0
+    if adj == "Chaud":  return 1.0 if temp == "Chaud" else (0.6 if temp == "Neutre" else 0.0)
+    if adj == "Froid":  return 1.0 if temp == "Froid" else (0.6 if temp == "Neutre" else 0.0)
+    if adj == "Neutre":
+        base = 1.0 if temp == "Neutre" else 0.0
         bonus = max(0.0, (10.0 - sat) / 10.0)
         return min(1.0, base + 0.6 * bonus)
     if adj == "clair":
         s = 1.0 - (noir / 100.0)
         if clar == "clair": s = min(1.0, s + 0.15)
         return s
-    if adj == "foncé":
+    if adj == "Foncé":
         s = noir / 100.0
-        if clar == "foncé": s = min(1.0, s + 0.15)
+        if clar == "Foncé": s = min(1.0, s + 0.15)
         return s
-    if adj == "lumineux": return 1.0 if lumo == "lumineux" else 0.3 + 0.7 * (sat / 100.0)
-    if adj == "mat":      return 1.0 if lumo == "mat" else 0.7 * (1.0 - sat / 100.0)
+    if adj == "Lumineux": return 1.0 if lumo == "Lumineux" else 0.3 + 0.7 * (sat / 100.0)
+    if adj == "Mat":      return 1.0 if lumo == "Mat" else 0.7 * (1.0 - sat / 100.0)
     return 0.0
 
 def color_family_from_rgb(rgb_tuple):
@@ -409,7 +409,7 @@ def _rgb_to_hsv_tuple(rgb):
 # =========================
 # Ordre d'affichage par familles (comme le PDF)
 # =========================
-import math
+import Math
 
 if result.empty:
     st.info("Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. Modifie l’ordre/priorité ou choisis d’autres adjectifs.")
@@ -423,7 +423,7 @@ PAGE_GROUPS = [
     ("Tons orangés/jaunes", {"orange", "yellow"}),
     ("Tons verts", {"green", "cyan"}),
     ("Tons bleus", {"blue"}),
-    ("Tons neutres", {"grey", "other"}),
+    ("Tons Neutres", {"grey", "other"}),
 ]
 
 ordered_chunks = []
@@ -455,7 +455,7 @@ else:
 # =========================
 # Grille + pagination
 # =========================
-import math
+import Math
 def _latin1_safe(s: str) -> str:
     if s is None: return ""
     repl = {"’": "'", "‘": "'", "“": '"', "”": '"', "–": "-", "—": "-", "•": "-",
@@ -477,7 +477,7 @@ def swatch_card(row):
     st.text_input("HEX", value=hexcode, label_visibility="collapsed")
 
 PAGE_SIZE = 36
-total = int(len(result)); pages = max(1, math.ceil(total / PAGE_SIZE))
+total = int(len(result)); pages = max(1, Math.ceil(total / PAGE_SIZE))
 if "page" not in st.session_state: st.session_state.page = 1
 
 col_prev, col_info, col_next = st.columns([1, 2, 1])
@@ -494,7 +494,7 @@ page = st.session_state.page
 start = (page - 1) * PAGE_SIZE; end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
 
-cols_per_row = 6; rows = math.ceil(len(chunk) / cols_per_row)
+cols_per_row = 6; rows = Math.ceil(len(chunk) / cols_per_row)
 for r in range(rows):
     cols = st.columns(cols_per_row)
     for j in range(cols_per_row):
@@ -519,7 +519,7 @@ CREDIT_FOOTER = "Nuancier généré par Otto Amélie – Tous droits réservés"
 
 class PDF(FPDF):
     def __init__(self, logo_path=None, credit=""):
-        super().__init__(orientation='P', unit='mm', format='A4')
+        super().__init__(orientation='P', unit='mm', forMat='A4')
         self.logo_path = logo_path
         self.credit = credit
         self.current_title = ""
@@ -562,7 +562,7 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
         ("Tons orangés/jaunes", {"orange", "yellow"}),
         ("Tons verts", {"green", "cyan"}),
         ("Tons bleus", {"blue"}),
-        ("Tons neutres", {"grey", "other"}),
+        ("Tons Neutres", {"grey", "other"}),
     ]
 
     pdf = PDF(logo_path=_pdf_logo_path, credit=CREDIT_FOOTER)
