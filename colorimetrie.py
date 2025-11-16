@@ -316,10 +316,10 @@ df["nom"] = df["nom"].fillna("").astype(str)
 # =========================
 with st.sidebar:
     st.markdown("### Vos critères")
-    ADJ_OPTIONS = ["chaud", "froid", "clair", "foncé", "lumineux", "mat", "neutre"]
-    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index("chaud"))
-    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index("clair"))
-    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("lumineux"))
+    ADJ_OPTIONS = ["Chaud", "Froid", "Clair", "Foncé", "Lumineux", "Mat", "Neutre"]
+    adj1 = st.selectbox("Adjectif prioritaire #1", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Chaud"))
+    adj2 = st.selectbox("Adjectif prioritaire #2", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Clair"))
+    adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Lumineux"))
     with st.expander("Options avancées"):
         SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
