@@ -74,7 +74,8 @@ THEME = {
 # =========================
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:wght@300;400;500;600&family=Nunito:wght@400;600;700&display=swap');
+
 
 :root {{
   --logo-max-height: {LOGO_MAX_PX}px; /* <- tu peux aussi modifier la taille ici */
@@ -242,9 +243,11 @@ st.markdown(
                   font-size:36px; font-weight:700; color:{THEME['text']}">
           Nuancier personnalisé
       </div>
-      <div style="color:{THEME['muted']}; margin-top:4px">
-          Outil adapté à toutes les palettes
-      </div>
+      <div style="color:{THEME['muted']}; margin-top:4px; 
+            font-family:'Montserrat', sans-serif; font-weight:400;">
+            Outil neutre  adapté à toutes les palettes
+    </div>
+
     </div>
     """,
     unsafe_allow_html=True
