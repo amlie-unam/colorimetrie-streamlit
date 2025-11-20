@@ -74,7 +74,7 @@ THEME = {
 # =========================
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Nunito:wght@400;600;700&display=swap');
 
 :root {{
   --logo-max-height: {LOGO_MAX_PX}px; /* <- tu peux aussi modifier la taille ici */
