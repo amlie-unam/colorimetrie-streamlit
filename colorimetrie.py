@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import re
 import colorsys
 import base64
@@ -325,7 +326,7 @@ with st.sidebar:
         TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
 
 if "SEUIL_STRICT" not in locals(): SEUIL_STRICT = 0.60
-if "TOPN" not in locals(): TOPN = 200
+
 
 # =========================
 # Préparation des données
