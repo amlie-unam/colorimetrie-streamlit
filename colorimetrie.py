@@ -568,7 +568,7 @@ class PDF(FPDF):
         self.current_title = ""
 
     def header(self):
-        self.set_font("Helvetica", size=14)
+        self.set_font("Times", style="B", size=20)
         self.set_text_color(62, 47, 42)
         self.set_xy(15, 12)
         self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
