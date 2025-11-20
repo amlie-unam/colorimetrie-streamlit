@@ -582,10 +582,10 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
     bottom_limit = 297 - 15
 
     def add_group_pages(page_title: str, df_page: pd.DataFrame):
-    pdf.current_title = page_title
-    pdf.add_page()
-    col = 0; x0 = left_margin; y = start_y
-    for _, row in df_page.iterrows():
+      pdf.current_title = page_title
+      pdf.add_page()
+      col = 0; x0 = left_margin; y = start_y
+      for _, row in df_page.iterrows():
         needed = swatch_h + 3 + 10
         if y + needed > bottom_limit:
             pdf.current_title = f"{page_title} (suite)"
