@@ -512,8 +512,7 @@ def swatch_card(row):
         f"""
         <div class="card">
           <div class="swatch" style="background: rgb({r},{g},{b});"></div>
-          <div style="font-weight:700">{_latin1_safe(nom)}</div>
-          <div style="font-size:12px; color:{THEME['muted']}; opacity:0.9">{ncs}</div>
+        
         </div>
         """, unsafe_allow_html=True
     )
