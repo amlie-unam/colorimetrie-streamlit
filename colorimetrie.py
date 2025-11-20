@@ -19,6 +19,44 @@ from fpdf import FPDF
 st.set_page_config(page_title="Nuancier NCS",
                    layout="wide",
                    initial_sidebar_state="expanded")
+#============================
+#Authentification
+#============================
+def check_password():
+    """Simple protection par mot de passe avec st.secrets."""
+
+    def password_entered():
+        """Vérifie le mot de passe et met un flag en session."""
+        if st.session_state.get("password") == st.secrets.get("APP_PASSWORD"):
+            st.session_state["password_correct"] = True
+            # On enlève le mot de passe en clair de la session
+            del st.session_state["password"]
+        else:
+            st.session_state["password_correct"] = False
+
+    # Si déjà authentifiée dans cette session
+    if st.session_state.get("password_correct", False):
+        return True
+
+    st.markdown("### Accès réservé 🔒")
+    st.text_input(
+        "Mot de passe",
+        type="password",
+        on_change=password_entered,
+        key="password"
+    )
+
+    if st.session_state.get("password_correct") is False:
+        st.error("Mot de passe incorrect.")
+
+    # On bloque le reste du script tant que ce n'est pas bon
+    return False
+
+
+# === Vérification immédiate ===
+if not check_password():
+    st.stop()
+
 
 # =========================
 # Logo config (local + GitHub)
