@@ -582,23 +582,25 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
     bottom_limit = 297 - 15
 
     def add_group_pages(page_title: str, df_page: pd.DataFrame):
-        pdf.current_title = page_title
-        pdf.add_page()
-        col = 0; x0 = left_margin; y = start_y
-        for _, row in df_page.iterrows():
-            needed = swatch_h + 3 + 10
-            if y + needed > bottom_limit:
-                pdf.current_title = f"{page_title} (suite)"
-                pdf.add_page(); col = 0; y = start_y
-            x = x0 + col * swatch_w
-            r, g, b = row["rgb"]
-            pdf.set_fill_color(int(r), int(g), int(b))
-            pdf.rect(x, y, swatch_w, swatch_h, style='F')
-          
-            col += 1
-            if col >= cols:
-                col = 0
-                y = pdf.get_y() + gap_y
+    pdf.current_title = page_title
+    pdf.add_page()
+    col = 0; x0 = left_margin; y = start_y
+    for _, row in df_page.iterrows():
+        needed = swatch_h + 3 + 10
+        if y + needed > bottom_limit:
+            pdf.current_title = f"{page_title} (suite)"
+            pdf.add_page(); col = 0; y = start_y
+        x = x0 + col * swatch_w
+        r, g, b = row["rgb"]
+        pdf.set_fill_color(int(r), int(g), int(b))
+        pdf.rect(x, y, swatch_w, swatch_h, style='F')
+        pdf.set_xy(x, y + swatch_h + 3)
+        pdf.set_text_color(0, 0, 0)
+        pdf.multi_cell(w=swatch_w, h=5, txt="", border=0, align='L')
+        col += 1
+        if col >= cols:
+            col = 0
+            y = pdf.get_y() + gap_y
 
     for page_title, fam_set in PAGE_GROUPS:
         df_group = df_pdf[df_pdf["famille"].isin(fam_set)].copy()
