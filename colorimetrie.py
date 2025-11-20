@@ -238,12 +238,12 @@ components.html("""
 st.markdown(
     f"""
     <div class="app-title" style="line-height:1.1">
-      <div style="font-family:'Playfair Display', serif;
+      <div style="font-family:'Abril Fatface', serif;
                   font-size:36px; font-weight:700; color:{THEME['text']}">
           Nuancier personnalisé
       </div>
       <div style="color:{THEME['muted']}; margin-top:4px">
-          Outil neutre & professionnel — adapté à toutes les palettes
+          Outil adapté à toutes les palettes
       </div>
     </div>
     """,
