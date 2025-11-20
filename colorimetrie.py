@@ -323,7 +323,7 @@ with st.sidebar:
     adj3 = st.selectbox("Adjectif prioritaire #3", ADJ_OPTIONS, index=ADJ_OPTIONS.index("Lumineux"))
     with st.expander("Options avancées"):
         SEUIL_STRICT = st.slider("Exigence du matching", 0.0, 1.0, 0.60, 0.05, key="seuil_strict")
-        TOPN = st.slider("Diversité du top (N)", 30, 300, 200, 10, key="topn")
+        
 
 if "SEUIL_STRICT" not in locals(): SEUIL_STRICT = 0.60
 
