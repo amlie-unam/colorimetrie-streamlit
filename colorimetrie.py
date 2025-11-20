@@ -534,7 +534,7 @@ class PDF(FPDF):
         self.set_text_color(62, 47, 42)
         self.set_xy(15, 12)
         self.cell(0, 8, _latin1_safe(self.current_title), ln=1)
-        self.set_draw_color(164, 139, 120)
+        self.set_draw_color(61, 59, 58)
         self.set_line_width(0.6)
         self.line(15, 22, 195, 22)
 
@@ -594,9 +594,7 @@ def generate_pdf_grouped_by_family_with_footer(dataframe: pd.DataFrame) -> bytes
             r, g, b = row["rgb"]
             pdf.set_fill_color(int(r), int(g), int(b))
             pdf.rect(x, y, swatch_w, swatch_h, style='F')
-            pdf.set_xy(x, y + swatch_h + 3)
-            pdf.set_text_color(0, 0, 0)
-            pdf.multi_cell(w=swatch_w, h=5, txt=_latin1_safe(str(row.get("nom", ""))), border=0, align='L')
+          
             col += 1
             if col >= cols:
                 col = 0
