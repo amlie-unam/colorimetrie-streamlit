@@ -520,10 +520,29 @@ def best_family_alternatives(df_source, family_names, top_n=6, min_score=0.30):
     if subset.empty:
         return subset
 
-    subset = subset[subset["score_global"] >= min_score].copy()
+    # On score uniquement sur les 2 premiers adjectifs
+    subset["score_2adjs"] = (w1 * subset["s1"]) + (w2 * subset["s2"])
+
+    # On exige un minimum de cohérence sur les 2 premiers adjectifs
+    subset = subset[
+        (subset["s1"] >= SEUIL_STRICT) &
+        (subset["s2"] >= SEUIL_STRICT)
+    ].copy()
+
+    # Si c'est encore vide, on relâche un peu mais on reste centré sur les 2 premiers adjectifs
+    if subset.empty:
+        relaxed_threshold = max(0.35, SEUIL_STRICT - 0.20)
+        subset = df_source[df_source["famille"].isin(family_names)].copy()
+        subset["score_2adjs"] = (w1 * subset["s1"]) + (w2 * subset["s2"])
+        subset = subset[
+            (subset["s1"] >= relaxed_threshold) &
+            (subset["s2"] >= relaxed_threshold)
+        ].copy()
+
     if subset.empty:
         return subset
 
+    # Bonus léger pour garder une cohérence visuelle, sans re-rendre le 3e adjectif bloquant
     temp = subset["temperature"].fillna("").astype(str).str.lower()
     lumo = subset["luminosite"].fillna("").astype(str).str.lower()
     clar = subset["clarte"].fillna("").astype(str).str.lower()
@@ -532,53 +551,45 @@ def best_family_alternatives(df_source, family_names, top_n=6, min_score=0.30):
 
     subset["family_fit_bonus"] = 0.0
 
-    selected_adjs = [adj1.lower(), adj2.lower(), adj3.lower()]
+    selected_first_two = [adj1.lower(), adj2.lower()]
 
-    if "froid" in selected_adjs:
-        subset.loc[temp.eq("froid"), "family_fit_bonus"] += 0.25
-        subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.08
+    if "froid" in selected_first_two:
+        subset.loc[temp.eq("froid"), "family_fit_bonus"] += 0.15
+        subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.05
 
-    if "chaud" in selected_adjs:
-        subset.loc[temp.eq("chaud"), "family_fit_bonus"] += 0.25
-        subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.08
+    if "chaud" in selected_first_two:
+        subset.loc[temp.eq("chaud"), "family_fit_bonus"] += 0.15
+        subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.05
 
-    if "mat" in selected_adjs:
-        subset.loc[lumo.eq("mat"), "family_fit_bonus"] += 0.20
-        subset["family_fit_bonus"] += (1.0 - sat / 100.0) * 0.10
+    if "mat" in selected_first_two:
+        subset.loc[lumo.eq("mat"), "family_fit_bonus"] += 0.12
+        subset["family_fit_bonus"] += (1.0 - sat / 100.0) * 0.06
 
-    if "lumineux" in selected_adjs:
-        subset.loc[lumo.eq("lumineux"), "family_fit_bonus"] += 0.20
-        subset["family_fit_bonus"] += (sat / 100.0) * 0.10
+    if "lumineux" in selected_first_two:
+        subset.loc[lumo.eq("lumineux"), "family_fit_bonus"] += 0.12
+        subset["family_fit_bonus"] += (sat / 100.0) * 0.06
 
-    if "foncé" in selected_adjs:
-        subset.loc[clar.eq("foncé"), "family_fit_bonus"] += 0.20
-        subset["family_fit_bonus"] += (noir / 100.0) * 0.15
+    if "foncé" in selected_first_two:
+        subset.loc[clar.eq("foncé"), "family_fit_bonus"] += 0.12
+        subset["family_fit_bonus"] += (noir / 100.0) * 0.08
 
-    if "clair" in selected_adjs:
-        subset.loc[clar.eq("clair"), "family_fit_bonus"] += 0.20
-        subset["family_fit_bonus"] += (1.0 - noir / 100.0) * 0.15
+    if "clair" in selected_first_two:
+        subset.loc[clar.eq("clair"), "family_fit_bonus"] += 0.12
+        subset["family_fit_bonus"] += (1.0 - noir / 100.0) * 0.08
 
-    if "neutre" in selected_adjs:
-        subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.20
-        subset["family_fit_bonus"] += (1.0 - sat / 100.0) * 0.10
+    if "neutre" in selected_first_two:
+        subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.12
+        subset["family_fit_bonus"] += (1.0 - sat / 100.0) * 0.06
 
-    subset["alt_score"] = subset["score_global"] + subset["family_fit_bonus"]
+    subset["alt_score"] = subset["score_2adjs"] + subset["family_fit_bonus"]
 
     subset = subset.sort_values(
-        by=["alt_score", "score_global", "noirceur%", "saturation%"],
-        ascending=[False, False, False, True]
+        by=["alt_score", "score_2adjs", "s1", "s2"],
+        ascending=[False, False, False, False]
     )
 
     subset = subset.drop_duplicates(subset=["ncs_code"])
     return subset.head(top_n)
-
-if result.empty:
-    st.warning(
-        "Aucune couleur ne dépasse le seuil fixé pour les trois adjectifs. "
-        "Voici malgré tout les couleurs les plus cohérentes avec ta sélection."
-    )
-    fallback = df_view.sort_values(by="score_global", ascending=False).head(36).copy()
-    result = fallback.copy()
 
 # =========================
 # Ordre d'affichage principal
