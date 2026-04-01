@@ -644,7 +644,7 @@ def _latin1_safe(s: str) -> str:
         s = s.replace(a, b)
     return s.encode("latin-1", errors="replace").decode("latin-1")
 
-def swatch_card(row):
+def swatch_card(row, key_prefix="main"):
     r, g, b = row["rgb"]
     hexcode = row["hex"]
 
@@ -656,9 +656,16 @@ def swatch_card(row):
         """,
         unsafe_allow_html=True
     )
-    st.text_input("HEX", value=hexcode, label_visibility="collapsed", key=f"hex_{row['ncs_code']}_{hexcode}")
 
-def render_grid(dataframe, cols_per_row=6):
+    unique_key = f"{key_prefix}_hex_{row.name}_{row['ncs_code']}_{hexcode}"
+    st.text_input(
+        "HEX",
+        value=hexcode,
+        label_visibility="collapsed",
+        key=unique_key
+    )
+
+def render_grid(dataframe, cols_per_row=6, key_prefix="main"):
     rows = math.ceil(len(dataframe) / cols_per_row)
     for r in range(rows):
         cols = st.columns(cols_per_row)
@@ -666,13 +673,13 @@ def render_grid(dataframe, cols_per_row=6):
             idx = r * cols_per_row + j
             if idx < len(dataframe):
                 with cols[j]:
-                    swatch_card(dataframe.iloc[idx])
+                    swatch_card(dataframe.iloc[idx], key_prefix=f"{key_prefix}_{idx}")
 
-def render_alternative_block(title, df_alt):
+def render_alternative_block(title, df_alt, key_prefix):
     if df_alt.empty:
         return
     st.markdown(f"<h3 class='alt-section-title'>{title}</h3>", unsafe_allow_html=True)
-    render_grid(df_alt, cols_per_row=6)
+    render_grid(df_alt, cols_per_row=6, key_prefix=key_prefix)
 
 # =========================
 # Grille + pagination
@@ -708,7 +715,7 @@ start = (page - 1) * PAGE_SIZE
 end = min(start + PAGE_SIZE, total)
 chunk = result.iloc[start:end].copy()
 
-render_grid(chunk, cols_per_row=6)
+render_grid(chunk, cols_per_row=6, key_prefix="main_page")
 
 # =========================
 # Alternatives familles absentes
@@ -718,14 +725,14 @@ if missing_red_family and not suggested_reds.empty:
         "Aucun rouge ne correspond parfaitement aux trois adjectifs sélectionnés. "
         "Voici les rouges les plus cohérents avec cette palette."
     )
-    render_alternative_block("Rouges conseillés", suggested_reds)
+    render_alternative_block("Rouges conseillés", suggested_reds, key_prefix="alt_red")
 
 if missing_yellow_family and not suggested_yellows.empty:
     st.info(
         "Aucun jaune ne correspond parfaitement aux trois adjectifs sélectionnés. "
         "Voici les jaunes les plus cohérents avec cette palette."
     )
-    render_alternative_block("Jaunes conseillés", suggested_yellows)
+    render_alternative_block("Jaunes conseillés", suggested_yellows, key_prefix="alt_yellow")
 
 # =========================
 # Table détaillée
