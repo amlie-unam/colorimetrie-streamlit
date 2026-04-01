@@ -512,7 +512,7 @@ result = df_view.loc[mask_strict].copy()
 # =========================
 # Gestion si aucun résultat strict
 # =========================
-def best_family_alternatives(df_source, family_names, top_n=6, min_score=0.30):
+def best_family_alternatives(df_source, family_names, top_n=6):
     if isinstance(family_names, str):
         family_names = [family_names]
 
@@ -520,29 +520,24 @@ def best_family_alternatives(df_source, family_names, top_n=6, min_score=0.30):
     if subset.empty:
         return subset
 
-    # On score uniquement sur les 2 premiers adjectifs
-    subset["score_2adjs"] = (w1 * subset["s1"]) + (w2 * subset["s2"])
+    # On se base uniquement sur le 1er adjectif
+    subset["score_1adj"] = subset["s1"]
 
-    # On exige un minimum de cohérence sur les 2 premiers adjectifs
-    subset = subset[
-        (subset["s1"] >= SEUIL_STRICT) &
-        (subset["s2"] >= SEUIL_STRICT)
-    ].copy()
+    # Filtre strict sur le 1er adjectif
+    subset = subset[subset["s1"] >= SEUIL_STRICT].copy()
 
-    # Si c'est encore vide, on relâche un peu mais on reste centré sur les 2 premiers adjectifs
+    # Si c'est vide, on relâche un peu
     if subset.empty:
         relaxed_threshold = max(0.35, SEUIL_STRICT - 0.20)
         subset = df_source[df_source["famille"].isin(family_names)].copy()
-        subset["score_2adjs"] = (w1 * subset["s1"]) + (w2 * subset["s2"])
-        subset = subset[
-            (subset["s1"] >= relaxed_threshold) &
-            (subset["s2"] >= relaxed_threshold)
-        ].copy()
+        subset["score_1adj"] = subset["s1"]
+        subset = subset[subset["s1"] >= relaxed_threshold].copy()
 
     if subset.empty:
         return subset
 
-    # Bonus léger pour garder une cohérence visuelle, sans re-rendre le 3e adjectif bloquant
+    # Petit bonus léger pour mieux trier à l'intérieur,
+    # sans rendre les adjectifs 2 et 3 bloquants
     temp = subset["temperature"].fillna("").astype(str).str.lower()
     lumo = subset["luminosite"].fillna("").astype(str).str.lower()
     clar = subset["clarte"].fillna("").astype(str).str.lower()
@@ -551,41 +546,41 @@ def best_family_alternatives(df_source, family_names, top_n=6, min_score=0.30):
 
     subset["family_fit_bonus"] = 0.0
 
-    selected_first_two = [adj1.lower(), adj2.lower()]
+    selected_first = adj1.lower()
 
-    if "froid" in selected_first_two:
+    if selected_first == "froid":
         subset.loc[temp.eq("froid"), "family_fit_bonus"] += 0.15
         subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.05
 
-    if "chaud" in selected_first_two:
+    elif selected_first == "chaud":
         subset.loc[temp.eq("chaud"), "family_fit_bonus"] += 0.15
         subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.05
 
-    if "mat" in selected_first_two:
+    elif selected_first == "mat":
         subset.loc[lumo.eq("mat"), "family_fit_bonus"] += 0.12
         subset["family_fit_bonus"] += (1.0 - sat / 100.0) * 0.06
 
-    if "lumineux" in selected_first_two:
+    elif selected_first == "lumineux":
         subset.loc[lumo.eq("lumineux"), "family_fit_bonus"] += 0.12
         subset["family_fit_bonus"] += (sat / 100.0) * 0.06
 
-    if "foncé" in selected_first_two:
+    elif selected_first == "foncé":
         subset.loc[clar.eq("foncé"), "family_fit_bonus"] += 0.12
         subset["family_fit_bonus"] += (noir / 100.0) * 0.08
 
-    if "clair" in selected_first_two:
+    elif selected_first == "clair":
         subset.loc[clar.eq("clair"), "family_fit_bonus"] += 0.12
         subset["family_fit_bonus"] += (1.0 - noir / 100.0) * 0.08
 
-    if "neutre" in selected_first_two:
+    elif selected_first == "neutre":
         subset.loc[temp.eq("neutre"), "family_fit_bonus"] += 0.12
         subset["family_fit_bonus"] += (1.0 - sat / 100.0) * 0.06
 
-    subset["alt_score"] = subset["score_2adjs"] + subset["family_fit_bonus"]
+    subset["alt_score"] = subset["score_1adj"] + subset["family_fit_bonus"]
 
     subset = subset.sort_values(
-        by=["alt_score", "score_2adjs", "s1", "s2"],
-        ascending=[False, False, False, False]
+        by=["alt_score", "score_1adj", "score_global"],
+        ascending=[False, False, False]
     )
 
     subset = subset.drop_duplicates(subset=["ncs_code"])
