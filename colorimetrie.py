@@ -631,10 +631,10 @@ suggested_reds = pd.DataFrame()
 suggested_yellows = pd.DataFrame()
 
 if missing_red_family:
-    suggested_reds = best_family_alternatives(df_view, ["red", "magenta"], top_n=6)
+    suggested_reds = best_family_alternatives(df_view, ["red"], top_n=6)
 
 if missing_yellow_family:
-    suggested_yellows = best_family_alternatives(df_view, ["yellow", "orange"], top_n=6)
+    suggested_yellows = best_family_alternatives(df_view, ["yellow"], top_n=6)
 
 # =========================
 # Affichage cartes
